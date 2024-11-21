@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Stack, Typography, TextField, Paper, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 // Estilos reutilizáveis
 const containerStyle = {
@@ -23,13 +24,25 @@ const paperStyle = {
 const textFieldStyle = {
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      borderColor: "#46685B",
+      borderColor: "#46685B",  // Cor da borda
       borderRadius: "20px",
       borderWidth: "4px",
-      backgroundColor: "#D9D9D9",
+      // Remover fundo do fieldset para evitar interferência
+      backgroundColor: "transparent",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#46685B",
+      borderColor: "#46685B", // Cor da borda ao focar
+    },
+    "& input": {
+      color: "#000",  // Cor do texto dentro do campo (garante visibilidade)
+      backgroundColor: "#D9D9D9", // Cor de fundo do campo de entrada
+      borderRadius: "20px",
+    },
+    "& .MuiInputLabel-root": {
+      color: "#46685B",  // Cor do rótulo (label)
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "#46685B",  // Cor do rótulo ao focar
     },
   },
 };
@@ -42,67 +55,93 @@ const buttonStyle = {
 };
 
 export const Login = () => {
+  const navigate = useNavigate();
+
   return (
     <Container sx={containerStyle}>
-      <Paper sx={paperStyle}>
-        <Stack spacing={3}>
-          {/* Título */}
-          <Typography variant="h3">Entrar</Typography>
+      <Stack spacing={1}>
+        <Paper sx={paperStyle}>
+          <Stack spacing={3}>
+            {/* Título */}
+            <Typography variant="h3">Entrar</Typography>
 
-          {/* Subtítulo */}
-          <Typography variant="body1" color="#555">
-            Para entrar, digite o seu e-mail e senha.
-          </Typography>
+            {/* Subtítulo */}
+            <Typography variant="body1" color="#555">
+              Para entrar, digite o seu e-mail e senha.
+            </Typography>
 
-          {/* Campo de E-mail */}
-          <TextField
-            label="Digite o seu e-mail:"
-            variant="outlined"
-            sx={textFieldStyle}
-            fullWidth
-          />
+            {/* Campo de E-mail */}
+            <TextField
+              label="Digite o seu e-mail:"
+              variant="outlined"
+              sx={textFieldStyle}
+              fullWidth
+            />
 
-          {/* Campo de Senha */}
-          <TextField
-            label="Digite a sua senha:"
-            variant="outlined"
-            sx={textFieldStyle}
-            fullWidth
-          />
+            {/* Campo de Senha */}
+            <TextField
+              label="Digite a sua senha:"
+              variant="outlined"
+              sx={textFieldStyle}
+              fullWidth
+            />
 
-          {/* Link "Esqueci a minha senha" */}
-          <Button
-            variant="text"
-            sx={{
+            {/* Link "Esqueci a minha senha" */}
+            <Button
+              variant="text"
+              sx={{
                 textTransform: "none", // Remove letras maiúsculas automáticas
                 fontSize: "0.9rem",    // Ajusta o tamanho da fonte
                 color: "#8A6464",      // Define a cor do texto
                 alignSelf: "flex-start", // Alinha o texto à esquerda
                 textDecoration: "underline", // Sublinha o texto
                 "&:hover": {
-                color: "#213435",    // Muda a cor ao passar o mouse
-                
-                
+                  color: "#213435",    // Muda a cor ao passar o mouse
                 },
-            }}
-            onClick={() => alert("Redirecionando para recuperação de senha...")}
+              }}
+              onClick={() => alert("Redirecionando para recuperação de senha...")}
             >
-            Esqueci minha senha
-        </Button>
+              Esqueci minha senha
+            </Button>
 
+            {/* Botão Entrar */}
+            <Button
+              variant="contained"
+              onClick={() => navigate("/home")}
+              sx={{
+                ...buttonStyle,
+                alignSelf: "flex-end", // Alinha o botão à direita
+              }}
+            >
+              Entrar
+            </Button>
+          </Stack>
+        </Paper>
 
-          {/* Botão Entrar */}
+        {/* Link "Não possui uma conta? Cadastre-se" */}
+        <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
+          {/* Texto "Não possui uma conta?" */}
+          <Typography variant="body2" sx={{ color: "#D9D9D9" }}>
+            Não possui uma conta?
+          </Typography>
+
+          {/* Botão "Cadastre-se" */}
           <Button
-            variant="contained"
+            variant="text"
             sx={{
-              ...buttonStyle,
-              alignSelf: "flex-end", // Alinha o botão à direita
+              textTransform: "none", // Remove letras maiúsculas automáticas
+              fontSize: "0.9rem",    // Ajusta o tamanho da fonte
+              color: "#D9D9D9",      // Define a cor do texto
+              "&:hover": {
+                color: "#213435",    // Muda a cor ao passar o mouse
+              },
             }}
+            onClick={() => navigate("/cadastro")}
           >
-            Entrar
+            Cadastre-se
           </Button>
         </Stack>
-      </Paper>
+      </Stack>
     </Container>
   );
 };
