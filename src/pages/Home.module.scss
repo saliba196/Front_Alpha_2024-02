@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 140px; // Largura inicial do menu lateral
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  padding: 16px;
+  background-color: #253a3b;
+}

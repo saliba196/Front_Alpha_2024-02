@@ -1,26 +1,21 @@
-import "./App.css";
-import { MuiButton } from "./components/MuiButton";
-import ImgMediaCard from "./components/video_prev";
-import MediaControlCard from "./components/video_red";
-import SideMenu from "./components/menu_lat.tsx";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home"; // Página Home
+//import Settings from "./pages/Settings"; // Outra página de exemplo (opcional)
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
-      {/* Lateral SideMenu */}
-      <SideMenu />
+    <Router>
+      <Routes>
+        {/* Rota para a página inicial */}
+        <Route path="/" element={<Home />} />
 
-      {/* Conteúdo Principal */}
-      <main style={{ flex: 1, padding: "16px", backgroundColor: "#f0f0f0" }}>
-        {/* Botão MUI */}
-        <MuiButton />
-        {/* Cartão de vídeo com pré-visualização */}
-        <ImgMediaCard />
-        {/* Cartão de vídeo destacado */}
-        <MediaControlCard />
-      </main>
-    </div>
+        {/* Rota para a página de configurações (exemplo) 
+                <Route path="/settings" element={<Settings />} />
+                */}
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
