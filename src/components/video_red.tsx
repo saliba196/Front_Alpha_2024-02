@@ -52,7 +52,7 @@ export default function MediaControlCard() {
       <CardMedia
         component="img"
         sx={{ width: 151 }}
-        image="C:\Users\luiza\Documents\Eng_de_software\IMG_3729_VSCO.jpg"
+        image="C:/Users/luiza/Documents/teste/react-mui-demo/src/Images/tina_img_teste.png"
         alt="Cover do curso"
       />
     </Card>

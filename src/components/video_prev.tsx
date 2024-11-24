@@ -4,7 +4,6 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Fab from "@mui/material/Fab";
@@ -16,7 +15,7 @@ export default function ImgMediaCard() {
         component="img"
         alt="Capa do curso"
         height="140"
-        image="C:\Users\luiza\Documents\Eng_de_software\IMG_3729_VSCO.jpg"
+        image="C:/Users/luiza/Documents/teste/react-mui-demo/src/Images/tina_img_teste.png"
       />
       <CardContent>
         <Typography
