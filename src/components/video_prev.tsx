@@ -5,6 +5,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
+import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Fab from "@mui/material/Fab";
 
@@ -31,19 +32,22 @@ export default function ImgMediaCard() {
           sx={{ color: "text.secondary" }}
           fontFamily="nunito"
         >
-          LResuminho do curso
+          Resuminho do curso
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Fab color="primary" aria-label="play">
-          <PlayArrowIcon />
-        </Fab>
-        <Fab color="secondary" aria-label="play" variant="extended">
-          <PlayArrowIcon sx={{ mr: 1 }} />{" "}
-          <Typography fontFamily="nunito"> Assistir </Typography>
-        </Fab>
-      </CardActions>
+      <Stack direction="row" justifyContent="center" spacing={2}>
+        <CardActions>
+          {/*<Button size="small">Share</Button>*{" "}
+          <Fab color="primary" aria-label="play">
+            * <PlayArrowIcon />*{" "}
+          </Fab>
+          */}
+          <Fab color="success" aria-label="play" variant="extended">
+            <PlayArrowIcon sx={{ mr: 1 }} />{" "}
+            <Typography fontFamily="nunito"> Assistir </Typography>
+          </Fab>
+        </CardActions>
+      </Stack>
     </Card>
   );
 }
