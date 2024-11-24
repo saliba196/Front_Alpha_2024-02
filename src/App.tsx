@@ -1,10 +1,10 @@
 import "./App.css";
-import { MuiTypography } from "./components/MuiTypograpy";
+import { MuiButton } from "./components/MuiButton";
 
 function App() {
   return (
     <div className="App">
-      <MuiTypography />
+      <MuiButton />
     </div>
   );
 }
