@@ -1,8 +1,8 @@
 import React from "react";
 import SideMenu from "../components/menu_lat"; // Menu lateral
 import { Box, Typography } from "@mui/material";
-import { CardComponent } from "../components/card_video"; //card normal
-import { CardVideoProgresso } from "../components/CardVideoProgresso"; // card ccom progresso
+import { CardComponent } from "../components/card_video"; // Card de vídeo simples
+import { CardVideoProgresso } from "../components/CardVideoProgresso"; // Novo card com progresso
 
 const containerStyle = {
   background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
