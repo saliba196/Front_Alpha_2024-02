@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { ButtonAtom } from "./ButtonAtom.tsx";
-import { ImageWithBadge } from "./ImageWithBadge.tsx";
-//import HomeIcon from "@mui/icons-material/Home";
-//import SettingsIcon from "@mui/icons-material/Settings";
-//import InfoIcon from "@mui/icons-material/Info";
+import { ButtonAtom } from "./ButtonAtom";
+import { ImageWithBadge } from "./ImageWithBadge";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import SearchIcon from "@mui/icons-material/Search";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
@@ -37,13 +34,25 @@ export const SideMenu: React.FC = () => {
       onMouseEnter={() => handleHover(true)}
       onMouseLeave={() => handleHover(false)}
     >
+      {/* Foto do perfil */}
       <ImageWithBadge
-        src="C:\Users\luiza\Documents\teste\react-mui-demo\src\Images\tina_img_teste.png"
-        alt="foto_de_perfil"
-        badgeContent="1"
+        src="C:/Users/luiza/Documents/teste/react-mui-demo/src/Images/tina_img_teste.png"
+        alt="Nome do Usuário"
         isExpanded={isExpanded}
       />
-      <Box mt={4} width="100%" display="flex" flexDirection="column" gap="16px">
+
+      {/* Botões */}
+      <Box
+        mt={4}
+        display="flex"
+        flexDirection="column"
+        alignItems="flex-start"
+        gap="16px"
+        width="100%" // Para alinhar os botões corretamente
+        sx={{
+          paddingLeft: isExpanded ? "28px" : "0px", // Alinhamento à esquerda
+        }}
+      >
         <ButtonAtom
           icon={<SearchIcon />}
           label="Busca"
@@ -90,4 +99,5 @@ export const SideMenu: React.FC = () => {
     </Box>
   );
 };
+
 export default SideMenu;

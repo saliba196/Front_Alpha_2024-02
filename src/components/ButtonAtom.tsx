@@ -16,6 +16,8 @@ const StyledIconButton = styled(IconButton)<{
   bgcolor: string;
   hoverColor?: string;
 }>`
+  width: 65px;
+  height: 65px;
   background-color: ${(props) => props.bgcolor};
   color: white;
   &:hover {
@@ -37,7 +39,11 @@ export const ButtonAtom: React.FC<ButtonAtomProps> = ({
     </StyledIconButton>
     {/* Texto exibido apenas se o menu está expandido */}
     {isExpanded && (
-      <Typography variant="body2" color="white">
+      <Typography
+        variant="body1"
+        color="white"
+        sx={{ fontFamily: "Nunito", fontWeight: "bold", fontSize: "20px" }}
+      >
         {label}
       </Typography>
     )}
