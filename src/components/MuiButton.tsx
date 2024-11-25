@@ -8,9 +8,12 @@ import {
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import AdsClickIcon from "@mui/icons-material/AdsClick";
 import DeleteIcon from "@mui/icons-material/Delete";
-export const MuiButton = () => {
+
+export const MuiTypography = () => {
   return (
+    
     <Stack spacing={4}>
+      {/* Text Button, Conthttps://www.youtube.com/watch?v=BHEPVdfBAqE&list=PLC3y8-rFHvwh-K9mDlrrcDywl7CeVL2rO&index=1ained Button and Outlined Button */}
       <Stack spacing={2} direction="row">
         <Button variant="text" href="https://classroom.google.com/u/0/">
           Classrom?
@@ -18,11 +21,13 @@ export const MuiButton = () => {
         <Button variant="contained">Contido porque ninguém é de ferro</Button>
         <Button variant="outlined">Outlined porque é outlier!!</Button>
         <Button variant="contained">
-          <Typography variant="h4" fontFamily="nunito">
+          <Typography variant="h4" fontFamily="Nunito">
             Botao teste
           </Typography>
         </Button>
       </Stack>
+
+      {/* Colored Buttons */}
       <Stack spacing={2} direction="row">
         <Button variant="contained" color="primary">
           Primaria
@@ -43,6 +48,8 @@ export const MuiButton = () => {
           Saber mais né
         </Button>
       </Stack>
+
+      {/* Button Sizes */}
       <Stack display="block" spacing={2} direction="row">
         <Button variant="contained" size="small">
           Small
@@ -54,6 +61,8 @@ export const MuiButton = () => {
           Já sabe o que né pae
         </Button>
       </Stack>
+
+      {/* Button with Icons */}
       <Stack spacing={2} direction="row">
         <Button variant="contained" startIcon={<AdsClickIcon />}>
           Clicate
@@ -70,6 +79,8 @@ export const MuiButton = () => {
           <DeleteIcon />
         </IconButton>
       </Stack>
+
+      {/* Button Group */}
       <Stack direction="row">
         <ButtonGroup
           variant="outlined"
@@ -77,14 +88,12 @@ export const MuiButton = () => {
           size="medium"
           color="secondary"
         >
-          <Typography fontFamily="nunito">
-            <Button>Luiza</Button>
-            <Button>Araujo</Button>
-            <Button>de</Button>
-            <Button>Oliveira</Button>
-            <Button>Caram</Button>
-            <Button>Saliba</Button>
-          </Typography>
+          <Button>Luiza</Button>
+          <Button>Araujo</Button>
+          <Button>de</Button>
+          <Button>Oliveira</Button>
+          <Button>Caram</Button>
+          <Button>Saliba</Button>
         </ButtonGroup>
       </Stack>
     </Stack>
