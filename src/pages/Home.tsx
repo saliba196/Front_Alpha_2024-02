@@ -1,7 +1,9 @@
 import React from "react";
-import SideMenu from "../components/menu_lat"; // Importar o menu lateral
+import SideMenu from "../components/menu_lat"; // Menu lateral
 import { Box, Typography } from "@mui/material";
-import { CardComponent } from "../components/card_video";
+import { CardComponent } from "../components/card_video"; //card normal
+import { CardVideoProgresso } from "../components/CardVideoProgresso"; // card ccom progresso
+
 const containerStyle = {
   background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
   height: "100vh",
@@ -31,7 +33,7 @@ const Home: React.FC = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "16px", // Espaço entre o título e o card
+            gap: "16px", // Espaço entre os elementos
           }}
         >
           {/* Título Principal */}
@@ -47,11 +49,18 @@ const Home: React.FC = () => {
             Bem-vindo à Home!
           </Typography>
 
-          {/* Card de Exemplo */}
+          {/* Card Simples */}
           <CardComponent
             title="Finanças para restaurante"
             onButtonClick={() => alert("Iniciando vídeo...")}
-            imageSrc={undefined} // Substitua por uma URL de imagem para exibir uma imagem real
+            imageSrc={undefined} // Substitua por uma URL de imagem real
+          />
+
+          {/* Card com Progresso */}
+          <CardVideoProgresso
+            title="Como fazer marketing de restaurante"
+            progress={60}
+            onButtonClick={() => alert("Continuando o vídeo...")}
           />
         </Box>
       </Box>
