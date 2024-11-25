@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { ButtonAtom } from "./ButtonAtom.tsx";
 import { ImageWithBadge } from "./ImageWithBadge.tsx";
-import HomeIcon from "@mui/icons-material/Home";
-import SettingsIcon from "@mui/icons-material/Settings";
-import InfoIcon from "@mui/icons-material/Info";
+//import HomeIcon from "@mui/icons-material/Home";
+//import SettingsIcon from "@mui/icons-material/Settings";
+//import InfoIcon from "@mui/icons-material/Info";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import SearchIcon from "@mui/icons-material/Search";
+import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
+import RamenDiningIcon from "@mui/icons-material/RamenDining";
+import PaidIcon from "@mui/icons-material/Paid";
+import Groups2SharpIcon from "@mui/icons-material/Groups2Sharp";
+import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 
 export const SideMenu: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -31,31 +38,54 @@ export const SideMenu: React.FC = () => {
       onMouseLeave={() => handleHover(false)}
     >
       <ImageWithBadge
-        src="your-image-url"
-        alt="User Name"
+        src="C:\Users\luiza\Documents\teste\react-mui-demo\src\Images\tina_img_teste.png"
+        alt="foto_de_perfil"
         badgeContent="1"
         isExpanded={isExpanded}
       />
       <Box mt={4} width="100%" display="flex" flexDirection="column" gap="16px">
         <ButtonAtom
-          icon={<HomeIcon />}
-          label="Home"
+          icon={<SearchIcon />}
+          label="Busca"
           backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
         <ButtonAtom
-          icon={<SettingsIcon />}
-          label="Settings"
+          icon={<SignalCellularAltIcon />}
+          label="Jurídico e finanças"
           backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
         <ButtonAtom
-          icon={<InfoIcon />}
-          label="About"
+          icon={<EmojiPeopleIcon />}
+          label="Atendimento e gestão"
           backgroundColor="#46685B"
           isExpanded={isExpanded}
         />
-        {/* Add more buttons as needed */}
+        <ButtonAtom
+          icon={<RamenDiningIcon />}
+          label="Receitas e Nutrição"
+          backgroundColor="#46685B"
+          isExpanded={isExpanded}
+        />
+        <ButtonAtom
+          icon={<PaidIcon />}
+          label="Vendas e Marketing"
+          backgroundColor="#46685B"
+          isExpanded={isExpanded}
+        />
+        <ButtonAtom
+          icon={<Groups2SharpIcon />}
+          label="Tina e Comunidade"
+          backgroundColor="#46685B"
+          isExpanded={isExpanded}
+        />
+        <ButtonAtom
+          icon={<LogoutSharpIcon />}
+          label="Sair"
+          backgroundColor="#46685B"
+          isExpanded={isExpanded}
+        />
       </Box>
     </Box>
   );
