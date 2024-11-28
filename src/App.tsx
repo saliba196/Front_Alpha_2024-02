@@ -4,14 +4,14 @@ import { MuiButtons } from "./components/MuiButtons";
 import { Login } from "./pages/login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Cadastro } from "./pages/cadastro";
-import { Infos } from "./pages/infos";
+import { Ola } from "./pages/teste1";
 
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Infos/>} />
+        <Route path="/" element={<Ola/>} />
       </Routes>
     </Router>
   );
