@@ -1,67 +1,89 @@
 import React from "react";
-import SideMenu from "../components/menu_lat"; // Menu lateral
 import { Box, Typography } from "@mui/material";
+import SideMenu from "../components/menu_lat"; // Menu lateral
 import { CardComponent } from "../components/card_video"; // Card de vídeo simples
-import { CardVideoProgresso } from "../components/CardVideoProgresso"; // Novo card com progresso
-
-const containerStyle = {
-  background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
-  height: "100vh",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  margin: 0,
-  padding: 0,
-};
+import { CardVideoProgresso } from "../components/CardVideoProgresso"; // Card com progresso
+import { BannerInicial } from "../components/BannerInicial"; // Componente Banner Inicial
 
 const Home: React.FC = () => {
   return (
-    <Box sx={{ display: "flex", width: "100%", height: "100vh" }}>
+    <Box sx={{ display: "flex", minHeight: "100vh", overflowX: "hidden" }}>
       {/* Menu Lateral */}
       <SideMenu />
 
       {/* Conteúdo Principal */}
       <Box
         sx={{
-          ...containerStyle,
-          flex: 1, // Preenche o espaço restante ao lado do menu
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          gap: "32px",
+          padding: "24px",
+          background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
+          overflowX: "hidden",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "16px", // Espaço entre os elementos
-          }}
-        >
-          {/* Título Principal */}
+        {/* Banner Inicial */}
+        <BannerInicial
+          title="Agatha All Along"
+          subtitle="Aprenda tudo sobre a dieta das bruxas"
+          onAssistirClick={() => alert("Assistir")}
+          onSaibaMaisClick={() => alert("Saiba Mais")}
+          imageSrc="/path/to/banner-image.jpg" // Substituir pela imagem correta
+        />
+
+        {/* Em Progresso */}
+        <Box>
           <Typography
-            variant="h3"
+            variant="h6"
+            sx={{ color: "white", fontWeight: "bold", marginBottom: "16px" }}
+          >
+            Em progresso
+          </Typography>
+          <Box
             sx={{
-              fontFamily: "Nunito",
-              fontWeight: "bold",
-              color: "white",
-              textAlign: "center",
+              display: "flex",
+              gap: "24px",
+              overflowX: "auto",
+              paddingBottom: "8px",
             }}
           >
-            Bem-vindo à Home!
+            {[...Array(5)].map((_, index) => (
+              <CardVideoProgresso
+                key={index}
+                title="Como fazer marketing de restaurante"
+                progress={60}
+                onButtonClick={() => alert("Continuando o vídeo...")}
+              />
+            ))}
+          </Box>
+        </Box>
+
+        {/* Lançamentos */}
+        <Box>
+          <Typography
+            variant="h6"
+            sx={{ color: "white", fontWeight: "bold", marginBottom: "16px" }}
+          >
+            Lançamentos
           </Typography>
-
-          {/* Card Simples */}
-          <CardComponent
-            title="Finanças para restaurante"
-            onButtonClick={() => alert("Iniciando vídeo...")}
-            imageSrc={undefined} // Substitua por uma URL de imagem real
-          />
-
-          {/* Card com Progresso */}
-          <CardVideoProgresso
-            title="Como fazer marketing de restaurante"
-            progress={60}
-            onButtonClick={() => alert("Continuando o vídeo...")}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              gap: "24px",
+              overflowX: "auto",
+              paddingBottom: "8px",
+            }}
+          >
+            {[...Array(8)].map((_, index) => (
+              <CardComponent
+                key={index}
+                title="Finanças para restaurante"
+                onButtonClick={() => alert("Iniciando vídeo...")}
+                imageSrc={undefined} // Substituir por uma URL de imagem real
+              />
+            ))}
+          </Box>
         </Box>
       </Box>
     </Box>
