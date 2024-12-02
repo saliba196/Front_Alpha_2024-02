@@ -28,7 +28,7 @@ export const SideMenu: React.FC = () => {
         alignItems: "center",
         padding: 2,
         transition: "width 0.3s", // Smooth width transition
-        position: "fixed",
+        //position: "fixed",
         overflow: "hidden", // Prevent overflow when collapsed
       }}
       onMouseEnter={() => handleHover(true)}
