@@ -83,7 +83,7 @@ export const Exercicios = () => {
         <Typography variant="h5" sx={{ color: "#FFF", textAlign: "center", marginTop: "20px" }}>
           Qual alimento é rico em carboidratos?
         </Typography>
-      </Stack>
+      
 
       {/* Botões de resposta em grid */}
       <Grid2 container spacing={2} justifyContent="center" sx={{ width: "100%", maxWidth: "400px" }}>
@@ -100,7 +100,7 @@ export const Exercicios = () => {
           </Grid2>
         ))}
       </Grid2>
-
+      </Stack>
       {/* Feedback e botão de continuar */}
       {showFeedback && (
         <Box
