@@ -6,13 +6,15 @@ import "./App.css";
 import { MuiButtons } from "./components/MuiButtons";
 import { Login } from "./pages/login";
 import { Cadastro } from "./pages/cadastro";
+import { Exercicios } from "./pages/exercicios";
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
         {/* Rota para a página inicial */}
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Exercicios />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/cadastro" element={<Cadastro />} />
 
