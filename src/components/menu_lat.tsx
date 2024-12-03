@@ -69,25 +69,25 @@ export const SideMenu: React.FC = () => {
         <ButtonAtom
           icon={<EmojiPeopleIcon />}
           label="Atendimento e gestão"
-          backgroundColor="#46685B"
+          backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
         <ButtonAtom
           icon={<RamenDiningIcon />}
           label="Receitas e Nutrição"
-          backgroundColor="#46685B"
+          backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
         <ButtonAtom
           icon={<PaidIcon />}
           label="Vendas e Marketing"
-          backgroundColor="#46685B"
+          backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
         <ButtonAtom
           icon={<Groups2SharpIcon />}
           label="Tina e Comunidade"
-          backgroundColor="#46685B"
+          backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
         <ButtonAtom
