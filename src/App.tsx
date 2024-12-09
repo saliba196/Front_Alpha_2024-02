@@ -1,27 +1,54 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home"; // Página Home
-//import Settings from "./pages/Settings"; // Outra página de exemplo (opcional)
-import "./App.css";
-//import { MuiButtons } from "./components/MuiButtons";
+import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
+import "@fontsource/nunito/400.css";
+import "@fontsource/nunito/700.css";
+import Home from "./pages/Home";
 import { Login } from "./pages/login";
 import { Cadastro } from "./pages/cadastro";
 import PaginaPerfil from "./pages/PaginaPerfil";
 
+// Criação do tema global
+const theme = createTheme({
+  palette: {
+    text: {
+      primary: "#FFFFFF", // Texto branco por padrão
+    },
+    background: {
+      default: "linear-gradient(to bottom right, #213435 30%, #46685B)", // Fundo global
+    },
+  },
+  typography: {
+    fontFamily: "Nunito, sans-serif", // Fonte Nunito global
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          margin: 0,
+          padding: 0,
+          background: "linear-gradient(to bottom right, #213435 30%, #46685B)", // Fundo global
+          overflowX: "hidden", // Remove rolagem horizontal
+        },
+      },
+    },
+  },
+});
+
 const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
-        {/* Rota para a página inicial */}
-        <Route path="/" element={<Login />} />
-        <Route path="/perfil" element={<PaginaPerfil />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        {/* Rota para a página de configurações (exemplo) 
-                <Route path="/settings" element={<Settings />} />
-                */}
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <CssBaseline /> {/* Aplica estilos globais */}
+      <Router>
+        <Routes>
+          {/* Rotas */}
+          <Route path="/" element={<Login />} />
+          <Route path="/perfil" element={<PaginaPerfil />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 };
 
