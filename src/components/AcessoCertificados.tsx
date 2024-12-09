@@ -5,7 +5,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import CircularButtonWithText from "./CircularButtonWithText";
 import DownloadIcon from "@mui/icons-material/Download";
 
-const IconWithText: React.FC = () => {
+const CertificadosCursos: React.FC = () => {
   return (
     <Stack direction="row" spacing={3} alignItems="center">
       <Stack direction="column" spacing={1} alignItems="left">
@@ -23,4 +23,4 @@ const IconWithText: React.FC = () => {
   );
 };
 
-export default IconWithText;
+export default CertificadosCursos;

@@ -4,6 +4,7 @@ import SideMenu from "../components/menu_lat"; // Componente do menu lateral
 import { PerfilUsuario } from "../components/PerfilUsuario"; // Componente do perfil do usuário
 import SubscriptionCard from "../components/SubscriptionCard"; // Card de assinatura
 import RenewalCard from "../components/RenewalCard"; // Card de renovação
+import 
 import { TituloPagina } from "../components/TituloPagina"; // Título da página
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
