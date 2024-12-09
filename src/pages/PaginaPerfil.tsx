@@ -86,7 +86,7 @@ const PaginaPerfil: React.FC = () => {
           />
           <RenewalCard
             title="Comunidade"
-            description="Garanta o acesso a comunidade mais engajada do Brasil. Você pode tirar dúvidas e fazer networking!"
+            description="Garanta o acesso a uma comunidade engajada com gestores e funcionários do ramo alimentício. Lá você pode tirar dúvidas e fazer networking!"
             icon={<GroupsIcon />}
           />
         </Box>
