@@ -76,17 +76,17 @@ const PaginaPerfil: React.FC = () => {
         >
           <RenewalCard
             title="Renovação Automática"
-            description="Com a renovação automática você garante benefícios como:"
+            description="Enquanto a sua assinatura estiver ativa, você fica protegido dos reajustes anuais que os novos alunos terão."
             icon={<AutorenewIcon />}
           />
           <RenewalCard
             title="Descontos na Tina"
-            description="Tenha acesso a preços exclusivos e ofertas especiais!"
+            description="Com sua assinatura na PlaTina você tem acesso exclusivo a preços especiais na assinatura da plataforma da Tina Gestão de cantina!"
             icon={<LoyaltyIcon />}
           />
           <RenewalCard
             title="Comunidade"
-            description="Garantia de acesso à comunidade mais engajada do Brasil."
+            description="Garanta o acesso a comunidade mais engajada do Brasil. Você pode tirar dúvidas e fazer networking!"
             icon={<GroupsIcon />}
           />
         </Box>
