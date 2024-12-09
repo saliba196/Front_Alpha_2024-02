@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import { Login } from "./pages/login";
 import { Cadastro } from "./pages/cadastro";
 import PaginaPerfil from "./pages/PaginaPerfil";
+import VerVideo from "./pages/VerVideo";
 
 // Criação do tema global
 const theme = createTheme({
@@ -46,6 +47,7 @@ const App: React.FC = () => {
           <Route path="/perfil" element={<PaginaPerfil />} />
           <Route path="/home" element={<Home />} />
           <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/video" element={<VerVideo />} />
         </Routes>
       </Router>
     </ThemeProvider>
