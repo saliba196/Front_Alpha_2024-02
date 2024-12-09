@@ -1,10 +1,10 @@
 import React from "react";
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Typography, Divider, Stack } from "@mui/material";
 import SideMenu from "../components/menu_lat"; // Componente do menu lateral
 import { PerfilUsuario } from "../components/PerfilUsuario"; // Componente do perfil do usuário
 import SubscriptionCard from "../components/SubscriptionCard"; // Card de assinatura
 import RenewalCard from "../components/RenewalCard"; // Card de renovação
-import 
+import AcessoCertificados from "../components/AcessoCertificados";
 import { TituloPagina } from "../components/TituloPagina"; // Título da página
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
@@ -30,14 +30,16 @@ const PaginaPerfil: React.FC = () => {
       >
         {/* Título da Página */}
         <TituloPagina titulo="Meu Perfil" />
-
-        {/* Seção de Perfil do Usuário */}
-        <PerfilUsuario
-          nome="Luiza Saliba"
-          assinatura="Assinante Premium"
-          email="luiza.saliba@tinaapp.com.br"
-          fotoUrl="/path/to/profile-image.jpg" // Substituir pela URL da foto
-        />
+        <Stack direction="column" spacing={3} alignItems="left">
+          {/* Seção de Perfil do Usuário */}
+          <PerfilUsuario
+            nome="Luiza Saliba"
+            assinatura="Assinante Premium"
+            email="luiza.saliba@tinaapp.com.br"
+            fotoUrl="/path/to/profile-image.jpg" // Substituir pela URL da foto
+          />
+          <AcessoCertificados />
+        </Stack>
 
         {/* Título para a Seção de Assinatura */}
         <Box>
