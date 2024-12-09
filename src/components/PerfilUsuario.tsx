@@ -1,8 +1,9 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { styled } from "@mui/system";
+//import { styled } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import CircularButtonWithText from "./CircularButtonWithText";
 
 interface PerfilUsuarioProps {
   nome: string;
@@ -10,7 +11,7 @@ interface PerfilUsuarioProps {
   email: string;
   fotoUrl: string;
 }
-
+/*
 const StyledButton = styled(Button)`
   background-color: #648a64;
   color: white;
@@ -26,6 +27,7 @@ const StyledButton = styled(Button)`
     background-color: #507750;
   }
 `;
+*/
 
 export const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({
   nome,
@@ -72,9 +74,7 @@ export const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({
         >
           {email}
         </Typography>
-        <StyledButton startIcon={<EditIcon sx={{ fontSize: "45px" }} />}>
-          Editar
-        </StyledButton>
+        <CircularButtonWithText label="Editar" Icon={EditIcon} />
       </Box>
     </Box>
   </Box>
