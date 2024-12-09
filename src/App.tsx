@@ -6,7 +6,7 @@ import "./App.css";
 //import { MuiButtons } from "./components/MuiButtons";
 import { Login } from "./pages/login";
 import { Cadastro } from "./pages/cadastro";
-import { PaginaPerfil } from "./pages/PaginaPerfil";
+import PaginaPerfil from "./pages/PaginaPerfil";
 
 const App: React.FC = () => {
   return (

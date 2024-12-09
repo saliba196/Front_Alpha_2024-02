@@ -34,7 +34,7 @@ export const SideMenu: React.FC = () => {
       onMouseLeave={() => handleHover(false)}
     >
       {/* Foto do perfil com redirecionamento */}
-      <Link to="perfil" style={{ textDecoration: "none" }}>
+      <Link to="/perfil" style={{ textDecoration: "none" }}>
         <ImageWithBadge
           src="C:/Users/luiza/Documents/teste/react-mui-demo/src/Images/tina_img_teste.png"
           alt="Nome do Usuário"
