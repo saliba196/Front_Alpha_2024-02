@@ -4,6 +4,7 @@ import { Stack, Typography } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import CircularButtonWithText from "./CircularButtonWithText";
 import DownloadIcon from "@mui/icons-material/Download";
+import { Link } from "react-router-dom";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 
 const AcessoCertificados: React.FC = () => {
@@ -21,7 +22,9 @@ const AcessoCertificados: React.FC = () => {
           <Typography fontSize="24px"> 8 Certificados disponíveis</Typography>
         </Stack>
       </Stack>
-      <CircularButtonWithText label="Download" Icon={DownloadIcon} />
+      <Link to="/certificados">
+        <CircularButtonWithText label="Download" Icon={DownloadIcon} />
+      </Link>
     </Stack>
   );
 };

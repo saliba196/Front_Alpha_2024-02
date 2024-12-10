@@ -5,7 +5,7 @@ import { TituloPagina } from "../components/TituloPagina"; // Título da página
 import { CardCertificado } from "../components/CardCertificado";
 //Organizar o stack com os certificados gerados dinâmicamente
 
-const VerVideo: React.FC = () => {
+const VerCertificados: React.FC = () => {
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", overflowX: "hidden" }}>
       {/* Menu Lateral */}
@@ -23,7 +23,7 @@ const VerVideo: React.FC = () => {
           overflowX: "hidden",
         }}
       >
-        <Stack direction="column" spacing={1} alignItems="left">
+        <Stack direction="column" spacing={2} alignItems="left">
           {/* Título da Página */}
           <TituloPagina titulo="Certificados" />
           <Typography fontSize={24}> Descrição da página </Typography>
@@ -41,4 +41,4 @@ const VerVideo: React.FC = () => {
   );
 };
 
-export default VerVideo;
+export default VerCertificados;

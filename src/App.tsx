@@ -5,6 +5,7 @@ import "@fontsource/nunito/400.css";
 import "@fontsource/nunito/700.css";
 import Home from "./pages/Home";
 import { Login } from "./pages/login";
+import VerCertificados from "./pages/certificados";
 import { Cadastro } from "./pages/cadastro";
 import PaginaPerfil from "./pages/PaginaPerfil";
 import VerVideo from "./pages/VerVideo";
@@ -48,6 +49,7 @@ const App: React.FC = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/video" element={<VerVideo />} />
+          <Route path="/certificados" element={<VerCertificados />} />
         </Routes>
       </Router>
     </ThemeProvider>
