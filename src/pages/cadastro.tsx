@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import {
   Container,
   Stack,
@@ -10,12 +9,10 @@ import {
   Grid2,
   FormControlLabel,
   Checkbox,
+  Box,
 } from "@mui/material";
-=======
-import { Container, Stack, Typography, TextField, Paper, Button, Grid2, FormControlLabel, Checkbox, Box } from "@mui/material";
->>>>>>> 1b049b2f97835e365bfd41ddd77fb99251d3587d
 import { useNavigate } from "react-router-dom";
-//import { alignProperty } from "@mui/material/styles/cssUtils";
+import { alignProperty } from "@mui/material/styles/cssUtils";
 
 // Estilos reutilizáveis
 const boxStyle = {
@@ -68,17 +65,12 @@ export const Cadastro = () => {
   const navigate = useNavigate();
 
   return (
-<<<<<<< HEAD
-    <Container sx={containerStyle}>
+    <Box sx={boxStyle}>
       <Stack
         spacing={2}
         alignItems="center"
         sx={{ width: "100%", maxWidth: "500px" }}
       >
-=======
-    <Box sx={boxStyle}>
-      <Stack spacing={2} alignItems="center" sx={{ width: "100%", maxWidth: "500px" }}>
->>>>>>> 1b049b2f97835e365bfd41ddd77fb99251d3587d
         <Paper sx={paperStyle}>
           <Typography variant="h3" sx={{ marginBottom: "30px" }}>
             Cadastro
