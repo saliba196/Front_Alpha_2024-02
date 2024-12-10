@@ -1,5 +1,16 @@
 import React from "react";
-import { Container, Stack, Typography, TextField, Paper, Button, Grid2, FormControlLabel, Checkbox, Box } from "@mui/material";
+import {
+  Container,
+  Stack,
+  Typography,
+  TextField,
+  Paper,
+  Button,
+  Grid2,
+  FormControlLabel,
+  Checkbox,
+  Box,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { alignProperty } from "@mui/material/styles/cssUtils";
 
@@ -55,7 +66,11 @@ export const Cadastro = () => {
 
   return (
     <Box sx={boxStyle}>
-      <Stack spacing={2} alignItems="center" sx={{ width: "100%", maxWidth: "500px" }}>
+      <Stack
+        spacing={2}
+        alignItems="center"
+        sx={{ width: "100%", maxWidth: "500px" }}
+      >
         <Paper sx={paperStyle}>
           <Typography variant="h3" sx={{ marginBottom: "30px" }}>
             Cadastro
@@ -63,10 +78,20 @@ export const Cadastro = () => {
 
           <Grid2 container spacing={2}>
             <Grid2 size={{ xs: 12, sm: 6 }}>
-              <TextField fullWidth label="Nome Completo" variant="outlined" sx={textFieldStyle} />
+              <TextField
+                fullWidth
+                label="Nome Completo"
+                variant="outlined"
+                sx={textFieldStyle}
+              />
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6 }}>
-              <TextField fullWidth label="E-mail" variant="outlined" sx={textFieldStyle} />
+              <TextField
+                fullWidth
+                label="E-mail"
+                variant="outlined"
+                sx={textFieldStyle}
+              />
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6 }}>
               <TextField
@@ -81,20 +106,42 @@ export const Cadastro = () => {
               />
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6 }}>
-              <TextField fullWidth label="CPF" variant="outlined" sx={textFieldStyle} />
+              <TextField
+                fullWidth
+                label="CPF"
+                variant="outlined"
+                sx={textFieldStyle}
+              />
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6 }}>
-              <TextField fullWidth label="Senha" variant="outlined" type="password" sx={textFieldStyle} />
+              <TextField
+                fullWidth
+                label="Senha"
+                variant="outlined"
+                type="password"
+                sx={textFieldStyle}
+              />
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6 }}>
-              <TextField fullWidth label="Confirmar Senha" variant="outlined" type="password" sx={textFieldStyle} />
+              <TextField
+                fullWidth
+                label="Confirmar Senha"
+                variant="outlined"
+                type="password"
+                sx={textFieldStyle}
+              />
             </Grid2>
           </Grid2>
 
           <FormControlLabel
             control={<Checkbox />}
             label="Já sou cliente Tina"
-            sx={{ justifyContent: "flex-begin", display: "flex", margin: "20px 0", color: "#46685B" }}
+            sx={{
+              justifyContent: "flex-begin",
+              display: "flex",
+              margin: "20px 0",
+              color: "#46685B",
+            }}
           />
 
           <Button
@@ -108,7 +155,13 @@ export const Cadastro = () => {
         </Paper>
 
         {/* Texto abaixo do Paper */}
-        <Stack direction="row" spacing={1} alignItems="center" justifyContent="center" sx={{ marginTop: "20px" }}>
+        <Stack
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          justifyContent="center"
+          sx={{ marginTop: "20px" }}
+        >
           <Typography variant="body2" sx={{ color: "#D9D9D9" }}>
             Já possui uma conta?
           </Typography>

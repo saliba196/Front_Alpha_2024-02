@@ -68,11 +68,12 @@ export const BannerInicial: React.FC<BannerInicialProps> = ({
             backgroundColor: "#46685B",
             color: "white",
             fontFamily: "Nunito",
-            fontSize: "12px",
+            fontSize: "30px",
             fontWeight: "bold",
             borderRadius: "4px",
             padding: "4px 8px",
             display: "inline-block",
+            textAlign: "center",
           }}
         >
           LANÇAMENTO
@@ -83,7 +84,7 @@ export const BannerInicial: React.FC<BannerInicialProps> = ({
           sx={{
             fontFamily: "Nunito",
             fontWeight: "bold",
-            fontSize: "32px",
+            fontSize: "45px",
             color: "white",
           }}
         >

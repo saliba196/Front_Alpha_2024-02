@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
+import { Link } from "react-router-dom"; // Importa o Link do React Router
 import { ButtonAtom } from "./ButtonAtom";
 import { ImageWithBadge } from "./ImageWithBadge";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
@@ -19,7 +20,6 @@ export const SideMenu: React.FC = () => {
     <Box
       sx={{
         width: isExpanded ? 280 : 140, // Dynamically set width
-        height: 900,
         flexShrink: 0,
         backgroundColor: "#253A3B",
         color: "white",
@@ -34,12 +34,14 @@ export const SideMenu: React.FC = () => {
       onMouseEnter={() => handleHover(true)}
       onMouseLeave={() => handleHover(false)}
     >
-      {/* Foto do perfil */}
-      <ImageWithBadge
-        src="C:/Users/luiza/Documents/teste/react-mui-demo/src/Images/tina_img_teste.png"
-        alt="Nome do Usuário"
-        isExpanded={isExpanded}
-      />
+      {/* Foto do perfil com redirecionamento */}
+      <Link to="/perfil" style={{ textDecoration: "none" }}>
+        <ImageWithBadge
+          src="C:/Users/luiza/Documents/teste/react-mui-demo/src/Images/tina_img_teste.png"
+          alt="Nome do Usuário"
+          isExpanded={isExpanded}
+        />
+      </Link>
 
       {/* Botões */}
       <Box
@@ -68,25 +70,25 @@ export const SideMenu: React.FC = () => {
         <ButtonAtom
           icon={<EmojiPeopleIcon />}
           label="Atendimento e gestão"
-          backgroundColor="#46685B"
+          backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
         <ButtonAtom
           icon={<RamenDiningIcon />}
           label="Receitas e Nutrição"
-          backgroundColor="#46685B"
+          backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
         <ButtonAtom
           icon={<PaidIcon />}
           label="Vendas e Marketing"
-          backgroundColor="#46685B"
+          backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
         <ButtonAtom
           icon={<Groups2SharpIcon />}
           label="Tina e Comunidade"
-          backgroundColor="#46685B"
+          backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
         <ButtonAtom
