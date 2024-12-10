@@ -59,7 +59,7 @@ export const CardCertificado: React.FC<VarsCardCertificado> = ({
         </Stack>
         <Download icon={<FileDownloadIcon />} text="Donwload"></Download>
       </Stack>
-      <Divider />
+      <Divider color="white" />
     </Stack>
   );
 };
