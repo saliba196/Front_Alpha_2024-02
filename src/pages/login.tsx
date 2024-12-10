@@ -1,9 +1,9 @@
 import React from "react";
-import { Container, Stack, Typography, TextField, Paper, Button } from "@mui/material";
+import { Container, Stack, Typography, TextField, Paper, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 // Estilos reutilizáveis
-const containerStyle = {
+const boxStyle = {
   background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
   height: "100vh",
   display: "flex",
@@ -11,6 +11,7 @@ const containerStyle = {
   justifyContent: "center",
   margin: 0,
   padding: 0,
+  width: "100%",
 };
 
 const paperStyle = {
@@ -58,7 +59,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   return (
-    <Container sx={containerStyle}>
+    <Box sx={boxStyle}>
       <Stack spacing={1}>
         <Paper sx={paperStyle}>
           <Stack spacing={3}>
@@ -142,7 +143,7 @@ export const Login = () => {
           </Button>
         </Stack>
       </Stack>
-    </Container>
+    </Box>
   );
 };
 
