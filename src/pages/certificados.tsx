@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, Divider, Stack } from "@mui/material";
 import SideMenu from "../components/menu_lat"; // Componente do menu lateral
 import { TituloPagina } from "../components/TituloPagina"; // Título da página
-//import CursosCertificados from "../components/CursosCertificados";
+import { CardCertificado } from "../components/CardCertificado";
 //Organizar o stack com os certificados gerados dinâmicamente
 
 const VerVideo: React.FC = () => {
@@ -28,7 +28,14 @@ const VerVideo: React.FC = () => {
           <TituloPagina titulo="Certificados" />
           <Typography fontSize={24}> Descrição da página </Typography>
         </Stack>
-        //Aqui vai o conteúdo da página
+        <Stack direction="column" spacing={1} alignItems="left">
+          <CardCertificado
+            imageUrl="link"
+            altText="foto do curso"
+            titulo="Nome do curso"
+            descricao="descricao do curso"
+          />
+        </Stack>
       </Box>
     </Box>
   );

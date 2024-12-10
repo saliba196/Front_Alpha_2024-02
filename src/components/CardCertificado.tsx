@@ -5,7 +5,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 interface VarsCardCertificado {
   imageUrl: string; // URL da imagem
-  altText?: string; // Texto alternativo opcional
+  altText: string; // Texto alternativo opcional
   titulo: string; // Título dinâmico do certificado
   descricao: string; // Descrição dinâmica do certificado
 }
