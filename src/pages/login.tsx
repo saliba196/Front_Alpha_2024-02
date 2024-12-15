@@ -64,7 +64,7 @@ export const Login = () => {
         <Paper sx={paperStyle}>
           <Stack spacing={3}>
             {/* Título */}
-            <Typography variant="h3">Entrar</Typography>
+            <Typography variant="h3" sx={{ color: "#213435" }}>Entrar</Typography>
 
             {/* Subtítulo */}
             <Typography variant="body1" color="#555">
@@ -104,7 +104,7 @@ export const Login = () => {
             >
               Esqueci minha senha
             </Button>
-
+            
             {/* Botão Entrar */}
             <Button
               variant="contained"
