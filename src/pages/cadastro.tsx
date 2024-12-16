@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Stack,
@@ -12,7 +12,7 @@ import {
   Box,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { alignProperty } from "@mui/material/styles/cssUtils";
+import axios from "axios"; // Importa o axios para fazer requisições
 
 // Estilos reutilizáveis
 const boxStyle = {
@@ -64,6 +64,52 @@ const buttonStyle = {
 export const Cadastro = () => {
   const navigate = useNavigate();
 
+  // Estados para armazenar os valores dos campos
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [nascimento, setNascimento] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [cliente, setCliente] = useState(false);
+  const [loading, setLoading] = useState(false); // Estado para controle de loading
+
+  // Função ao clicar no botão "Cadastre-se"
+  const handleSubmit = async () => {
+    if (senha !== confirmarSenha) {
+      alert("As senhas não coincidem.");
+      return;
+    }
+
+    // Dados a serem enviados para a API
+    const data = {
+      nome,
+      email,
+      nascimento,
+      cpf,
+      senha,
+      cliente,
+    };
+
+    setLoading(true); // Ativa o loading ao enviar a requisição
+
+    try {
+      const response = await axios.post("URL_DA_API/cadastro", data); // Substitua "URL_DA_API/cadastro" pela URL da sua API
+
+      if (response.data.status === "success") {
+        console.log("Cadastro bem-sucedido", response.data);
+        navigate("/home");
+      } else {
+        alert(response.data.message || "Erro no cadastro.");
+      }
+    } catch (error) {
+      console.error("Erro ao fazer cadastro:", error);
+      alert("Erro ao tentar se conectar ao servidor.");
+    } finally {
+      setLoading(false); // Desativa o loading após a requisição
+    }
+  };
+
   return (
     <Box sx={boxStyle}>
       <Stack
@@ -72,7 +118,7 @@ export const Cadastro = () => {
         sx={{ width: "100%", maxWidth: "500px" }}
       >
         <Paper sx={paperStyle}>
-          <Typography variant="h3" sx={{ marginBottom: "30px" }}>
+          <Typography variant="h3" sx={{ color: "#213435", marginBottom: "30px" }}>
             Cadastro
           </Typography>
 
@@ -83,6 +129,8 @@ export const Cadastro = () => {
                 label="Nome Completo"
                 variant="outlined"
                 sx={textFieldStyle}
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
               />
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6 }}>
@@ -91,6 +139,8 @@ export const Cadastro = () => {
                 label="E-mail"
                 variant="outlined"
                 sx={textFieldStyle}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6 }}>
@@ -103,6 +153,8 @@ export const Cadastro = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={nascimento}
+                onChange={(e) => setNascimento(e.target.value)}
               />
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6 }}>
@@ -111,6 +163,8 @@ export const Cadastro = () => {
                 label="CPF"
                 variant="outlined"
                 sx={textFieldStyle}
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
               />
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6 }}>
@@ -120,6 +174,8 @@ export const Cadastro = () => {
                 variant="outlined"
                 type="password"
                 sx={textFieldStyle}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
               />
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6 }}>
@@ -129,12 +185,19 @@ export const Cadastro = () => {
                 variant="outlined"
                 type="password"
                 sx={textFieldStyle}
+                value={confirmarSenha}
+                onChange={(e) => setConfirmarSenha(e.target.value)}
               />
             </Grid2>
           </Grid2>
 
           <FormControlLabel
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={cliente}
+                onChange={(e) => setCliente(e.target.checked)}
+              />
+            }
             label="Já sou cliente Tina"
             sx={{
               justifyContent: "flex-begin",
@@ -146,11 +209,12 @@ export const Cadastro = () => {
 
           <Button
             variant="contained"
-            onClick={() => navigate("/home")}
+            onClick={handleSubmit}
             fullWidth
             sx={buttonStyle}
+            disabled={loading} // Desativa o botão enquanto está carregando
           >
-            Cadastre-se
+            {loading ? "Cadastrando..." : "Cadastre-se"}
           </Button>
         </Paper>
 

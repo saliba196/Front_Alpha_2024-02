@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Stack, Typography, TextField, Paper, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-// Estilos reutilizáveis
 const boxStyle = {
   background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
   height: "100vh",
@@ -28,7 +28,6 @@ const textFieldStyle = {
       borderColor: "#46685B",  // Cor da borda
       borderRadius: "20px",
       borderWidth: "4px",
-      // Remover fundo do fieldset para evitar interferência
       backgroundColor: "transparent",
     },
     "&.Mui-focused fieldset": {
@@ -57,6 +56,54 @@ const buttonStyle = {
 
 export const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState(""); // Estado para armazenar o e-mail
+  const [senha, setSenha] = useState(""); // Estado para armazenar a senha
+  const [advice, setAdvice] = useState(""); // Estado para armazenar o conselho
+
+
+  const handleLogin = () => {
+    // Validar se os campos de e-mail e senha estão preenchidos
+    if (!email || !senha) {
+      alert("Por favor, preencha todos os campos!");
+      return;
+    }
+  
+    // Enviar dados de login para a API
+    axios
+      .post("URL_DA_API/login", { email, senha }) // Substitua pela URL correta da sua API
+      .then((response) => {
+        if (response.data.status === "success") {
+          // Caso o login seja bem-sucedido
+          console.log("Login bem-sucedido", response.data);
+          
+          // Salvar o token no localStorage ou em um estado global
+          localStorage.setItem("token", response.data.data.token);
+  
+          // Redireciona para a página "home" após login
+          navigate("/home");
+        } else {
+          // Se a resposta indicar erro
+          alert(response.data.message || "Erro ao fazer login.");
+        }
+      })
+      .catch((error) => {
+        // Tratar erros da requisição
+        if (error.response) {
+          // Quando a resposta da API contém um erro
+          console.error("Erro de resposta:", error.response.data);
+          alert(error.response.data.message || "Erro ao fazer login.");
+        } else if (error.request) {
+          // Quando a requisição foi feita mas sem resposta
+          console.error("Erro na requisição:", error.request);
+          alert("Erro ao conectar com o servidor. Tente novamente.");
+        } else {
+          // Quando ocorre um erro ao configurar a requisição
+          console.error("Erro ao configurar requisição:", error.message);
+          alert("Erro desconhecido. Tente novamente.");
+        }
+      });
+  };
+  
 
   return (
     <Box sx={boxStyle}>
@@ -68,7 +115,7 @@ export const Login = () => {
 
             {/* Subtítulo */}
             <Typography variant="body1" color="#555">
-              Para entrar, digite o seu e-mail e senha.
+              Para entrar digite o seu e-mail e senha.
             </Typography>
 
             {/* Campo de E-mail */}
@@ -77,6 +124,8 @@ export const Login = () => {
               variant="outlined"
               sx={textFieldStyle}
               fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} // Atualiza o valor do e-mail
             />
 
             {/* Campo de Senha */}
@@ -85,6 +134,9 @@ export const Login = () => {
               variant="outlined"
               sx={textFieldStyle}
               fullWidth
+              type="password"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)} // Atualiza o valor da senha
             />
 
             {/* Link "Esqueci a minha senha" */}
@@ -104,11 +156,11 @@ export const Login = () => {
             >
               Esqueci minha senha
             </Button>
-            
+
             {/* Botão Entrar */}
             <Button
               variant="contained"
-              onClick={() => navigate("/home")}
+              onClick={handleLogin} // Chama a função handleLogin
               sx={{
                 ...buttonStyle,
                 alignSelf: "flex-end", // Alinha o botão à direita
