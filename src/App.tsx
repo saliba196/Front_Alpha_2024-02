@@ -51,6 +51,7 @@ const App: React.FC = () => {
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/video" element={<VerVideo />} />
           <Route path="/certificados" element={<VerCertificados />} />
+          <Route path="/recuperacao" element={<Recuperacao />} />
         </Routes>
       </Router>
     </ThemeProvider>

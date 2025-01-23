@@ -66,7 +66,7 @@ export const Recuperacao = () => {
       <Stack spacing={1}>
         <Paper sx={paperStyle}>
             <Stack spacing={3}>
-                <Typography variant="h4">Recuperação de Senha</Typography>
+                <Typography variant="h4" sx={{ color: "#213435" }}>Recuperação de Senha</Typography>
                 <TextField
                 fullWidth
                 label="E-mail"

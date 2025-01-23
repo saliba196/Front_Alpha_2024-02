@@ -72,7 +72,7 @@ export const Cadastro = () => {
         sx={{ width: "100%", maxWidth: "500px" }}
       >
         <Paper sx={paperStyle}>
-          <Typography variant="h3" sx={{ marginBottom: "30px" }}>
+          <Typography variant="h3" sx={{ color: "#213435", marginBottom: "30px" }}>
             Cadastro
           </Typography>
 
