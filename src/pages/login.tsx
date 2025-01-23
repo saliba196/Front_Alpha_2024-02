@@ -85,6 +85,7 @@ export const Login = () => {
               variant="outlined"
               sx={textFieldStyle}
               fullWidth
+              type="password"
             />
 
             {/* Link "Esqueci a minha senha" */}
@@ -100,7 +101,7 @@ export const Login = () => {
                   color: "#213435",    // Muda a cor ao passar o mouse
                 },
               }}
-              onClick={() => alert("Redirecionando para recuperação de senha...")}
+              onClick={() => navigate("/recuperacao")}
             >
               Esqueci minha senha
             </Button>
