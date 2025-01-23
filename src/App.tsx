@@ -36,6 +36,7 @@ const theme = createTheme({
     },
   },
 });
+import { Recuperacao } from "./pages/recuperacao";
 
 const App: React.FC = () => {
   return (
