@@ -62,7 +62,7 @@ const buttonStyle = {
   fontSize: "1rem",
 };
 
-export const Cadastro = () => {
+export const ADMCriaAula = () => {
   const navigate = useNavigate();
 
   return (
@@ -78,4 +78,4 @@ export const Cadastro = () => {
   );
 };
 
-export default Cadastro;
+export default ADMCriaAula;

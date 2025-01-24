@@ -9,6 +9,7 @@ import VerCertificados from "./pages/certificados";
 import { Cadastro } from "./pages/cadastro";
 import PaginaPerfil from "./pages/PaginaPerfil";
 import VerVideo from "./pages/VerVideo";
+import ADMCriaAula from "./pages/ADMCriaAula";
 
 // Criação do tema global
 const theme = createTheme({
@@ -52,6 +53,7 @@ const App: React.FC = () => {
           <Route path="/video" element={<VerVideo />} />
           <Route path="/certificados" element={<VerCertificados />} />
           <Route path="/recuperacao" element={<Recuperacao />} />
+          <Route path="/ADMCriaAula" element={<ADMCriaAula />} />
         </Routes>
       </Router>
     </ThemeProvider>
