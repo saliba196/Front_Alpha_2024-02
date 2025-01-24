@@ -3,7 +3,8 @@ import { Box, Stack, TextField, Button, Typography } from "@mui/material";
 import ADMMenu_lat from "../components/ADMMenuLateral";
 import { TituloPagina } from "../components/TituloPagina";
 import QuestionSection from "../components/QuestionSection";
-import ClassCreationForm from "../components/ClassCreationForm.tsx";
+import InfosDoCurso from "../components/InfosDoCurso.tsx";
+import SecaoCriaAulas from "../components/SecaoCriaAulas";
 
 const ADMCriaCurso: React.FC = () => {
   const [numQuestions, setNumQuestions] = useState<number>(1);
@@ -25,21 +26,42 @@ const ADMCriaCurso: React.FC = () => {
       {/* Conteúdo principal */}
       <Box
         sx={{
-          flex: 1,
           display: "flex",
           flexDirection: "column",
           gap: "32px",
           padding: "24px",
-          background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
-          overflowX: "hidden",
+          //overflowX: "hidden",
         }}
       >
         {/* Título da Página */}
         <TituloPagina titulo="Criação de Curso" />
-        <ClassCreationForm />
+        <InfosDoCurso />
+        <Typography
+          sx={{
+            fontFamily: "Nunito",
+            fontWeight: "bold",
+            fontSize: "32px",
+            color: "white",
+            marginBottom: "8px",
+          }}
+        >
+          Aulas do curso
+        </Typography>
+        <SecaoCriaAulas />
+        <Typography
+          sx={{
+            fontFamily: "Nunito",
+            fontWeight: "bold",
+            fontSize: "32px",
+            color: "white",
+            marginBottom: "8px",
+          }}
+        >
+          Perguntas do questionário
+        </Typography>
 
         {/* Formulário Inicial */}
-        <Stack spacing={2} sx={{ maxWidth: "600px" }}>
+        <Stack spacing={2} sx={{ maxWidth: "800px" }}>
           <Box>
             <Typography
               sx={{
@@ -60,8 +82,8 @@ const ADMCriaCurso: React.FC = () => {
               value={numQuestions}
               onChange={handleNumQuestionsChange}
               sx={{
-                backgroundColor: "#e0e0e0",
-                borderRadius: "4px",
+                backgroundColor: "#fff",
+                borderRadius: "8px",
                 "& .MuiOutlinedInput-input": {
                   color: "black",
                 },
@@ -72,20 +94,18 @@ const ADMCriaCurso: React.FC = () => {
 
         {/* Seção Dinâmica de Perguntas */}
         <QuestionSection numQuestions={numQuestions} />
-
-        {/* Botão Confirmar */}
-        <Box sx={{ textAlign: "center", marginTop: "24px" }}>
+        {/* Botão de Salvar */}
+        <Box>
           <Button
             variant="contained"
             color="success"
+            //onClick={() => console.log("Lessons Data:", lessons)}
             sx={{
-              fontFamily: "'Nunito', sans-serif",
-              fontWeight: "bold",
-              fontSize: "18px",
-              marginTop: "1rem",
+              padding: "10px 20px",
+              borderRadius: "8px",
             }}
           >
-            Confirmar
+            Salvar Curso
           </Button>
         </Box>
       </Box>
