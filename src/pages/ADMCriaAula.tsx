@@ -65,17 +65,7 @@ const buttonStyle = {
 export const ADMCriaAula = () => {
   const navigate = useNavigate();
 
-  return (
-    <Box sx={boxStyle}>
-      <Stack
-        spacing={2}
-        alignItems="center"
-        sx={{ width: "100%", maxWidth: "500px" }}
-      >
-        <ClassCreationForm />
-      </Stack>
-    </Box>
-  );
+  return <ClassCreationForm />;
 };
 
 export default ADMCriaAula;

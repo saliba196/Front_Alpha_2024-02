@@ -8,15 +8,13 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { TituloPagina } from "./TituloPagina"; // Importação do componente
-import { useNavigate } from "react-router-dom"; // Importação do useNavigate
 
 interface Course {
   id: string;
   name: string;
 }
 
-const ClassCreationForm: React.FC = () => {
+const CriaAulaCurso: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [formData, setFormData] = useState({
     title: "",
@@ -54,14 +52,26 @@ const ClassCreationForm: React.FC = () => {
     <Box
       sx={{
         padding: "2rem",
-        maxWidth: "700px",
+        maxWidth: "600px",
         borderRadius: "8px",
       }}
     >
-      <TituloPagina titulo="Criação de Aula" />
+      <Typography
+        variant="h1"
+        sx={{
+          fontFamily: "'Nunito', sans-serif",
+          fontWeight: "bold",
+          fontSize: "64px",
+          color: "white",
+          marginBottom: "1.5rem",
+          textAlign: "center",
+        }}
+      >
+        Criação de Aula
+      </Typography>
 
       <form onSubmit={(e) => e.preventDefault()}>
-        {/* Título da Aula */}
+        {/* Título */}
         <Box sx={{ marginBottom: "1rem" }}>
           <Typography
             variant="body1"
@@ -88,7 +98,7 @@ const ClassCreationForm: React.FC = () => {
           />
         </Box>
 
-        {/* Número da Aula */}
+        {/* Número */}
         <Box sx={{ marginBottom: "1rem" }}>
           <Typography
             variant="body1"
@@ -150,14 +160,13 @@ const ClassCreationForm: React.FC = () => {
           </Select>
         </Box>
 
-        {/* Descrição da Aula */}
+        {/* Descrição */}
         <Box sx={{ marginBottom: "1rem" }}>
           <Typography
             variant="body1"
             sx={{
               fontFamily: "'Nunito', sans-serif",
               fontWeight: "bold",
-              maxWidth: "800px",
               fontSize: "18px",
               color: "white",
               marginBottom: "0.5rem",
@@ -206,7 +215,7 @@ const ClassCreationForm: React.FC = () => {
           />
         </Box>
 
-        {/* Botão de Confirmação */}
+        {/* Botão de confirmação */}
         <Button
           variant="contained"
           color="success"
@@ -225,4 +234,4 @@ const ClassCreationForm: React.FC = () => {
   );
 };
 
-export default ClassCreationForm;
+export default CriaAulaCurso;

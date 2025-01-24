@@ -10,6 +10,7 @@ import { Cadastro } from "./pages/cadastro";
 import PaginaPerfil from "./pages/PaginaPerfil";
 import VerVideo from "./pages/VerVideo";
 import ADMCriaAula from "./pages/ADMCriaAula";
+import { Recuperacao } from "./pages/recuperacao"; // Importação movida para o topo
 
 // Criação do tema global
 const theme = createTheme({
@@ -37,7 +38,6 @@ const theme = createTheme({
     },
   },
 });
-import { Recuperacao } from "./pages/recuperacao";
 
 const App: React.FC = () => {
   return (
