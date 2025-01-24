@@ -9,6 +9,10 @@ import VerCertificados from "./pages/certificados";
 import { Cadastro } from "./pages/cadastro";
 import PaginaPerfil from "./pages/PaginaPerfil";
 import VerVideo from "./pages/VerVideo";
+import ADMCriaAula from "./pages/ADMCriaAula";
+import { Recuperacao } from "./pages/recuperacao"; // Importação movida para o topo
+import QuizCreationPage from "./pages/QuizCreationPage";
+import ADMCriaCurso from "./pages/ADMCriaCurso";
 
 // Criação do tema global
 const theme = createTheme({
@@ -36,7 +40,6 @@ const theme = createTheme({
     },
   },
 });
-import { Recuperacao } from "./pages/recuperacao";
 
 const App: React.FC = () => {
   return (
@@ -52,6 +55,9 @@ const App: React.FC = () => {
           <Route path="/video" element={<VerVideo />} />
           <Route path="/certificados" element={<VerCertificados />} />
           <Route path="/recuperacao" element={<Recuperacao />} />
+          <Route path="/ADMCriaAula" element={<ADMCriaAula />} />
+          <Route path="/ADMQuizCreationPage" element={<QuizCreationPage />} />
+          <Route path="/ADMCriaCurso" element={<ADMCriaCurso />} />
         </Routes>
       </Router>
     </ThemeProvider>
