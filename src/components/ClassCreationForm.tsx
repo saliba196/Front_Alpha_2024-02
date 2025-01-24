@@ -8,7 +8,6 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { TituloPagina } from "./TituloPagina"; // Importação do componente
 import { useNavigate } from "react-router-dom"; // Importação do useNavigate
 
 interface Course {
@@ -58,8 +57,6 @@ const ClassCreationForm: React.FC = () => {
         borderRadius: "8px",
       }}
     >
-      <TituloPagina titulo="Criação de Aula" />
-
       <form onSubmit={(e) => e.preventDefault()}>
         {/* Título da Aula */}
         <Box sx={{ marginBottom: "1rem" }}>
@@ -84,6 +81,9 @@ const ClassCreationForm: React.FC = () => {
             sx={{
               backgroundColor: "#e0e0e0",
               borderRadius: "4px",
+              "& .MuiOutlinedInput-input": {
+                color: "black",
+              },
             }}
           />
         </Box>
@@ -111,6 +111,9 @@ const ClassCreationForm: React.FC = () => {
             sx={{
               backgroundColor: "#e0e0e0",
               borderRadius: "4px",
+              "& .MuiOutlinedInput-input": {
+                color: "black",
+              },
             }}
           />
         </Box>
@@ -137,6 +140,9 @@ const ClassCreationForm: React.FC = () => {
             sx={{
               backgroundColor: "#e0e0e0",
               borderRadius: "4px",
+              "& .MuiOutlinedInput-input": {
+                color: "black",
+              },
             }}
           >
             <MenuItem value="" disabled sx={{ color: "black" }}>
@@ -168,13 +174,16 @@ const ClassCreationForm: React.FC = () => {
           <TextField
             variant="outlined"
             multiline
-            rows={4}
+            rows={6}
             name="description"
             value={formData.description}
             onChange={handleInputChange}
             sx={{
               backgroundColor: "#e0e0e0",
               borderRadius: "4px",
+              "& .MuiOutlinedInput-input": {
+                color: "black",
+              },
             }}
           />
         </Box>
@@ -202,6 +211,9 @@ const ClassCreationForm: React.FC = () => {
             sx={{
               backgroundColor: "#e0e0e0",
               borderRadius: "4px",
+              "& .MuiOutlinedInput-input": {
+                color: "black",
+              },
             }}
           />
         </Box>

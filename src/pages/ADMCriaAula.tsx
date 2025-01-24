@@ -13,8 +13,10 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { alignProperty } from "@mui/material/styles/cssUtils";
-import ClassCreationForm from "../components/ClassCreationForm.tsx"; // Componente Banner Inicial
+import ClassCreationForm from "../components/ClassCreationForm.tsx";
 import ADMMenu_lat from "../components/ADMMenuLateral";
+import { TituloPagina } from "../components/TituloPagina";
+
 // Estilos reutilizáveis
 const boxStyle = {
   background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
@@ -70,6 +72,8 @@ export const ADMCriaAula = () => {
       <ADMMenu_lat />
       <Box sx={{ flex: 1, p: 4 }}>
         {" "}
+        {/* Título da Página */}
+        <TituloPagina titulo="Criação de Aula" />
         {/* Conteúdo principal */}
         <ClassCreationForm />
       </Box>
