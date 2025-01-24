@@ -14,7 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { alignProperty } from "@mui/material/styles/cssUtils";
 import ClassCreationForm from "../components/ClassCreationForm.tsx"; // Componente Banner Inicial
-
+import ADMMenu_lat from "../components/ADMMenuLateral";
 // Estilos reutilizáveis
 const boxStyle = {
   background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
@@ -65,7 +65,16 @@ const buttonStyle = {
 export const ADMCriaAula = () => {
   const navigate = useNavigate();
 
-  return <ClassCreationForm />;
+  return (
+    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+      <ADMMenu_lat />
+      <Box sx={{ flex: 1, p: 4 }}>
+        {" "}
+        {/* Conteúdo principal */}
+        <ClassCreationForm />
+      </Box>
+    </Box>
+  );
 };
 
 export default ADMCriaAula;
