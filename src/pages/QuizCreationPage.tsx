@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Stack, TextField, Button, Typography } from "@mui/material";
-import SideMenu from "../components/menu_lat";
+import ADMMenu_lat from "../components/ADMMenuLateral";
 import { TituloPagina } from "../components/TituloPagina";
 import QuestionSection from "../components/QuestionSection";
 
@@ -19,7 +19,7 @@ const QuizCreationPage: React.FC = () => {
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", overflowX: "hidden" }}>
       {/* Menu Lateral */}
-      <SideMenu />
+      <ADMMenu_lat />
 
       {/* Conteúdo principal */}
       <Box
