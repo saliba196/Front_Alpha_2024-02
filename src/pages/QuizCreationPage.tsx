@@ -128,7 +128,16 @@ const QuizCreationPage: React.FC = () => {
 
         {/* Botão Confirmar */}
         <Box sx={{ textAlign: "center", marginTop: "24px" }}>
-          <Button variant="contained" color="success">
+          <Button
+            variant="contained"
+            color="success"
+            sx={{
+              fontFamily: "'Nunito', sans-serif",
+              fontWeight: "bold",
+              fontSize: "18px",
+              marginTop: "1rem",
+            }}
+          >
             Confirmar
           </Button>
         </Box>

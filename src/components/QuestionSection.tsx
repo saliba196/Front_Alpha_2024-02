@@ -52,19 +52,37 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ numQuestions }) => {
       <TextField
         fullWidth
         placeholder="Insira sua pergunta aqui"
-        sx={{ marginBottom: "16px", backgroundColor: "#fff" }}
+        sx={{
+          backgroundColor: "#e0e0e0",
+          borderRadius: "4px",
+          "& .MuiOutlinedInput-input": {
+            color: "black",
+          },
+        }}
       />
       <Typography
         variant="subtitle1"
-        sx={{ fontFamily: "Nunito", fontWeight: "bold", marginBottom: "8px" }}
+        sx={{
+          fontFamily: "Nunito",
+          fontWeight: "bold",
+          marginBottom: "8px",
+          color: "#213435",
+        }}
       >
-        Opções de resposta
+        Insira abaixo as opções de resposta e selecione indique a resposta
+        correta ao lado
       </Typography>
+
       <RadioGroup>
         {["A", "B", "C", "D"].map((option) => (
           <Box
             key={option}
-            sx={{ display: "flex", alignItems: "center", marginBottom: "8px" }}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "8px",
+              color: "#213435",
+            }}
           >
             <Typography sx={{ marginRight: "8px", fontWeight: "bold" }}>
               {option}
@@ -72,7 +90,13 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ numQuestions }) => {
             <TextField
               fullWidth
               placeholder={`Resposta ${option}`}
-              sx={{ backgroundColor: "#fff" }}
+              sx={{
+                backgroundColor: "#e0e0e0",
+                borderRadius: "4px",
+                "& .MuiOutlinedInput-input": {
+                  color: "black",
+                },
+              }}
             />
             <FormControlLabel
               value={option}
@@ -98,7 +122,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ numQuestions }) => {
         >
           Anterior
         </Button>
-        <Typography sx={{ alignSelf: "center" }}>
+        <Typography color="#213435" sx={{ alignSelf: "center" }}>
           Pergunta {currentPage} de {numQuestions}
         </Typography>
         <Button
