@@ -11,6 +11,7 @@ import PaginaPerfil from "./pages/PaginaPerfil";
 import VerVideo from "./pages/VerVideo";
 import ADMCriaAula from "./pages/ADMCriaAula";
 import { Recuperacao } from "./pages/recuperacao"; // Importação movida para o topo
+import QuizCreationPage from "./pages/QuizCreationPage";
 
 // Criação do tema global
 const theme = createTheme({
@@ -54,6 +55,7 @@ const App: React.FC = () => {
           <Route path="/certificados" element={<VerCertificados />} />
           <Route path="/recuperacao" element={<Recuperacao />} />
           <Route path="/ADMCriaAula" element={<ADMCriaAula />} />
+          <Route path="/ADMQuizCreationPage" element={<QuizCreationPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

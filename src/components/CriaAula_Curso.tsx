@@ -94,6 +94,9 @@ const CriaAulaCurso: React.FC = () => {
             sx={{
               backgroundColor: "#e0e0e0",
               borderRadius: "4px",
+              "& .MuiOutlinedInput-input": {
+                color: "black",
+              },
             }}
           />
         </Box>
@@ -121,6 +124,9 @@ const CriaAulaCurso: React.FC = () => {
             sx={{
               backgroundColor: "#e0e0e0",
               borderRadius: "4px",
+              "& .MuiOutlinedInput-input": {
+                color: "black",
+              },
             }}
           />
         </Box>
@@ -147,6 +153,9 @@ const CriaAulaCurso: React.FC = () => {
             sx={{
               backgroundColor: "#e0e0e0",
               borderRadius: "4px",
+              "& .MuiOutlinedInput-input": {
+                color: "black",
+              },
             }}
           >
             <MenuItem value="" disabled sx={{ color: "black" }}>
@@ -184,6 +193,9 @@ const CriaAulaCurso: React.FC = () => {
             sx={{
               backgroundColor: "#e0e0e0",
               borderRadius: "4px",
+              "& .MuiOutlinedInput-input": {
+                color: "black",
+              },
             }}
           />
         </Box>
@@ -211,6 +223,9 @@ const CriaAulaCurso: React.FC = () => {
             sx={{
               backgroundColor: "#e0e0e0",
               borderRadius: "4px",
+              "& .MuiOutlinedInput-input": {
+                color: "black",
+              },
             }}
           />
         </Box>
