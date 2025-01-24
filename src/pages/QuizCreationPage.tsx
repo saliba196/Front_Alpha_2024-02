@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Stack, TextField, Button, Typography } from "@mui/material";
 import SideMenu from "../components/menu_lat";
 import { TituloPagina } from "../components/TituloPagina";
-import QuestionSection from "../components/QuestionSectio";
+import QuestionSection from "../components/QuestionSection";
 
 const QuizCreationPage: React.FC = () => {
   const [numQuestions, setNumQuestions] = useState<number>(1);
