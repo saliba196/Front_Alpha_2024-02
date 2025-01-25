@@ -13,6 +13,7 @@ import ADMCriaAula from "./pages/ADMCriaAula";
 import { Recuperacao } from "./pages/recuperacao"; // Importação movida para o topo
 import QuizCreationPage from "./pages/QuizCreationPage";
 import ADMCriaCurso from "./pages/ADMCriaCurso";
+import AdminPanel from "./pages/PainelADM";
 
 // Criação do tema global
 const theme = createTheme({
@@ -58,6 +59,7 @@ const App: React.FC = () => {
           <Route path="/ADMCriaAula" element={<ADMCriaAula />} />
           <Route path="/ADMQuizCreationPage" element={<QuizCreationPage />} />
           <Route path="/ADMCriaCurso" element={<ADMCriaCurso />} />
+          <Route path="/AdminPanel" element={<AdminPanel />} />
         </Routes>
       </Router>
     </ThemeProvider>

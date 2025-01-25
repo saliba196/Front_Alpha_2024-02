@@ -10,6 +10,7 @@ import PaidIcon from "@mui/icons-material/Paid";
 import Groups2SharpIcon from "@mui/icons-material/Groups2Sharp";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import { Link } from "react-router-dom";
 
 export const ADMMenu_lat: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -35,12 +36,14 @@ export const ADMMenu_lat: React.FC = () => {
       onMouseEnter={() => handleHover(true)}
       onMouseLeave={() => handleHover(false)}
     >
-      {/* Foto do perfil */}
-      <ImageWithBadge
-        src="C:/Users/luiza/Documents/teste/react-mui-demo/src/Images/tina_img_teste.png"
-        alt="Nome do Usuário"
-        isExpanded={isExpanded}
-      />
+      {/* Foto do perfil com redirecionamento */}
+      <Link to="/perfil" style={{ textDecoration: "none" }}>
+        <ImageWithBadge
+          src="C:/Users/luiza/Documents/teste/react-mui-demo/src/Images/tina_img_teste.png"
+          alt="Nome do Usuário"
+          isExpanded={isExpanded}
+        />
+      </Link>
 
       {/* Botões */}
       <Box
