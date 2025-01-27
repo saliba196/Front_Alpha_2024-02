@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/axios": "^0.9.36",
     "@types/react": "^18.3.18",
     "react-scripts": "^5.0.1"
   }
