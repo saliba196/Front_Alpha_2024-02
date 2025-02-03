@@ -1,27 +1,42 @@
+// src/pages/QuizCreationPage.tsx
 import React, { useState } from "react";
 import { Box, Stack, TextField, Button, Typography } from "@mui/material";
 import ADMMenu_lat from "../components/ADMMenuLateral";
 import { TituloPagina } from "../components/TituloPagina";
 import QuestionSection from "../components/QuestionSection";
+import { createQuiz } from "../services/quizService";
 
 const QuizCreationPage: React.FC = () => {
   const [numQuestions, setNumQuestions] = useState<number>(1);
-  const [courseName, setCourseName] = useState("");
-  const [associatedCourse, setAssociatedCourse] = useState("");
+  const [courseName, setCourseName] = useState<string>("");
+  const [associatedCourse, setAssociatedCourse] = useState<string>("");
 
   const handleNumQuestionsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = parseInt(event.target.value, 10);
-    setNumQuestions(value > 0 ? value : 1); // Garante que seja >= 1
+    setNumQuestions(value > 0 ? value : 1);
+  };
+
+  const handleConfirm = async () => {
+    const quizData = {
+      courseName,
+      associatedCourse,
+      numQuestions,
+    };
+
+    try {
+      await createQuiz(quizData);
+      console.log("Questionário criado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao criar o questionário:", error);
+    }
   };
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", overflowX: "hidden" }}>
-      {/* Menu Lateral */}
       <ADMMenu_lat />
 
-      {/* Conteúdo principal */}
       <Box
         sx={{
           flex: 1,
@@ -33,10 +48,8 @@ const QuizCreationPage: React.FC = () => {
           overflowX: "hidden",
         }}
       >
-        {/* Título da Página */}
         <TituloPagina titulo="Criação de Questionário" />
 
-        {/* Formulário Inicial */}
         <Stack spacing={2} sx={{ maxWidth: "600px" }}>
           <Box>
             <Typography
@@ -53,7 +66,6 @@ const QuizCreationPage: React.FC = () => {
             <TextField
               variant="outlined"
               fullWidth
-              name="title"
               value={associatedCourse}
               onChange={(e) => setAssociatedCourse(e.target.value)}
               sx={{
@@ -65,6 +77,7 @@ const QuizCreationPage: React.FC = () => {
               }}
             />
           </Box>
+
           <Box>
             <Typography
               sx={{
@@ -81,7 +94,6 @@ const QuizCreationPage: React.FC = () => {
               variant="outlined"
               type="number"
               fullWidth
-              name="title"
               value={numQuestions}
               onChange={handleNumQuestionsChange}
               sx={{
@@ -93,6 +105,7 @@ const QuizCreationPage: React.FC = () => {
               }}
             />
           </Box>
+
           <Box>
             <Typography
               sx={{
@@ -107,9 +120,7 @@ const QuizCreationPage: React.FC = () => {
             </Typography>
             <TextField
               variant="outlined"
-              type="number"
               fullWidth
-              name="title"
               value={courseName}
               onChange={(e) => setCourseName(e.target.value)}
               sx={{
@@ -123,14 +134,13 @@ const QuizCreationPage: React.FC = () => {
           </Box>
         </Stack>
 
-        {/* Seção Dinâmica de Perguntas */}
         <QuestionSection numQuestions={numQuestions} />
 
-        {/* Botão Confirmar */}
         <Box sx={{ textAlign: "center", marginTop: "24px" }}>
           <Button
             variant="contained"
             color="success"
+            onClick={handleConfirm}
             sx={{
               fontFamily: "'Nunito', sans-serif",
               fontWeight: "bold",
