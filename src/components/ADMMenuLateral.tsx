@@ -63,12 +63,14 @@ export const ADMMenu_lat: React.FC = () => {
           backgroundColor="#648A64"
           isExpanded={isExpanded}
         />
-        <ButtonAtom
-          icon={<VerifiedUserIcon />}
-          label="Painel de administrador"
-          backgroundColor="#648A64"
-          isExpanded={isExpanded}
-        />
+        <Link to="/AdminPanel" style={{ textDecoration: "none" }}>
+          <ButtonAtom
+            icon={<VerifiedUserIcon />}
+            label="Painel de administrador"
+            backgroundColor="#648A64"
+            isExpanded={isExpanded}
+          />
+        </Link>
         <ButtonAtom
           icon={<SignalCellularAltIcon />}
           label="Jurídico e finanças"
