@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Container, Stack, Typography, TextField, Paper, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -25,25 +26,24 @@ const paperStyle = {
 const textFieldStyle = {
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      borderColor: "#46685B",  // Cor da borda
+      borderColor: "#46685B", // Cor da borda
       borderRadius: "20px",
       borderWidth: "4px",
-      // Remover fundo do fieldset para evitar interferência
-      backgroundColor: "transparent",
+      backgroundColor: "transparent", // Remover fundo do fieldset para evitar interferência
     },
     "&.Mui-focused fieldset": {
       borderColor: "#46685B", // Cor da borda ao focar
     },
     "& input": {
-      color: "#000",  // Cor do texto dentro do campo (garante visibilidade)
+      color: "#000", // Cor do texto dentro do campo (garante visibilidade)
       backgroundColor: "#D9D9D9", // Cor de fundo do campo de entrada
       borderRadius: "20px",
     },
     "& .MuiInputLabel-root": {
-      color: "#46685B",  // Cor do rótulo (label)
+      color: "#46685B", // Cor do rótulo (label)
     },
     "& .MuiInputLabel-root.Mui-focused": {
-      color: "#46685B",  // Cor do rótulo ao focar
+      color: "#46685B", // Cor do rótulo ao focar
     },
   },
 };
@@ -52,91 +52,114 @@ const buttonStyle = {
   backgroundColor: "#648A64",
   borderRadius: "13px",
   padding: "10px 20px", // Aumenta o espaçamento interno
-  fontSize: "1rem",   // Aumenta o tamanho da fonte
+  fontSize: "1rem", // Aumenta o tamanho da fonte
 };
 
 export const Login = () => {
   const navigate = useNavigate();
+  const [csrfToken, setCsrfToken] = useState<string>("");
+  const [formData, setFormData] = useState({ email: "", password: "" });
+
+  // Obtendo o CSRF token
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await axios.get<{ csrf_token: string }>("/api/csrf-token");
+        setCsrfToken(response.data.csrf_token);
+      } catch (error) {
+        console.error("Erro ao obter CSRF token:", error);
+      }
+    };
+    fetchCsrfToken();
+  }, []);
+
+  // Atualizando os dados do formulário
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Enviando os dados do formulário
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "/login/authenticate",
+        { ...formData, csrf_token: csrfToken },
+        { headers: { "Content-Type": "application/json" } }
+      );
+      console.log("Login bem-sucedido:", response.data);
+      navigate("/home");
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+      alert("Erro ao fazer login. Verifique suas credenciais.");
+    }
+  };
 
   return (
     <Box sx={boxStyle}>
       <Stack spacing={1}>
         <Paper sx={paperStyle}>
-          <Stack spacing={3}>
-            {/* Título */}
-            <Typography variant="h3" sx={{ color: "#213435" }}>Entrar</Typography>
+          <form onSubmit={handleSubmit}>
+            <Stack spacing={3}>
+              {/* Título */}
+              <Typography variant="h3" sx={{ color: "#213435" }}>Entrar</Typography>
 
-            {/* Subtítulo */}
-            <Typography variant="body1" color="#555">
-              Para entrar, digite o seu e-mail e senha.
-            </Typography>
+              {/* Subtítulo */}
+              <Typography variant="body1" color="#555">
+                Para entrar, digite o seu e-mail e senha.
+              </Typography>
 
-            {/* Campo de E-mail */}
-            <TextField
-              label="Digite o seu e-mail:"
-              variant="outlined"
-              sx={textFieldStyle}
-              fullWidth
-            />
+              {/* Campo de E-mail */}
+              <TextField
+                name="email"
+                label="Digite o seu e-mail:"
+                variant="outlined"
+                sx={textFieldStyle}
+                fullWidth
+                value={formData.email}
+                onChange={handleInputChange}
+              />
 
-            {/* Campo de Senha */}
-            <TextField
-              label="Digite a sua senha:"
-              variant="outlined"
-              sx={textFieldStyle}
-              fullWidth
-              type="password"
-            />
+              {/* Campo de Senha */}
+              <TextField
+                name="password"
+                label="Digite a sua senha:"
+                variant="outlined"
+                sx={textFieldStyle}
+                fullWidth
+                type="password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
 
-            {/* Link "Esqueci a minha senha" */}
-            <Button
-              variant="text"
-              sx={{
-                textTransform: "none", // Remove letras maiúsculas automáticas
-                fontSize: "0.9rem",    // Ajusta o tamanho da fonte
-                color: "#8A6464",      // Define a cor do texto
-                alignSelf: "flex-start", // Alinha o texto à esquerda
-                textDecoration: "underline", // Sublinha o texto
-                "&:hover": {
-                  color: "#213435",    // Muda a cor ao passar o mouse
-                },
-              }}
-              onClick={() => navigate("/recuperacao")}
-            >
-              Esqueci minha senha
-            </Button>
-            
-            {/* Botão Entrar */}
-            <Button
-              variant="contained"
-              onClick={() => navigate("/home")}
-              sx={{
-                ...buttonStyle,
-                alignSelf: "flex-end", // Alinha o botão à direita
-              }}
-            >
-              Entrar
-            </Button>
-          </Stack>
+              {/* Botão Entrar */}
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  ...buttonStyle,
+                  alignSelf: "flex-end", // Alinha o botão à direita
+                }}
+              >
+                Entrar
+              </Button>
+            </Stack>
+          </form>
         </Paper>
 
         {/* Link "Não possui uma conta? Cadastre-se" */}
         <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
-          {/* Texto "Não possui uma conta?" */}
           <Typography variant="body2" sx={{ color: "#D9D9D9" }}>
             Não possui uma conta?
           </Typography>
-
-          {/* Botão "Cadastre-se" */}
           <Button
             variant="text"
             sx={{
               textTransform: "none", // Remove letras maiúsculas automáticas
-              fontSize: "0.9rem",    // Ajusta o tamanho da fonte
-              color: "#D9D9D9",      // Define a cor do texto
-              "&:hover": {
-                color: "#213435",    // Muda a cor ao passar o mouse
-              },
+              fontSize: "0.9rem", // Ajusta o tamanho da fonte
+              color: "#D9D9D9", // Define a cor do texto
+              "&:hover": { color: "#213435" }, // Muda a cor ao passar o mouse
             }}
             onClick={() => navigate("/cadastro")}
           >

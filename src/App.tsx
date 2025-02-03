@@ -6,7 +6,7 @@ import "@fontsource/nunito/700.css";
 import Home from "./pages/Home";
 import { Login } from "./pages/login";
 import VerCertificados from "./pages/certificados";
-import { Cadastro } from "./pages/cadastro";
+import Cadastro from "./pages/cadastro";
 import PaginaPerfil from "./pages/PaginaPerfil";
 import VerVideo from "./pages/VerVideo";
 import ADMCriaAula from "./pages/ADMCriaAula";
@@ -14,6 +14,7 @@ import { Recuperacao } from "./pages/recuperacao"; // Importação movida para o
 import QuizCreationPage from "./pages/QuizCreationPage";
 import ADMCriaCurso from "./pages/ADMCriaCurso";
 import AdminPanel from "./pages/PainelADM";
+import SearchPage from "./pages/pesquisa";
 
 // Criação do tema global
 const theme = createTheme({
@@ -60,6 +61,7 @@ const App: React.FC = () => {
           <Route path="/ADMQuizCreationPage" element={<QuizCreationPage />} />
           <Route path="/ADMCriaCurso" element={<ADMCriaCurso />} />
           <Route path="/AdminPanel" element={<AdminPanel />} />
+          <Route path="/Pesquisa" element={<SearchPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

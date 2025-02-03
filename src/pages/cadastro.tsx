@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Stack,
@@ -12,7 +12,6 @@ import {
   Box,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { alignProperty } from "@mui/material/styles/cssUtils";
 
 // Estilos reutilizáveis
 const boxStyle = {
@@ -61,16 +60,96 @@ const buttonStyle = {
   fontSize: "1rem",
 };
 
-export const Cadastro = () => {
+interface SignUpFormData {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  fullName: string;
+  birthDate: string;
+  cpf: string;
+  clienteTina: boolean;
+  keepLoggedIn: boolean;
+}
+
+const Cadastro: React.FC = () => {
+  const [formData, setFormData] = useState<SignUpFormData>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    fullName: "",
+    birthDate: "",
+    cpf: "",
+    clienteTina: false,
+    keepLoggedIn: false,
+  });
+  const [csrfToken, setCsrfToken] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Pega o CSRF token da meta tag
+    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
+    if (token) {
+      setCsrfToken(token);
+    }
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    if (type === "checkbox") {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: checked,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("As senhas não coincidem!");
+      return;
+    }
+
+    try {
+      const response = await fetch("/sign-up", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          csrf_token: csrfToken,
+          email: formData.email,
+          password: formData.password,
+          password_check: formData.confirmPassword,
+          full_name: formData.fullName,
+          birth_date: formData.birthDate,
+          cpf: formData.cpf,
+          cliente_tina: formData.clienteTina.toString(),
+          keep_logged_in: formData.keepLoggedIn.toString(),
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Cadastro realizado com sucesso!");
+        navigate("/home");
+      } else {
+        alert(data.error || "Erro ao cadastrar");
+      }
+    } catch (error) {
+      alert("Erro na comunicação com o servidor.");
+    }
+  };
 
   return (
     <Box sx={boxStyle}>
-      <Stack
-        spacing={2}
-        alignItems="center"
-        sx={{ width: "100%", maxWidth: "500px" }}
-      >
+      <Stack spacing={2} alignItems="center" sx={{ width: "100%", maxWidth: "500px" }}>
         <Paper sx={paperStyle}>
           <Typography variant="h3" sx={{ color: "#213435", marginBottom: "30px" }}>
             Cadastro
@@ -82,6 +161,9 @@ export const Cadastro = () => {
                 fullWidth
                 label="Nome Completo"
                 variant="outlined"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleInputChange}
                 sx={textFieldStyle}
               />
             </Grid2>
@@ -90,6 +172,9 @@ export const Cadastro = () => {
                 fullWidth
                 label="E-mail"
                 variant="outlined"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
                 sx={textFieldStyle}
               />
             </Grid2>
@@ -99,6 +184,9 @@ export const Cadastro = () => {
                 label="Data de Nascimento"
                 variant="outlined"
                 type="date"
+                name="birthDate"
+                value={formData.birthDate}
+                onChange={handleInputChange}
                 sx={textFieldStyle}
                 InputLabelProps={{
                   shrink: true,
@@ -110,6 +198,9 @@ export const Cadastro = () => {
                 fullWidth
                 label="CPF"
                 variant="outlined"
+                name="cpf"
+                value={formData.cpf}
+                onChange={handleInputChange}
                 sx={textFieldStyle}
               />
             </Grid2>
@@ -119,6 +210,9 @@ export const Cadastro = () => {
                 label="Senha"
                 variant="outlined"
                 type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
                 sx={textFieldStyle}
               />
             </Grid2>
@@ -128,13 +222,16 @@ export const Cadastro = () => {
                 label="Confirmar Senha"
                 variant="outlined"
                 type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
                 sx={textFieldStyle}
               />
             </Grid2>
           </Grid2>
 
           <FormControlLabel
-            control={<Checkbox />}
+            control={<Checkbox name="clienteTina" checked={formData.clienteTina} onChange={handleInputChange} />}
             label="Já sou cliente Tina"
             sx={{
               justifyContent: "flex-begin",
@@ -146,7 +243,7 @@ export const Cadastro = () => {
 
           <Button
             variant="contained"
-            onClick={() => navigate("/home")}
+            onClick={handleSubmit}
             fullWidth
             sx={buttonStyle}
           >
