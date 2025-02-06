@@ -2,76 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Stack, Typography, TextField, Paper, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-// Estilos reutilizáveis
-const boxStyle = {
-  background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
-  height: "100vh",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  margin: 0,
-  padding: 0,
-  width: "100%",
-};
-
-const paperStyle = {
-  padding: "50px 30px",
-  textAlign: "center",
-  borderRadius: "30px",
-  backgroundColor: "#E1E3AC",
-  width: "400px",
-};
-
-const textFieldStyle = {
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "#46685B", // Cor da borda
-      borderRadius: "20px",
-      borderWidth: "4px",
-      backgroundColor: "transparent", // Remover fundo do fieldset para evitar interferência
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#46685B", // Cor da borda ao focar
-    },
-    "& input": {
-      color: "#000", // Cor do texto dentro do campo (garante visibilidade)
-      backgroundColor: "#D9D9D9", // Cor de fundo do campo de entrada
-      borderRadius: "20px",
-    },
-    "& .MuiInputLabel-root": {
-      color: "#46685B", // Cor do rótulo (label)
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "#46685B", // Cor do rótulo ao focar
-    },
-  },
-};
-
-const buttonStyle = {
-  backgroundColor: "#648A64",
-  borderRadius: "13px",
-  padding: "10px 20px", // Aumenta o espaçamento interno
-  fontSize: "1rem", // Aumenta o tamanho da fonte
-};
+import { boxStyle, paperStyle, textFieldStyle, buttonStyle } from "../components/Login.styles";
+import { gerarPerguntas } from "../api/quizService";
 
 export const Login = () => {
   const navigate = useNavigate();
   const [csrfToken, setCsrfToken] = useState<string>("");
   const [formData, setFormData] = useState({ email: "", password: "" });
 
-  // Obtendo o CSRF token
-  useEffect(() => {
-    const fetchCsrfToken = async () => {
-      try {
-        const response = await axios.get<{ csrf_token: string }>("/api/csrf-token");
-        setCsrfToken(response.data.csrf_token);
-      } catch (error) {
-        console.error("Erro ao obter CSRF token:", error);
-      }
-    };
-    fetchCsrfToken();
-  }, []);
 
   // Atualizando os dados do formulário
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,6 +33,7 @@ export const Login = () => {
       alert("Erro ao fazer login. Verifique suas credenciais.");
     }
   };
+
 
   return (
     <Box sx={boxStyle}>
