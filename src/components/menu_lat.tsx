@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { Link } from "react-router-dom"; // Importa o Link do React Router
+import { Link, useNavigate } from "react-router-dom"; // Importa o Link e useNavigate do React Router
 import { ButtonAtom } from "./ButtonAtom";
 import { ImageWithBadge } from "./ImageWithBadge";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
@@ -10,11 +10,23 @@ import RamenDiningIcon from "@mui/icons-material/RamenDining";
 import PaidIcon from "@mui/icons-material/Paid";
 import Groups2SharpIcon from "@mui/icons-material/Groups2Sharp";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
+import {logout_api} from "../api/logout";
 
 export const SideMenu: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate(); // Hook para navegação
 
   const handleHover = (hovering: boolean) => setIsExpanded(hovering);
+
+  const handleLogout = async () => {
+    try {
+      await logout_api();
+      navigate("/"); // Redireciona para a página de login após o logout
+    } catch (error) {
+      console.error("Erro ao deslogar:", error);
+      // Você pode adicionar um tratamento de erro aqui, como exibir uma mensagem para o usuário
+    }
+  };
 
   return (
     <Box
@@ -96,6 +108,7 @@ export const SideMenu: React.FC = () => {
           label="Sair"
           backgroundColor="#46685B"
           isExpanded={isExpanded}
+          onClick={handleLogout}
         />
       </Box>
     </Box>

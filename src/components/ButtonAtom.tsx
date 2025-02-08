@@ -9,6 +9,7 @@ interface ButtonAtomProps {
   backgroundColor: string; // Cor de fundo do botão
   hoverColor?: string; // Cor ao passar o mouse (opcional)
   isExpanded: boolean; // Se o menu está expandido
+  onClick?: () => void; // Função chamada ao clicar no botão (opcional)
 }
 
 // Estiliza o botão com MUI e styled-components
@@ -31,10 +32,11 @@ export const ButtonAtom: React.FC<ButtonAtomProps> = ({
   backgroundColor,
   hoverColor,
   isExpanded,
+  onClick, // Adiciona a propriedade onClick
 }) => (
   <Box display="flex" alignItems="center" gap="8px">
     {/* Botão com ícone */}
-    <StyledIconButton bgcolor={backgroundColor} hoverColor={hoverColor}>
+    <StyledIconButton bgcolor={backgroundColor} hoverColor={hoverColor} onClick={onClick}>
       {icon}
     </StyledIconButton>
     {/* Texto exibido apenas se o menu está expandido */}
