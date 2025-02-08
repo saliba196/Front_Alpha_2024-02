@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import "@fontsource/nunito/400.css";
 import "@fontsource/nunito/700.css";
 import Home from "./pages/Home";
-import { Login } from "./pages/login";
+import Login from "./pages/login";
 import VerCertificados from "./pages/certificados";
 import Cadastro from "./pages/cadastro";
 import PaginaPerfil from "./pages/PaginaPerfil";

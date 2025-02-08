@@ -1,31 +1,37 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Container, Stack, Typography, TextField, Paper, Button, Box } from "@mui/material";
+import React, { useState } from "react";
+import { Container, Stack, Typography, TextField, Paper, Button, Box, Checkbox, FormControlLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { boxStyle, paperStyle, textFieldStyle, buttonStyle } from "../components/Login.styles";
-import { gerarPerguntas } from "../api/quizService";
+import { loginUser } from "../api/loginService";
 
-export const Login = () => {
+interface SignUpFormData {
+  id_method: string;
+  password: string;
+  keep_logged_in: boolean;
+}
+
+const Login: React.FC = () => {
+  const [formData, setFormData] = useState<SignUpFormData>({
+    id_method: "",
+    password: "",
+    keep_logged_in: false,
+  });
+
   const navigate = useNavigate();
-  const [csrfToken, setCsrfToken] = useState<string>("");
-  const [formData, setFormData] = useState({ email: "", password: "" });
 
-
-  // Atualizando os dados do formulário
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
-  // Enviando os dados do formulário
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post(
-        "/login/authenticate",
-        { ...formData, csrf_token: csrfToken },
-        { headers: { "Content-Type": "application/json" } }
-      );
+      const response = await loginUser(formData);
       console.log("Login bem-sucedido:", response.data);
       navigate("/home");
     } catch (error) {
@@ -33,7 +39,6 @@ export const Login = () => {
       alert("Erro ao fazer login. Verifique suas credenciais.");
     }
   };
-
 
   return (
     <Box sx={boxStyle}>
@@ -51,12 +56,12 @@ export const Login = () => {
 
               {/* Campo de E-mail */}
               <TextField
-                name="email"
+                name="id_method"
                 label="Digite o seu e-mail:"
                 variant="outlined"
                 sx={textFieldStyle}
                 fullWidth
-                value={formData.email}
+                value={formData.id_method}
                 onChange={handleInputChange}
               />
 
@@ -70,6 +75,18 @@ export const Login = () => {
                 type="password"
                 value={formData.password}
                 onChange={handleInputChange}
+              />
+
+              {/* Checkbox "Manter-me conectado" */}
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="keep_logged_in"
+                    checked={formData.keep_logged_in}
+                    onChange={handleInputChange}
+                  />
+                }
+                label="Manter-me conectado"
               />
 
               {/* Botão Entrar */}
