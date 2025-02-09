@@ -30,7 +30,6 @@ export const SideMenu: React.FC = () => {
         }
       } catch (error: any) {
         console.error("Erro ao buscar informações do usuário:", error);
-        alert(`Erro ao buscar informações do usuário: ${error.message}\nDetalhes: ${JSON.stringify(error.response?.data, null, 2)}`);
       }
     };
 

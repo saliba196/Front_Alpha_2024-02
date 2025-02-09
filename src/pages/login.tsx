@@ -3,7 +3,7 @@ import { Container, Stack, Typography, TextField, Paper, Button, Box, Checkbox, 
 import { useNavigate } from "react-router-dom";
 import { boxStyle, paperStyle, textFieldStyle, buttonStyle } from "../components/Login.styles";
 import { loginUser } from "../api/loginService";
-import { getUserInfo } from "../api/user_info";
+import { fetchUserRequisition } from "../api/user_requisition";
 
 interface SignUpFormData {
   id_method: string;
@@ -36,15 +36,19 @@ const Login: React.FC = () => {
       console.log("Login bem-sucedido:", response.data);
 
       // Fetch user info to check if the user is an admin
-      const userInfo = await getUserInfo();
-      if (userInfo.is_adm === true) {
-        navigate("/HomeADM"); // Redirect to admin home page
+      const userRequisition = await fetchUserRequisition();
+      if (userRequisition.response === 200 && userRequisition.data) {
+        if (userRequisition.data.is_adm === true) {
+          navigate("/HomeADM"); // Redirect to admin home page
+        } else {
+          navigate("/home"); // Redirect to user home page
+        }
       } else {
-        navigate("/home"); // Redirect to user home page
+        throw new Error(userRequisition.description);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erro ao fazer login:", error);
-      alert("Erro ao fazer login. Verifique suas credenciais.");
+      alert(`Erro ao fazer login. Verifique suas credenciais.\nDetalhes: ${error.message}`);
     }
   };
 

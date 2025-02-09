@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import SideMenu from "../components/menu_lat"; // Menu lateral
 import { CardComponent } from "../components/card_video"; // Card de vídeo simples
 import { CardVideoProgresso } from "../components/CardVideoProgresso"; // Card com progresso
 import { BannerInicial } from "../components/BannerInicial"; // Componente Banner Inicial
+import { checkUserLoggedIn } from "../api/auth"; // Import checkUserLoggedIn
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const verifyLogin = async () => {
+      const isLoggedIn = await checkUserLoggedIn();
+      if (!isLoggedIn) {
+        navigate("/"); // Redirect to login page if not logged in
+      } else {
+        setIsLoading(false); // Set loading to false if logged in
+      }
+    };
+
+    verifyLogin();
+  }, [navigate]);
+
+  if (isLoading) {
+    return null; // Render nothing while checking login status
+  }
+
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", overflowX: "hidden" }}>
       {/* Menu Lateral */}
