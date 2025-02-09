@@ -69,7 +69,7 @@ const Login: React.FC = () => {
               {/* Campo de E-mail */}
               <TextField
                 name="id_method"
-                label="Digite o seu e-mail:"
+                label="Digite o seu e-mail ou CPF:"
                 variant="outlined"
                 sx={textFieldStyle}
                 fullWidth
