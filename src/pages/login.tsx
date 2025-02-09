@@ -44,6 +44,7 @@ const Login: React.FC = () => {
           navigate("/home"); // Redirect to user home page
         }
       } else {
+        console.log("Erro ao buscar dados do usuário:", userRequisition);
         throw new Error(userRequisition.description);
       }
     } catch (error: any) {
