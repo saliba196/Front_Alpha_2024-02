@@ -1,4 +1,5 @@
 import axiosInstance from "./axiosInstance";
+import { fetchUserRequisition } from "./user_requisition";
 
 interface AuthResponse {
     response: number;
@@ -18,6 +19,16 @@ export const checkUserLoggedIn = async (): Promise<boolean> => {
         return response.data.response === 200;
     } catch (error: any) {
         console.error("Erro ao verificar login do usuário:", error);
+        return false;
+    }
+};
+
+export const checkUserIsAdmin = async (): Promise<boolean> => {
+    try {
+        const userRequisition = await fetchUserRequisition();
+        return userRequisition.data?.is_adm === true;
+    } catch (error: any) {
+        console.error("Erro ao verificar se o usuário é admin:", error);
         return false;
     }
 };

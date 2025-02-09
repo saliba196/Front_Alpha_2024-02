@@ -5,7 +5,7 @@ import SideMenu from "../components/menu_lat"; // Menu lateral
 import { CardComponent } from "../components/card_video"; // Card de vídeo simples
 import { CardVideoProgresso } from "../components/CardVideoProgresso"; // Card com progresso
 import { BannerInicial } from "../components/BannerInicial"; // Componente Banner Inicial
-import { checkUserLoggedIn } from "../api/auth"; // Import checkUserLoggedIn
+import { checkUserLoggedIn, checkUserIsAdmin } from "../api/auth"; // Import checkUserLoggedIn and checkUserIsAdmin
 import { fetchCourses, fetchAulas } from "../api/courses"; // Import fetchCourses and fetchAulas
 
 interface Course {
@@ -33,7 +33,12 @@ const Home: React.FC = () => {
       if (!isLoggedIn) {
         navigate("/"); // Redirect to login page if not logged in
       } else {
-        setIsLoading(false); // Set loading to false if logged in
+        const isAdmin = await checkUserIsAdmin();
+        if (isAdmin) {
+          navigate("/HomeADM"); // Redirect to admin home page if user is admin
+        } else {
+          setIsLoading(false); // Set loading to false if logged in and not admin
+        }
       }
     };
 
