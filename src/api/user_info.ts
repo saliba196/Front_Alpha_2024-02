@@ -11,6 +11,8 @@ interface UserInfo {
 
 export const getUserInfo = async (): Promise<UserInfo> => {
     try {
+        console.log("Cookies:", document.cookie);
+
         const response = await axiosInstance.get<{ data: UserInfo }>("/account/call");
         console.log("Informações do usuário:", response.data.data);
 

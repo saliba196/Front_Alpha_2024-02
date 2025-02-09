@@ -11,6 +11,8 @@ import PaidIcon from "@mui/icons-material/Paid";
 import Groups2SharpIcon from "@mui/icons-material/Groups2Sharp";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import {logout_api} from "../api/logout";
+import { getUserInfo } from "../api/user_info";
+import { get } from "http";
 
 export const SideMenu: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -108,7 +110,7 @@ export const SideMenu: React.FC = () => {
           label="Sair"
           backgroundColor="#46685B"
           isExpanded={isExpanded}
-          onClick={handleLogout}
+          onClick={getUserInfo}
         />
       </Box>
     </Box>
