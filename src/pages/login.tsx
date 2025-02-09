@@ -3,6 +3,7 @@ import { Container, Stack, Typography, TextField, Paper, Button, Box, Checkbox, 
 import { useNavigate } from "react-router-dom";
 import { boxStyle, paperStyle, textFieldStyle, buttonStyle } from "../components/Login.styles";
 import { loginUser } from "../api/loginService";
+import { getUserInfo } from "../api/user_info";
 
 interface SignUpFormData {
   id_method: string;
@@ -33,7 +34,14 @@ const Login: React.FC = () => {
     try {
       const response = await loginUser(formData);
       console.log("Login bem-sucedido:", response.data);
-      navigate("/home");
+
+      // Fetch user info to check if the user is an admin
+      const userInfo = await getUserInfo();
+      if (userInfo.is_adm === true) {
+        navigate("/HomeADM"); // Redirect to admin home page
+      } else {
+        navigate("/home"); // Redirect to user home page
+      }
     } catch (error) {
       console.error("Erro ao fazer login:", error);
       alert("Erro ao fazer login. Verifique suas credenciais.");
@@ -77,6 +85,21 @@ const Login: React.FC = () => {
                 onChange={handleInputChange}
               />
 
+              {/* Botão Recuperar Conta */}
+              <Button
+                variant="text"
+                sx={{
+                  textTransform: "none", // Remove letras maiúsculas automáticas
+                  fontSize: "0.9rem", // Ajusta o tamanho da fonte
+                  color: "#8B0000", // Define a cor do texto
+                  "&:hover": { color: "#213435" }, // Muda a cor ao passar o mouse
+                  alignSelf: "flex-start", // Alinha o botão à esquerda
+                }}
+                onClick={() => navigate("/recuperacao")}
+              >
+                Esqueceu a senha?
+              </Button>
+
               {/* Checkbox "Manter-me conectado" */}
               <FormControlLabel
                 control={
@@ -86,7 +109,11 @@ const Login: React.FC = () => {
                     onChange={handleInputChange}
                   />
                 }
-                label="Manter-me conectado"
+                label={
+                  <Typography sx={{ color: "#555" }}>
+                    Manter-me conectado
+                  </Typography>
+                }
               />
 
               {/* Botão Entrar */}
