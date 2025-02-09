@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Stack, Typography, TextField, Paper, Button, Box, Checkbox, FormControlLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { boxStyle, paperStyle, textFieldStyle, buttonStyle } from "../components/Login.styles";
-import { loginUser } from "../api/loginService";
+import { loginUser, checkUserLoggedIn } from "../api/loginService";
 import { fetchUserRequisition } from "../api/user_requisition";
 
 interface SignUpFormData {
@@ -19,6 +19,17 @@ const Login: React.FC = () => {
   });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const redirectIfLoggedIn = async () => {
+      const isLoggedIn = await checkUserLoggedIn();
+      if (isLoggedIn) {
+        navigate("/home");
+      }
+    };
+
+    redirectIfLoggedIn();
+  }, [navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -48,7 +59,7 @@ const Login: React.FC = () => {
         throw new Error(userRequisition.description);
       }
     } catch (error: any) {
-      console.error("Erro ao fazer login:", error);
+      console.error(error);
       alert(`Erro ao fazer login. Verifique suas credenciais.\nDetalhes: ${error.message}`);
     }
   };
