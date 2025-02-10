@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Container, Stack, Typography, TextField, Paper, Button, Box, Checkbox, FormControlLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { boxStyle, paperStyle, textFieldStyle, buttonStyle } from "../components/Login.styles";
-import { loginUser, checkUserLoggedIn } from "../api/loginService";
+import { loginUser } from "../api/loginService";
+import { checkUserLoggedIn } from "../api/auth";
 import { fetchUserRequisition } from "../api/user_requisition";
 
 interface SignUpFormData {
