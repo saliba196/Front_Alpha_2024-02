@@ -1,8 +1,6 @@
-// quizService.ts
+import axiosInstance from "./axiosInstance";
 
-import axios from "axios";
 // Interface para o corpo da requisição
-
 interface QuizRequest {
   transcricao: string;
   num_perguntas: number;
@@ -22,23 +20,51 @@ interface Pergunta {
 }
 
 interface QuizResponse {
-  perguntas: Pergunta[];
+  data: {
+    perguntas: Pergunta[];
+  };
+  description: string;
+  error: string | null;
+  meta: any;
+  response: number;
+  timestamp: string;
 }
 
 // Função para enviar a requisição ao endpoint e tratar a resposta
 export const generateQuiz = async (data: QuizRequest): Promise<QuizResponse> => {
   try {
-    const response = await axios.post<QuizResponse>(
-      "http://127.0.0.1:5000/quiz/generate",
-      data
-    );
-    // Aqui, você pode fazer validações adicionais caso a API retorne erros dentro do corpo
-    // Exemplo: se a API sempre retornar 200 e indicar erros por meio de algum campo,
-    // você pode fazer uma verificação adicional antes de retornar os dados.
+    const response = await axiosInstance.post<QuizResponse>("/quiz/generate", data);
+    
+    if (response.data.response !== 200) {
+      const responseCode = response.data.response;
+      const errorMessage = response.data.description || "Erro desconhecido no processamento.";
+      
+      console.log(responseCode, errorMessage);
+
+      throw new Error(errorMessage);
+    }
+    console.log();
     return response.data;
   } catch (error: any) {
-    // Trate os erros (de rede, status HTTP diferentes, etc.)
-    console.error("Erro ao gerar quiz:", error);
-    throw error;
+    if (error.response) {
+      switch (error.response.status) {
+        case 400:
+          throw new Error("Requisição inválida.");
+        case 401:
+          throw new Error("Acesso não autorizado.");
+        case 404:
+          throw new Error("Recurso não encontrado.");
+        case 500:
+          throw new Error("Erro interno do servidor.");
+        default:
+          throw new Error(error.response.data.error || "Erro desconhecido do servidor.");
+      }
+    } else if (error.request) {
+      // Erro de rede ou sem resposta
+      throw new Error("Sem resposta do servidor. Verifique sua conexão.");
+    } else {
+      // Erro genérico
+      throw new Error(`Erro desconhecido ao gerar quiz. ${error}`);
+    }
   }
 };
