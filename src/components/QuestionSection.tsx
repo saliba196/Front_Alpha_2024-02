@@ -147,6 +147,17 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
           </Box>
         ))}
       </RadioGroup>
+      <Typography
+        variant="subtitle1"
+        sx={{
+          fontFamily: "Nunito",
+          fontWeight: "bold",
+          marginTop: "16px",
+          color: "#213435",
+        }}
+      >
+        Resposta correta: {localQuestions[currentPage - 1]?.resposta_correta || ""}
+      </Typography>
       <Box
         sx={{
           display: "flex",

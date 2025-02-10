@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Stack, TextField, Button, Typography } from "@mui/material";
+import { Box, Stack, TextField, Button, Typography, CircularProgress } from "@mui/material";
 import ADMMenu_lat from "../components/ADMMenuLateral";
 import { TituloPagina } from "../components/TituloPagina";
 import QuestionSection from "../components/QuestionSection";
@@ -40,6 +40,7 @@ const QuizCreationPage: React.FC = () => {
   });
   const [aiQuestions, setAiQuestions] = useState<Pergunta[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
@@ -52,6 +53,7 @@ const QuizCreationPage: React.FC = () => {
   const generateAiQuestions = async () => {
     try {
       setError(null); // Clear previous errors
+      setLoading(true); // Start loading animation
       const response = await generateQuiz({
         transcricao: formData.classTranscription,
         num_perguntas: formData.numQuestions,
@@ -59,6 +61,8 @@ const QuizCreationPage: React.FC = () => {
       setAiQuestions(response.data.perguntas);
     } catch (error: any) {
       setError(error.message);
+    } finally {
+      setLoading(false); // Stop loading animation
     }
   };
 
@@ -126,14 +130,15 @@ const QuizCreationPage: React.FC = () => {
         </Stack>
 
         {/* Botão para gerar perguntas por IA */}
-        <Box sx={{ textAlign: "center", marginTop: "24px" }}>
+        <Box sx={{ textAlign: "left", marginTop: "24px" }}>
           <Button
             variant="contained"
             color="primary"
             sx={buttonStyle}
             onClick={generateAiQuestions}
+            disabled={loading}
           >
-            Gerar Perguntas por IA
+            {loading ? <CircularProgress size={24} /> : "Gerar Perguntas por IA"}
           </Button>
         </Box>
 
