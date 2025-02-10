@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -9,12 +9,48 @@ import {
   Button,
 } from "@mui/material";
 
-interface QuestionSectionProps {
-  numQuestions: number;
+interface Pergunta {
+  pergunta: string;
+  alternativas: {
+    A: string;
+    B: string;
+    C: string;
+    D: string;
+  };
+  resposta_correta: string;
 }
 
-const QuestionSection: React.FC<QuestionSectionProps> = ({ numQuestions }) => {
+interface QuestionSectionProps {
+  numQuestions: number;
+  questions?: Pergunta[];
+}
+
+const QuestionSection: React.FC<QuestionSectionProps> = ({
+  numQuestions,
+  questions = [],
+}) => {
+  const [localQuestions, setLocalQuestions] = useState<Pergunta[]>(questions);
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setLocalQuestions(questions);
+  }, [questions]);
+
+  const handleChangeQuestion = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: "pergunta" | "A" | "B" | "C" | "D"
+  ) => {
+    setLocalQuestions((prev) => {
+      const updated = [...prev];
+      if (!updated[currentPage - 1]) return prev;
+      if (field === "pergunta") {
+        updated[currentPage - 1].pergunta = e.target.value;
+      } else {
+        updated[currentPage - 1].alternativas[field] = e.target.value;
+      }
+      return updated;
+    });
+  };
 
   const handleNext = () => {
     if (currentPage < numQuestions) {
@@ -52,6 +88,8 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ numQuestions }) => {
       <TextField
         fullWidth
         placeholder="Insira sua pergunta aqui"
+        value={localQuestions[currentPage - 1]?.pergunta || ""}
+        onChange={(e) => handleChangeQuestion(e, "pergunta")}
         sx={{
           backgroundColor: "#e0e0e0",
           borderRadius: "4px",
@@ -90,6 +128,8 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ numQuestions }) => {
             <TextField
               fullWidth
               placeholder={`Resposta ${option}`}
+              value={localQuestions[currentPage - 1]?.alternativas?.[option] || ""}
+              onChange={(e) => handleChangeQuestion(e, option as "A" | "B" | "C" | "D")}
               sx={{
                 backgroundColor: "#e0e0e0",
                 borderRadius: "4px",

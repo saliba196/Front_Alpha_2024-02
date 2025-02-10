@@ -3,141 +3,156 @@ import { Box, Stack, TextField, Button, Typography } from "@mui/material";
 import ADMMenu_lat from "../components/ADMMenuLateral";
 import { TituloPagina } from "../components/TituloPagina";
 import QuestionSection from "../components/QuestionSection";
+import { generateQuiz } from "../api/quizService";
+import {
+  boxStyle,
+  contentStyle,
+  stackStyle,
+  textFieldStyle,
+  typographyStyle,
+  buttonStyle,
+} from "../components/QuizCreationPage.styles";
+
+interface QuizFormData {
+  associatedCourse: string;
+  numQuestions: number;
+  courseName: string;
+  classTranscription: string;
+}
+
+interface Pergunta {
+  pergunta: string;
+  alternativas: {
+    A: string;
+    B: string;
+    C: string;
+    D: string;
+  };
+  resposta_correta: string;
+}
 
 const QuizCreationPage: React.FC = () => {
-  const [numQuestions, setNumQuestions] = useState<number>(1);
-  const [courseName, setCourseName] = useState("");
-  const [associatedCourse, setAssociatedCourse] = useState("");
+  const [formData, setFormData] = useState<QuizFormData>({
+    associatedCourse: "",
+    numQuestions: 1,
+    courseName: "",
+    classTranscription: "",
+  });
+  const [aiQuestions, setAiQuestions] = useState<Pergunta[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleNumQuestionsChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = parseInt(event.target.value, 10);
-    setNumQuestions(value > 0 ? value : 1); // Garante que seja >= 1
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "number" ? parseInt(value, 10) : value,
+    }));
+  };
+
+  const generateAiQuestions = async () => {
+    try {
+      setError(null); // Clear previous errors
+      const response = await generateQuiz({
+        transcricao: formData.classTranscription,
+        num_perguntas: formData.numQuestions,
+      });
+      setAiQuestions(response.data.perguntas);
+    } catch (error: any) {
+      setError(error.message);
+    }
   };
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh", overflowX: "hidden" }}>
+    <Box sx={boxStyle}>
       {/* Menu Lateral */}
       <ADMMenu_lat />
 
       {/* Conteúdo principal */}
-      <Box
-        sx={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          gap: "32px",
-          padding: "24px",
-          background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
-          overflowX: "hidden",
-        }}
-      >
+      <Box sx={contentStyle}>
         {/* Título da Página */}
         <TituloPagina titulo="Criação de Questionário" />
 
         {/* Formulário Inicial */}
-        <Stack spacing={2} sx={{ maxWidth: "600px" }}>
+        <Stack spacing={2} sx={stackStyle}>
           <Box>
-            <Typography
-              sx={{
-                fontFamily: "Nunito",
-                fontWeight: "bold",
-                fontSize: "18px",
-                color: "white",
-                marginBottom: "8px",
-              }}
-            >
-              Curso associado:
-            </Typography>
+            <Typography sx={typographyStyle}>Curso associado:</Typography>
             <TextField
               variant="outlined"
               fullWidth
-              name="title"
-              value={associatedCourse}
-              onChange={(e) => setAssociatedCourse(e.target.value)}
-              sx={{
-                backgroundColor: "#e0e0e0",
-                borderRadius: "4px",
-                "& .MuiOutlinedInput-input": {
-                  color: "black",
-                },
-              }}
+              name="associatedCourse"
+              value={formData.associatedCourse}
+              onChange={handleInputChange}
+              sx={textFieldStyle}
             />
           </Box>
           <Box>
-            <Typography
-              sx={{
-                fontFamily: "Nunito",
-                fontWeight: "bold",
-                fontSize: "18px",
-                color: "white",
-                marginBottom: "8px",
-              }}
-            >
-              Número de Perguntas:
-            </Typography>
+            <Typography sx={typographyStyle}>Número de Perguntas:</Typography>
             <TextField
               variant="outlined"
               type="number"
               fullWidth
-              name="title"
-              value={numQuestions}
-              onChange={handleNumQuestionsChange}
-              sx={{
-                backgroundColor: "#e0e0e0",
-                borderRadius: "4px",
-                "& .MuiOutlinedInput-input": {
-                  color: "black",
-                },
-              }}
+              name="numQuestions"
+              value={formData.numQuestions}
+              onChange={handleInputChange}
+              sx={textFieldStyle}
             />
           </Box>
           <Box>
-            <Typography
-              sx={{
-                fontFamily: "Nunito",
-                fontWeight: "bold",
-                fontSize: "18px",
-                color: "white",
-                marginBottom: "8px",
-              }}
-            >
+            <Typography sx={typographyStyle}>
               Curso relacionado ao questionário:
             </Typography>
             <TextField
               variant="outlined"
-              type="number"
               fullWidth
-              name="title"
-              value={courseName}
-              onChange={(e) => setCourseName(e.target.value)}
-              sx={{
-                backgroundColor: "#e0e0e0",
-                borderRadius: "4px",
-                "& .MuiOutlinedInput-input": {
-                  color: "black",
-                },
-              }}
+              name="courseName"
+              value={formData.courseName}
+              onChange={handleInputChange}
+              sx={textFieldStyle}
+            />
+          </Box>
+          <Box>
+            <Typography sx={typographyStyle}>Transcrição da Aula:</Typography>
+            <TextField
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              name="classTranscription"
+              value={formData.classTranscription}
+              onChange={handleInputChange}
+              sx={textFieldStyle}
             />
           </Box>
         </Stack>
 
-        {/* Seção Dinâmica de Perguntas */}
-        <QuestionSection numQuestions={numQuestions} />
-
-        {/* Botão Confirmar */}
+        {/* Botão para gerar perguntas por IA */}
         <Box sx={{ textAlign: "center", marginTop: "24px" }}>
           <Button
             variant="contained"
-            color="success"
-            sx={{
-              fontFamily: "'Nunito', sans-serif",
-              fontWeight: "bold",
-              fontSize: "18px",
-              marginTop: "1rem",
-            }}
+            color="primary"
+            sx={buttonStyle}
+            onClick={generateAiQuestions}
           >
+            Gerar Perguntas por IA
+          </Button>
+        </Box>
+
+        {/* Exibir mensagem de erro, se houver */}
+        {error && (
+          <Box sx={{ textAlign: "center", marginTop: "24px" }}>
+            <Typography color="error">{error}</Typography>
+          </Box>
+        )}
+
+        {/* Seção Dinâmica de Perguntas */}
+        <QuestionSection
+          numQuestions={aiQuestions.length > 0 ? aiQuestions.length : formData.numQuestions}
+          questions={aiQuestions}
+        />
+
+        {/* Botão Confirmar */}
+        <Box sx={{ textAlign: "center", marginTop: "24px" }}>
+          <Button variant="contained" color="success" sx={buttonStyle}>
             Confirmar
           </Button>
         </Box>
