@@ -15,7 +15,7 @@ export const loginUser = async (userData: LoginData): Promise<{ data: LoginRespo
     try {
         const response = await axiosInstance.post("/login/authenticate", userData);
         
-        if (response.data.response && response.data.response !== 200) {
+        if (response.data.response !== 200) {
             const responseCode = response.data.response;
             const errorMessage = response.data.description || "Erro desconhecido no processamento.";
 
@@ -49,7 +49,7 @@ export const loginUser = async (userData: LoginData): Promise<{ data: LoginRespo
             throw new Error("Sem resposta do servidor. Verifique sua conexão.");
         } else {
             // Erro genérico
-            throw new Error("Erro desconhecido ao logar.");
+            throw new Error(`Erro desconhecido ao logar. ${error}`);
         }
     }
 };

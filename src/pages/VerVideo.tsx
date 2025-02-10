@@ -30,7 +30,7 @@ const VerVideo: React.FC = () => {
       >
         <Stack direction="column" spacing={1} alignItems="left">
           {/* Título da Página */}
-          <TituloPagina titulo="Nome do vídeo rs" />
+          <TituloPagina titulo="Nome do vídeo rs" backRoute="/home" />
           <Typography fontSize={24}> Descrição da aula </Typography>
         </Stack>
         <Stack direction="column" spacing={3} alignItems="left"></Stack>

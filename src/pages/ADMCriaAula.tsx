@@ -73,7 +73,7 @@ export const ADMCriaAula = () => {
       <Box sx={{ flex: 1, p: 4 }}>
         {" "}
         {/* Título da Página */}
-        <TituloPagina titulo="Criação de Aula" />
+        <TituloPagina titulo="Criação de Aula" backRoute="/AdminPanel" />
         {/* Conteúdo principal */}
         <ClassCreationForm />
       </Box>

@@ -22,7 +22,7 @@ const AdminPanel: React.FC = () => {
         }}
       >
         {/* Título da Página */}
-        <TituloPagina titulo="Painel de administrador" />
+        <TituloPagina titulo="Painel de administrador" backRoute="/HomeADM" />
 
         {/* Botões do Painel */}
         <Grid

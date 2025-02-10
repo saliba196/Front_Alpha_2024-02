@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography, Divider, Stack } from "@mui/material";
 import SideMenu from "../components/menu_lat"; // Componente do menu lateral
 import { PerfilUsuario } from "../components/PerfilUsuario"; // Componente do perfil do usuário
@@ -9,8 +10,42 @@ import { TituloPagina } from "../components/TituloPagina"; // Título da página
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import GroupsIcon from "@mui/icons-material/Groups";
+import { checkUserLoggedIn } from "../api/auth"; // Import checkUserLoggedIn
+import { fetchUserRequisition } from "../api/user_requisition"; // Import fetchUserRequisition
 
 const PaginaPerfil: React.FC = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userSignature, setUserSignature] = useState("");
+
+  useEffect(() => {
+    const verifyLogin = async () => {
+      const isLoggedIn = await checkUserLoggedIn();
+      if (!isLoggedIn) {
+        navigate("/"); // Redirect to login page if not logged in
+      } else {
+        const userRequisition = await fetchUserRequisition();
+        if (userRequisition.response === 200 && userRequisition.data) {
+          setUserName(userRequisition.data.name);
+          setUserEmail(userRequisition.data.email);
+          setUserSignature(userRequisition.data.signature ? "Assinante Premium" : "Assinante Básico");
+          setIsLoading(false); // Set loading to false if logged in and user info fetched
+        } else {
+          console.error("Erro ao buscar informações do usuário:", userRequisition.error);
+          throw new Error(userRequisition.description);
+        }
+      }
+    };
+
+    verifyLogin();
+  }, [navigate]);
+
+  if (isLoading) {
+    return null; // Render nothing while checking login status
+  }
+
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", overflowX: "hidden" }}>
       {/* Menu Lateral */}
@@ -29,13 +64,13 @@ const PaginaPerfil: React.FC = () => {
         }}
       >
         {/* Título da Página */}
-        <TituloPagina titulo="Meu Perfil" />
+        <TituloPagina titulo="Meu Perfil" backRoute="/home" />
         <Stack direction="column" spacing={3} alignItems="left">
           {/* Seção de Perfil do Usuário */}
           <PerfilUsuario
-            nome="Luiza Saliba"
-            assinatura="Assinante Premium"
-            email="luiza.saliba@tinaapp.com.br"
+            nome={userName}
+            assinatura={userSignature}
+            email={userEmail}
             fotoUrl="/path/to/profile-image.jpg" // Substituir pela URL da foto
           />
           <AcessoCertificados />

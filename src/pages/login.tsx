@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Stack, Typography, TextField, Paper, Button, Box, Checkbox, FormControlLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { boxStyle, paperStyle, textFieldStyle, buttonStyle } from "../components/Login.styles";
 import { loginUser } from "../api/loginService";
+import { checkUserLoggedIn } from "../api/auth";
+import { fetchUserRequisition } from "../api/user_requisition";
 
 interface SignUpFormData {
   id_method: string;
@@ -19,6 +21,17 @@ const Login: React.FC = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const redirectIfLoggedIn = async () => {
+      const isLoggedIn = await checkUserLoggedIn();
+      if (isLoggedIn) {
+        navigate("/home");
+      }
+    };
+
+    redirectIfLoggedIn();
+  }, [navigate]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -33,10 +46,22 @@ const Login: React.FC = () => {
     try {
       const response = await loginUser(formData);
       console.log("Login bem-sucedido:", response.data);
-      navigate("/home");
-    } catch (error) {
-      console.error("Erro ao fazer login:", error);
-      alert("Erro ao fazer login. Verifique suas credenciais.");
+
+      // Fetch user info to check if the user is an admin
+      const userRequisition = await fetchUserRequisition();
+      if (userRequisition.response === 200 && userRequisition.data) {
+        if (userRequisition.data.is_adm === true) {
+          navigate("/HomeADM"); // Redirect to admin home page
+        } else {
+          navigate("/HomeADM"); // Redirect to user home page
+        }
+      } else {
+        console.log("Erro ao buscar dados do usuário:", userRequisition);
+        throw new Error(userRequisition.description);
+      }
+    } catch (error: any) {
+      console.error(error);
+      alert(`Erro ao fazer login. Verifique suas credenciais.\nDetalhes: ${error.message}`);
     }
   };
 
@@ -57,7 +82,7 @@ const Login: React.FC = () => {
               {/* Campo de E-mail */}
               <TextField
                 name="id_method"
-                label="Digite o seu e-mail:"
+                label="Digite o seu e-mail ou CPF:"
                 variant="outlined"
                 sx={textFieldStyle}
                 fullWidth
@@ -77,6 +102,21 @@ const Login: React.FC = () => {
                 onChange={handleInputChange}
               />
 
+              {/* Botão Recuperar Conta */}
+              <Button
+                variant="text"
+                sx={{
+                  textTransform: "none", // Remove letras maiúsculas automáticas
+                  fontSize: "0.9rem", // Ajusta o tamanho da fonte
+                  color: "#8B0000", // Define a cor do texto
+                  "&:hover": { color: "#213435" }, // Muda a cor ao passar o mouse
+                  alignSelf: "flex-start", // Alinha o botão à esquerda
+                }}
+                onClick={() => navigate("/recuperacao")}
+              >
+                Esqueceu a senha?
+              </Button>
+
               {/* Checkbox "Manter-me conectado" */}
               <FormControlLabel
                 control={
@@ -86,7 +126,11 @@ const Login: React.FC = () => {
                     onChange={handleInputChange}
                   />
                 }
-                label="Manter-me conectado"
+                label={
+                  <Typography sx={{ color: "#555" }}>
+                    Manter-me conectado
+                  </Typography>
+                }
               />
 
               {/* Botão Entrar */}
