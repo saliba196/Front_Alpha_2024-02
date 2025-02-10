@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import { ButtonAtom } from "./ButtonAtom";
 import { ImageWithBadge } from "./ImageWithBadge";
@@ -10,12 +10,44 @@ import PaidIcon from "@mui/icons-material/Paid";
 import Groups2SharpIcon from "@mui/icons-material/Groups2Sharp";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { fetchUserRequisition } from "../api/user_requisition";
+import { logout_api } from "../api/logout";
 
 export const ADMMenu_lat: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [userName, setUserName] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const userRequisition = await fetchUserRequisition();
+        if (userRequisition.response === 200 && userRequisition.data) {
+          setUserName(userRequisition.data.name);
+        } else {
+          console.error("Erro ao buscar informações do usuário:", userRequisition.error);
+          throw new Error(userRequisition.description);
+        }
+      } catch (error: any) {
+        console.error("Erro ao buscar informações do usuário:", error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   const handleHover = (hovering: boolean) => setIsExpanded(hovering);
+
+  const handleLogout = async () => {
+    try {
+      await logout_api();
+      navigate("/"); // Redireciona para a página de login após o logout
+    } catch (error) {
+      console.error("Erro ao deslogar:", error);
+      // Você pode adicionar um tratamento de erro aqui, como exibir uma mensagem para o usuário
+    }
+  };
 
   return (
     <Box
@@ -39,8 +71,8 @@ export const ADMMenu_lat: React.FC = () => {
       {/* Foto do perfil com redirecionamento */}
       <Link to="/perfil" style={{ textDecoration: "none" }}>
         <ImageWithBadge
-          src="C:/Users/luiza/Documents/teste/react-mui-demo/src/Images/tina_img_teste.png"
-          alt="Nome do Usuário"
+          src=""
+          alt={userName}
           isExpanded={isExpanded}
         />
       </Link>
@@ -62,12 +94,14 @@ export const ADMMenu_lat: React.FC = () => {
           label="Busca"
           backgroundColor="#648A64"
           isExpanded={isExpanded}
+          onClick={() => navigate("/Pesquisa")} // Redireciona para a página de pesquisa
         />
         <ButtonAtom
           icon={<VerifiedUserIcon />}
           label="Painel de administrador"
           backgroundColor="#648A64"
           isExpanded={isExpanded}
+          onClick={() => navigate("/AdminPanel")} // Redireciona para o painel de administrador
         />
         <ButtonAtom
           icon={<SignalCellularAltIcon />}
@@ -104,6 +138,7 @@ export const ADMMenu_lat: React.FC = () => {
           label="Sair"
           backgroundColor="#46685B"
           isExpanded={isExpanded}
+          onClick={handleLogout} // Adiciona a função de logout
         />
       </Box>
     </Box>

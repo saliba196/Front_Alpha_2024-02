@@ -1,11 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import ADMMenu_lat from "../components/ADMMenuLateral"; // Menu lateral
 import { CardComponent } from "../components/card_video"; // Card de vídeo simples
 import { CardVideoProgresso } from "../components/CardVideoProgresso"; // Card com progresso
 import { BannerInicial } from "../components/BannerInicial"; // Componente Banner Inicial
+import { fetchCourses, fetchAulas } from "../api/courses"; // Import fetchCourses and fetchAulas
+
+interface Course {
+  id: number;
+  name: string;
+  description: string;
+}
+
+interface Aula {
+  id: number;
+  title: string;
+  description: string;
+  url: string;
+}
 
 const HomeADM: React.FC = () => {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [aulas, setAulas] = useState<Aula[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const coursesData = await fetchCourses();
+        setCourses(coursesData);
+
+        if (coursesData.length > 0) {
+          const aulasData = await fetchAulas(coursesData[0].id);
+          setAulas(aulasData);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", overflowX: "hidden" }}>
       {/* Menu Lateral */}
@@ -24,13 +59,15 @@ const HomeADM: React.FC = () => {
         }}
       >
         {/* Banner Inicial */}
-        <BannerInicial
-          title="Agatha All Along"
-          subtitle="Aprenda tudo sobre a dieta das bruxas"
-          onAssistirClick={() => alert("Assistir")}
-          onSaibaMaisClick={() => alert("Saiba Mais")}
-          imageSrc="/path/to/banner-image.jpg" // Substituir pela imagem correta
-        />
+        {courses.length > 0 && (
+          <BannerInicial
+            title={courses[0].name}
+            subtitle={courses[0].description}
+            onAssistirClick={() => alert("Assistir")}
+            onSaibaMaisClick={() => alert("Saiba Mais")}
+            imageSrc="/path/to/banner-image.jpg" // Substituir pela imagem correta
+          />
+        )}
 
         {/* Em Progresso */}
         <Box>
@@ -48,11 +85,11 @@ const HomeADM: React.FC = () => {
               paddingBottom: "8px",
             }}
           >
-            {[...Array(5)].map((_, index) => (
+            {aulas.map((aula) => (
               <CardVideoProgresso
-                key={index}
-                title="Como fazer marketing de restaurante"
-                progress={60}
+                key={aula.id}
+                title={aula.title}
+                progress={60} // Placeholder progress value
                 onButtonClick={() => alert("Continuando o vídeo...")}
               />
             ))}
@@ -75,10 +112,10 @@ const HomeADM: React.FC = () => {
               paddingBottom: "8px",
             }}
           >
-            {[...Array(8)].map((_, index) => (
+            {courses.map((course) => (
               <CardComponent
-                key={index}
-                title="Finanças para restaurante"
+                key={course.id}
+                title={course.name}
                 onButtonClick={() => alert("Iniciando vídeo...")}
                 imageSrc={undefined} // Substituir por uma URL de imagem real
               />

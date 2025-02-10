@@ -91,6 +91,7 @@ export const SideMenu: React.FC = () => {
           label="Busca"
           backgroundColor="#648A64"
           isExpanded={isExpanded}
+          onClick={() => navigate("/Pesquisa")} // Redireciona para a página de pesquisa
         />
         <ButtonAtom
           icon={<SignalCellularAltIcon />}

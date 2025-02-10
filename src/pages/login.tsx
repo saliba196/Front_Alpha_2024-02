@@ -53,7 +53,7 @@ const Login: React.FC = () => {
         if (userRequisition.data.is_adm === true) {
           navigate("/HomeADM"); // Redirect to admin home page
         } else {
-          navigate("/home"); // Redirect to user home page
+          navigate("/HomeADM"); // Redirect to user home page
         }
       } else {
         console.log("Erro ao buscar dados do usuário:", userRequisition);

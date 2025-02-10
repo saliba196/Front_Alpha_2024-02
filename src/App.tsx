@@ -51,7 +51,7 @@ const App: React.FC = () => {
       <Router>
         <Routes>
           {/* Rotas */}
-          <Route path="/" element={<QuizCreationPage />} />
+          <Route path="/" element={<Login />} />
           <Route path="/perfil" element={<PaginaPerfil />} />
           <Route path="/home" element={<Home />} />
           <Route path="/cadastro" element={<Cadastro />} />
@@ -59,7 +59,7 @@ const App: React.FC = () => {
           <Route path="/certificados" element={<VerCertificados />} />
           <Route path="/recuperacao" element={<Recuperacao />} />
           <Route path="/ADMCriaAula" element={<ADMCriaAula />} />
-          <Route path="/ADMQuizCreationPage" element={<Login />} />
+          <Route path="/ADMQuizCreationPage" element={<QuizCreationPage />} />
           <Route path="/ADMCriaCurso" element={<ADMCriaCurso />} />
           <Route path="/AdminPanel" element={<AdminPanel />} />
           <Route path="/Pesquisa" element={<SearchPage />} />
