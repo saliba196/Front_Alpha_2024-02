@@ -64,7 +64,7 @@ const PaginaPerfil: React.FC = () => {
         }}
       >
         {/* Título da Página */}
-        <TituloPagina titulo="Meu Perfil" />
+        <TituloPagina titulo="Meu Perfil" backRoute="/home" />
         <Stack direction="column" spacing={3} alignItems="left">
           {/* Seção de Perfil do Usuário */}
           <PerfilUsuario

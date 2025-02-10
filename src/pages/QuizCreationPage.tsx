@@ -74,7 +74,7 @@ const QuizCreationPage: React.FC = () => {
       {/* Conteúdo principal */}
       <Box sx={contentStyle}>
         {/* Título da Página */}
-        <TituloPagina titulo="Criação de Questionário" />
+        <TituloPagina titulo="Criação de Questionário" backRoute="/AdminPanel" />
 
         {/* Formulário Inicial */}
         <Stack spacing={2} sx={stackStyle}>
