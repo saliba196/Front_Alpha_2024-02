@@ -7,7 +7,7 @@ interface CustomButtonProps {
   text: string; // Texto dinâmico
 }
 
-export const Download: React.FC<CustomButtonProps> = ({ icon, text }) => {
+export const Download: React.FC<CustomButtonProps> = ({ icon, text, downloadUrl }) => {
   const navigate = useNavigate(); // Hook para navegação
 
   const handleClick = () => {
@@ -16,7 +16,8 @@ export const Download: React.FC<CustomButtonProps> = ({ icon, text }) => {
 
   return (
     <Button
-      onClick={handleClick}
+      // onClick={handleClick}
+      href={downloadUrl}
       sx={{
         width: "187px",
         height: "66px",

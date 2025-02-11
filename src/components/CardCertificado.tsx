@@ -8,6 +8,7 @@ interface VarsCardCertificado {
   altText: string; // Texto alternativo opcional
   titulo: string; // Título dinâmico do certificado
   descricao: string; // Descrição dinâmica do certificado
+  downloadUrl: string; // Nova prop para o link de download
 }
 
 export const CardCertificado: React.FC<VarsCardCertificado> = ({
@@ -15,6 +16,7 @@ export const CardCertificado: React.FC<VarsCardCertificado> = ({
   altText = "Imagem do Curso",
   titulo,
   descricao,
+  downloadUrl, // Nova prop
 }) => {
   return (
     <Stack direction="column" spacing={1} alignItems="left">
@@ -57,7 +59,12 @@ export const CardCertificado: React.FC<VarsCardCertificado> = ({
             </Typography>
           </Stack>
         </Stack>
-        <Download icon={<FileDownloadIcon />} text="Donwload"></Download>
+        {/* Componente Download com link para o certificado */}
+        <Download
+          icon={<FileDownloadIcon />}
+          text="Download"
+          downloadUrl={downloadUrl} // Passa o link de download para o componente Download
+        />
       </Stack>
       <Divider color="white" />
     </Stack>

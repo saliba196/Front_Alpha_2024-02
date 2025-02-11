@@ -184,7 +184,6 @@ const SubscriptionCard: React.FC = () => {
           Selecione o plano
         </MenuItem>
         <MenuItem sx={styles.alterarPlano} value="mensal">Acesso por um mês</MenuItem>
-        <MenuItem sx={styles.alterarPlano} value="trimestral">Acesso por três meses</MenuItem>
         <MenuItem sx={styles.alterarPlano} value="semestral">Acesso por seis meses</MenuItem>
         <MenuItem sx={styles.alterarPlano} value="anual">Acesso por um ano</MenuItem>
       </Select>
