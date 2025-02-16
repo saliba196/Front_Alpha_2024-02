@@ -4,7 +4,7 @@ interface videoRequest {
     video_url: string;
 }
 
-const getVideo = async (data: videoRequest): Promise<any> => {
+export const getVideo = async (data: videoRequest): Promise<any> => {
     try {
         const response = await axiosInstance.post("/videos/get-url", data);
         if (response.data.response !== 200) {

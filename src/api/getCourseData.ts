@@ -12,7 +12,7 @@ interface CourseData {
 }
 
 
-const trackCourse = async (data: CourseData): Promise<any> => {
+export const trackCourse = async (data: CourseData): Promise<any> => {
     try {
         const response = await axiosInstance.get("/courses/get-current", data);
         if (response.data.response !== 200) {

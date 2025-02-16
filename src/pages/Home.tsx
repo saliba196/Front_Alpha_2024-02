@@ -7,6 +7,7 @@ import { CardVideoProgresso } from "../components/CardVideoProgresso"; // Card c
 import { BannerInicial } from "../components/BannerInicial"; // Componente Banner Inicial
 import { checkUserLoggedIn, checkUserIsAdmin } from "../api/auth"; // Import checkUserLoggedIn and checkUserIsAdmin
 import { fetchCourses, fetchAulas } from "../api/courses"; // Import fetchCourses and fetchAulas
+import { trackCourse } from "../api/getCourseData";
 
 interface Course {
     id: number;
