@@ -37,7 +37,7 @@ export const generateQuiz = async (data: QuizRequest): Promise<QuizResponse> => 
     
     if (response.data.response !== 200) {
       const responseCode = response.data.response;
-      const errorMessage = response.data.description || "Erro desconhecido no processamento.";
+      const errorMessage = response.data.description;
       
       console.log(responseCode, errorMessage);
 

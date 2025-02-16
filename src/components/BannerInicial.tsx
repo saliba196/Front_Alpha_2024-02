@@ -9,7 +9,7 @@ interface BannerInicialProps {
   subtitle: string; // Subtítulo do banner
   onAssistirClick: () => void; // Função para o botão "Assistir"
   onSaibaMaisClick: () => void; // Função para o botão "Saiba mais"
-  imageSrc?: string; // URL da imagem de fundo (opcional)
+  imageSrc: string; // URL da imagem de fundo
 }
 
 // Estilo para o botão "Assistir" e "Saiba Mais"
@@ -41,85 +41,34 @@ export const BannerInicial: React.FC<BannerInicialProps> = ({
   return (
     <Box
       sx={{
-        width: "1300px",
-        height: "567px",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
-        justifyContent: "flex-start",
-        padding: "32px",
-        backgroundColor: "#D3D3D3", // Placeholder para imagem de fundo
-        backgroundImage: imageSrc ? `url(${imageSrc})` : "none",
+        backgroundImage: `url(${imageSrc})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        borderRadius: "8px",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+        padding: "24px",
+        borderRadius: "16px",
+        color: "white",
+        textAlign: "center",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-        }}
-      >
-        {/* Indicador de Lançamento */}
-        <Typography
-          sx={{
-            backgroundColor: "#46685B",
-            color: "white",
-            fontFamily: "Nunito",
-            fontSize: "30px",
-            fontWeight: "bold",
-            borderRadius: "4px",
-            padding: "4px 8px",
-            display: "inline-block",
-            textAlign: "center",
-          }}
-        >
-          LANÇAMENTO
-        </Typography>
-
-        {/* Título */}
-        <Typography
-          sx={{
-            fontFamily: "Nunito",
-            fontWeight: "bold",
-            fontSize: "45px",
-            color: "white",
-          }}
-        >
-          {title}
-        </Typography>
-
-        {/* Subtítulo */}
-        <Typography
-          sx={{
-            fontFamily: "Nunito",
-            fontSize: "18px",
-            color: "white",
-          }}
-        >
-          {subtitle}
-        </Typography>
-
-        {/* Botões */}
-        <Box sx={{ display: "flex", gap: "16px", mt: "16px" }}>
-          <StyledButton
-            bgcolor="#648A64"
-            onClick={onAssistirClick}
-            startIcon={<PlayArrowIcon />}
-          >
-            Assistir
-          </StyledButton>
-          <StyledButton
-            bgcolor="#46685B"
-            onClick={onSaibaMaisClick}
-            startIcon={<InfoIcon />}
-          >
-            Saiba mais
-          </StyledButton>
-        </Box>
+      <Typography variant="h4" sx={{ fontWeight: "bold", marginBottom: "16px" }}>
+        {title}
+      </Typography>
+      <Typography variant="subtitle1" sx={{ marginBottom: "24px" }}>
+        {subtitle}
+      </Typography>
+      <Box sx={{ display: "flex", gap: "16px" }}>
+        <Button variant="contained" color="primary" onClick={onAssistirClick}>
+          Assistir
+        </Button>
+        <Button variant="outlined" color="primary" onClick={onSaibaMaisClick}>
+          Saiba Mais
+        </Button>
       </Box>
     </Box>
   );
 };
+
+export default BannerInicial;

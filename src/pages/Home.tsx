@@ -12,6 +12,7 @@ interface Course {
     id: number;
     name: string;
     description: string;
+    imageUrl: string; // Adicione a propriedade imageUrl
 }
 
 interface Aula {
@@ -91,7 +92,7 @@ const Home: React.FC = () => {
             subtitle={courses[0].description}
             onAssistirClick={() => alert("Assistir")}
             onSaibaMaisClick={() => alert("Saiba Mais")}
-            imageSrc="/path/to/banner-image.jpg" // Substituir pela imagem correta
+            imageSrc={courses[0].imageUrl} // Use a propriedade imageUrl
           />
         )}
 
@@ -143,7 +144,7 @@ const Home: React.FC = () => {
                 key={course.id}
                 title={course.name}
                 onButtonClick={() => alert("Iniciando vídeo...")}
-                imageSrc={undefined} // Substituir por uma URL de imagem real
+                imageSrc={course.imageUrl} // Use a propriedade imageUrl
               />
             ))}
           </Box>
