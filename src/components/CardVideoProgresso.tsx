@@ -49,7 +49,7 @@ export const CardVideoProgresso: React.FC<CardVideoProgressoProps> = ({
             height: 169, // Altura aumentada em 10%
             backgroundColor: "#D3D3D3", // Placeholder cinza para imagem
             borderRadius: "4px",
-            backgroundImage: imageSrc ? `url(${imageSrc})` : "none",
+            backgroundImage: imageSrc ? `url("${imageSrc}")` : "none",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

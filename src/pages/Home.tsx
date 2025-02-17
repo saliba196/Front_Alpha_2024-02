@@ -7,13 +7,12 @@ import { CardVideoProgresso } from "../components/CardVideoProgresso"; // Card c
 import { BannerInicial } from "../components/BannerInicial"; // Componente Banner Inicial
 import { checkUserLoggedIn, checkUserIsAdmin } from "../api/auth"; // Import checkUserLoggedIn and checkUserIsAdmin
 import { fetchCourses, fetchAulas } from "../api/courses"; // Import fetchCourses and fetchAulas
-import { trackCourse } from "../api/getCourseData";
 
 interface Course {
     id: number;
     name: string;
     description: string;
-    imageUrl: string; // Adicione a propriedade imageUrl
+    url: string;
 }
 
 interface Aula {
@@ -119,6 +118,7 @@ const Home: React.FC = () => {
                 title={aula.title}
                 progress={60} // Placeholder progress value
                 onButtonClick={() => alert("Continuando o vídeo...")}
+                imageSrc={aula.url} // Placeholder image source
               />
             ))}
           </Box>
@@ -145,7 +145,7 @@ const Home: React.FC = () => {
                 key={course.id}
                 title={course.name}
                 onButtonClick={() => alert("Iniciando vídeo...")}
-                imageSrc={course.imageUrl} // Use a propriedade imageUrl
+                imageSrc={course.url} 
               />
             ))}
           </Box>
