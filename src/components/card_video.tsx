@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Typography, IconButton, Avatar } from "@mui/material";
 import { styled } from "@mui/system";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { Link } from "react-router-dom";
 
 interface CardComponentProps {
   title: string; // Título do card
-  onButtonClick?: () => void; // Função opcional para o botão
+  onButtonClick?: () => void; // Função opcional para o clique
   imageSrc?: string; // Caminho para a imagem (opcional)
+  linkTo?: string; // URL para redirecionamento ao clicar no card
 }
 
 const StyledIconButton = styled(IconButton)`
@@ -18,13 +19,10 @@ const StyledIconButton = styled(IconButton)`
   }
 `;
 
-export const CardComponent: React.FC<CardComponentProps> = ({
-  title,
-  onButtonClick,
-  imageSrc,
-}) => {
+const CardContent: React.FC<CardComponentProps> = ({ title, onButtonClick, imageSrc }) => {
   return (
     <Box
+      onClick={onButtonClick}
       sx={{
         width: "100%",
         height: "210px",
@@ -35,28 +33,26 @@ export const CardComponent: React.FC<CardComponentProps> = ({
         alignItems: "center",
         padding: "8px",
         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        cursor: onButtonClick ? "pointer" : "default",
       }}
     >
-      {/* Placeholder da imagem */}
       <Avatar
         src={imageSrc}
         alt={title}
         variant="square"
         sx={{
           width: "100%",
-          height: "100px",
-          backgroundColor: "#d3d3d3", // Cor de fundo do placeholder
+          height: "150px",
+          backgroundColor: "#d3d3d3",
           marginBottom: "12px",
           borderRadius: "4px",
         }}
       />
-
-      {/* Título */}
       <Typography
         sx={{
           fontFamily: "Nunito",
           fontSize: "16px",
-          fontWeight: 400,
+          fontWeight: 500,
           color: "white",
           textAlign: "center",
           marginBottom: "12px",
@@ -64,30 +60,17 @@ export const CardComponent: React.FC<CardComponentProps> = ({
       >
         {title}
       </Typography>
-
-      {/* Botão com ícone e texto */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "8px",
-        }}
-      >
-        <StyledIconButton onClick={onButtonClick}>
-          <PlayArrowIcon sx={{ color: "white", fontSize: "18px" }} />
-        </StyledIconButton>
-        <Typography
-          sx={{
-            fontFamily: "Nunito",
-            fontSize: "16px",
-            fontWeight: 700,
-            color: "white",
-          }}
-        >
-          Assistir
-        </Typography>
-      </Box>
     </Box>
   );
+};
+
+export const CardComponent: React.FC<CardComponentProps> = (props) => {
+  if (props.linkTo) {
+    return (
+      <Link to={props.linkTo} style={{ textDecoration: "none" }}>
+        <CardContent {...props} />
+      </Link>
+    );
+  }
+  return <CardContent {...props} />;
 };

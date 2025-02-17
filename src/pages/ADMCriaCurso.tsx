@@ -1,40 +1,102 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Stack, TextField, Button, Typography, CircularProgress } from "@mui/material";
 import ADMMenu_lat from "../components/ADMMenuLateral";
 import { TituloPagina } from "../components/TituloPagina";
 import QuestionSection from "../components/QuestionSection";
-import InfosDoCurso from "../components/InfosDoCurso.tsx";
+import InfosDoCurso from "../components/InfosDoCurso";
 import SecaoCriaAulas from "../components/SecaoCriaAulas";
 import { generateQuiz } from "../api/quizService";
+import { createCourse } from "../api/createCourse";
+
+interface Lesson {
+  title: string;
+  description: string;
+  youtubeLink: string;
+  thumnail_url: string;
+}
+
+interface Pergunta {
+  pergunta: string;
+  alternativas: {
+    A: string;
+    B: string;
+    C: string;
+    D: string;
+  };
+  resposta_correta: string;
+  resposta_sugerida: string; // Adicionando campo para resposta sugerida
+}
 
 const ADMCriaCurso: React.FC = () => {
   const [numQuestions, setNumQuestions] = useState<number>(1);
-  const [courseName, setCourseName] = useState("");
-  const [associatedCourse, setAssociatedCourse] = useState("");
-  const [classTranscription, setClassTranscription] = useState("");
-  interface Pergunta {
-    id: number;
-    pergunta: string;
-    alternativas: string[];
-    resposta_correta: string;
-  }
+  const [formData, setFormData] = useState({
+    courseTitle: "",
+    numberOfLessons: "",
+    courseDescription: "",
+    courseCoverUrl: "",
+  });
 
-  const [aiQuestions, setAiQuestions] = useState<Pergunta[]>([]);
+  const [lessons, setLessons] = useState<Lesson[]>([
+    {
+      title: "",
+      description: "",
+      youtubeLink: "",
+      thumnail_url: "",
+    },
+  ]);
+
+  const [aiQuestions, setAiQuestions] = useState<Pergunta[]>([
+    {
+      pergunta: "",
+      alternativas: {
+        A: "",
+        B: "",
+        C: "",
+        D: "",
+      },
+      resposta_correta: "",
+      resposta_sugerida: "", // Inicializando campo para resposta sugerida
+    },
+  ]);
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleNumQuestionsChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  useEffect(() => {
+    // Ajusta o número de perguntas quando numQuestions é alterado
+    setAiQuestions((prev) => {
+      const updated = [...prev];
+      if (numQuestions > updated.length) {
+        // Adiciona perguntas vazias se numQuestions for maior que o tamanho atual
+        for (let i = updated.length; i < numQuestions; i++) {
+          updated.push({
+            pergunta: "",
+            alternativas: {
+              A: "",
+              B: "",
+              C: "",
+              D: "",
+            },
+            resposta_correta: "",
+            resposta_sugerida: "", // Inicializando campo para resposta sugerida
+          });
+        }
+      } else if (numQuestions < updated.length) {
+        // Remove perguntas extras se numQuestions for menor que o tamanho atual
+        updated.length = numQuestions;
+      }
+      return updated;
+    });
+  }, [numQuestions]);
+
+  const handleNumQuestionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value, 10);
     setNumQuestions(value > 0 ? value : 1); // Garante que seja >= 1
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "classTranscription") {
-      setClassTranscription(value);
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const generateAiQuestions = async () => {
@@ -42,20 +104,55 @@ const ADMCriaCurso: React.FC = () => {
       setError(null); // Clear previous errors
       setLoading(true); // Start loading animation
       const response = await generateQuiz({
-        transcricao: classTranscription,
+        transcricao: formData.courseDescription,
         num_perguntas: numQuestions,
       });
-      const perguntas: Pergunta[] = response.data.perguntas.map((pergunta: any, index: number) => ({
-        id: index,
+      const perguntas = response.data.perguntas.slice(0, numQuestions).map((pergunta: any) => ({
         pergunta: pergunta.pergunta,
         alternativas: pergunta.alternativas,
         resposta_correta: pergunta.resposta_correta,
+        resposta_sugerida: pergunta.resposta_correta, // Armazenando a resposta sugerida pela IA
       }));
       setAiQuestions(perguntas);
     } catch (error: any) {
       setError(error.message);
     } finally {
       setLoading(false); // Stop loading animation
+    }
+  };
+
+  const handleSaveCourse = async () => {
+    try {
+      setLoading(true);
+      const courseData = {
+        titulo: formData.courseTitle,
+        numero_aulas: parseInt(formData.numberOfLessons, 10),
+        descricao_curso: formData.courseDescription,
+        imagem_curso: formData.courseCoverUrl,
+        aulas: lessons.map((lesson) => ({
+          titulo: lesson.title,
+          descricao: lesson.description,
+          video_url: lesson.youtubeLink,
+          transcrição: lesson.thumnail_url,
+        })),
+        questoes: aiQuestions.map((question) => ({
+          enunciado: question.pergunta,
+          alternativa_a: question.alternativas.A,
+          alternativa_b: question.alternativas.B,
+          alternativa_c: question.alternativas.C,
+          alternativa_d: question.alternativas.D,
+          alternativa_e: "", // Supondo que não há alternativa E
+          resposta_correta: question.resposta_correta,
+        })),
+      };
+      console.log("Dados do curso:", courseData);
+      const response = await createCourse(courseData);
+      console.log("Curso criado com sucesso:", response);
+      // Adicione qualquer lógica adicional após a criação do curso, como redirecionamento ou exibição de mensagem de sucesso
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,7 +173,7 @@ const ADMCriaCurso: React.FC = () => {
       >
         {/* Título da Página */}
         <TituloPagina titulo="Criação de Curso" backRoute="/AdminPanel" />
-        <InfosDoCurso />
+        <InfosDoCurso formData={formData} onFormDataChange={setFormData} />
         <Typography
           sx={{
             fontFamily: "Nunito",
@@ -88,7 +185,7 @@ const ADMCriaCurso: React.FC = () => {
         >
           Aulas do curso
         </Typography>
-        <SecaoCriaAulas />
+        <SecaoCriaAulas lessons={lessons} setLessons={setLessons} />
         <Typography
           sx={{
             fontFamily: "Nunito",
@@ -141,15 +238,15 @@ const ADMCriaCurso: React.FC = () => {
                 marginBottom: "8px",
               }}
             >
-              Transcrição da Aula:
+              Descrição do Curso:
             </Typography>
             <TextField
               variant="outlined"
               fullWidth
               multiline
               rows={4}
-              name="classTranscription"
-              value={classTranscription}
+              name="courseDescription"
+              value={formData.courseDescription}
               onChange={handleInputChange}
               sx={{
                 backgroundColor: "#fff",
@@ -185,6 +282,7 @@ const ADMCriaCurso: React.FC = () => {
         <QuestionSection
           numQuestions={aiQuestions.length > 0 ? aiQuestions.length : numQuestions}
           questions={aiQuestions}
+          setQuestions={setAiQuestions}
         />
 
         {/* Botão de Salvar */}
@@ -192,7 +290,7 @@ const ADMCriaCurso: React.FC = () => {
           <Button
             variant="contained"
             color="success"
-            //onClick={() => console.log("Lessons Data:", lessons)}
+            onClick={handleSaveCourse}
             sx={{
               padding: "10px 20px",
               borderRadius: "8px",

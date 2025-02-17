@@ -16,6 +16,8 @@ import ADMCriaCurso from "./pages/ADMCriaCurso";
 import AdminPanel from "./pages/PainelADM";
 import SearchPage from "./pages/pesquisa";
 import HomeADM from "./pages/HomeADM";
+import Infos from "./pages/infos";
+import Exercicios from "./pages/exercicios";
 
 // Criação do tema global
 const theme = createTheme({
@@ -64,6 +66,8 @@ const App: React.FC = () => {
           <Route path="/AdminPanel" element={<AdminPanel />} />
           <Route path="/Pesquisa" element={<SearchPage />} />
           <Route path="/HomeADM" element={<HomeADM />} />
+          <Route path="/infos" element={<Infos />} />
+          <Route path="/exercicios" element={<Exercicios />} />
         </Routes>
       </Router>
     </ThemeProvider>

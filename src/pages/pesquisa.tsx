@@ -42,7 +42,7 @@ const PaginaPesquisa: React.FC = () => {
         }}
       >
         {/* Título da Página */}
-        <TituloPagina titulo="Pesquisa de Cursos" />
+        <TituloPagina titulo="Pesquisa de Cursos" backRoute="/home" />
         
         <Stack direction="column" spacing={3} alignItems="left">
           {/* Campo de Pesquisa */}

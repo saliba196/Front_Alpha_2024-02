@@ -1,16 +1,15 @@
 import React from "react";
-import { Box, Typography, Divider, Stack } from "@mui/material";
-import SideMenu from "../components/menu_lat"; // Componente do menu lateral
-import { PerfilUsuario } from "../components/PerfilUsuario"; // Componente do perfil do usuário
-import SubscriptionCard from "../components/SubscriptionCard"; // Card de assinatura
-import RenewalCard from "../components/RenewalCard"; // Card de renovação
-import AcessoCertificados from "../components/AcessoCertificados";
-import { TituloPagina } from "../components/TituloPagina"; // Título da página
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import LoyaltyIcon from "@mui/icons-material/Loyalty";
-import GroupsIcon from "@mui/icons-material/Groups";
+import { Box, Typography, Stack } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
+import SideMenu from "../components/menu_lat";
+import { TituloPagina } from "../components/TituloPagina";
 
 const VerVideo: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const videoUrl = searchParams.get("videoUrl") || "";
+  const videoTitle = searchParams.get("videoTitle") || "Título do vídeo";
+  const description = searchParams.get("description") || "Descrição da aula";
+
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", overflowX: "hidden" }}>
       {/* Menu Lateral */}
@@ -28,14 +27,25 @@ const VerVideo: React.FC = () => {
           overflowX: "hidden",
         }}
       >
-        <Stack direction="column" spacing={1} alignItems="left">
-          {/* Título da Página */}
-          <TituloPagina titulo="Nome do vídeo rs" backRoute="/home" />
-          <Typography fontSize={24}> Descrição da aula </Typography>
+        <Stack direction="column" spacing={1} alignItems="flex-start">
+          <TituloPagina titulo={videoTitle} backRoute="/home" />
+          <Typography fontSize={24}>{description}</Typography>
         </Stack>
-        <Stack direction="column" spacing={3} alignItems="left"></Stack>
-        <Box component="section" sx={{ p: 2, border: "1px dashed grey" }}>
-          Aqui vai o vídeo
+        <Box component="section" sx={{ p: 2, display: "flex", justifyContent: "center" }}>
+          {videoUrl ? (
+            <Box
+              component="iframe"
+              src={videoUrl}
+              title={videoTitle}
+              width="60%"
+              height="700px"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <Typography color="white">Nenhuma URL de vídeo foi fornecida.</Typography>
+          )}
         </Box>
       </Box>
     </Box>

@@ -41,13 +41,13 @@ export const BannerInicial: React.FC<BannerInicialProps> = ({
   return (
     <Box
       sx={{
-        width: "1300px",
+        width: "100%",
         height: "567px",
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-start",
         padding: "32px",
-        backgroundColor: "#D3D3D3", // Placeholder para imagem de fundo
+        backgroundColor: "#D3D3D3",
         backgroundImage: imageSrc ? `url(${imageSrc})` : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -62,7 +62,6 @@ export const BannerInicial: React.FC<BannerInicialProps> = ({
           gap: "16px",
         }}
       >
-        {/* Indicador de Lançamento */}
         <Typography
           sx={{
             backgroundColor: "#46685B",
@@ -79,7 +78,6 @@ export const BannerInicial: React.FC<BannerInicialProps> = ({
           LANÇAMENTO
         </Typography>
 
-        {/* Título */}
         <Typography
           sx={{
             fontFamily: "Nunito",
@@ -91,7 +89,6 @@ export const BannerInicial: React.FC<BannerInicialProps> = ({
           {title}
         </Typography>
 
-        {/* Subtítulo */}
         <Typography
           sx={{
             fontFamily: "Nunito",
@@ -102,15 +99,7 @@ export const BannerInicial: React.FC<BannerInicialProps> = ({
           {subtitle}
         </Typography>
 
-        {/* Botões */}
         <Box sx={{ display: "flex", gap: "16px", mt: "16px" }}>
-          <StyledButton
-            bgcolor="#648A64"
-            onClick={onAssistirClick}
-            startIcon={<PlayArrowIcon />}
-          >
-            Assistir
-          </StyledButton>
           <StyledButton
             bgcolor="#46685B"
             onClick={onSaibaMaisClick}

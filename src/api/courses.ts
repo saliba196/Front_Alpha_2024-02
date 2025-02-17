@@ -4,13 +4,15 @@ interface Course {
     id: number;
     name: string;
     description: string;
+    url: string;
 }
 
 interface Aula {
     id: number;
     title: string;
     description: string;
-    url: string;
+    video_url: string;
+    image_url: string;
 }
 
 interface CourseResponse {
@@ -29,6 +31,7 @@ export const fetchCourses = async (): Promise<Course[]> => {
     try {
         const response = await axiosInstance.get<CourseResponse>("/courses");
         if (response.data.response === 200) {
+            console.log(response.data.data);
             return response.data.data;
         } else {
             throw new Error(response.data.description);
@@ -52,3 +55,4 @@ export const fetchAulas = async (courseId: number): Promise<Aula[]> => {
         throw error;
     }
 };
+

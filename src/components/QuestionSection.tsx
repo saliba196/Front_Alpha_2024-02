@@ -18,29 +18,31 @@ interface Pergunta {
     D: string;
   };
   resposta_correta: string;
+  resposta_sugerida: string; // Adicionando campo para resposta sugerida
 }
 
 interface QuestionSectionProps {
   numQuestions: number;
-  questions?: Pergunta[];
+  questions: Pergunta[];
+  setQuestions: (questions: Pergunta[]) => void;
 }
 
 const QuestionSection: React.FC<QuestionSectionProps> = ({
   numQuestions,
-  questions = [],
+  questions,
+  setQuestions,
 }) => {
-  const [localQuestions, setLocalQuestions] = useState<Pergunta[]>(questions);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    setLocalQuestions(questions);
-  }, [questions]);
+    setQuestions(questions);
+  }, [questions, setQuestions]);
 
   const handleChangeQuestion = (
     e: React.ChangeEvent<HTMLInputElement>,
     field: "pergunta" | "A" | "B" | "C" | "D"
   ) => {
-    setLocalQuestions((prev) => {
+    setQuestions((prev) => {
       const updated = [...prev];
       if (!updated[currentPage - 1]) return prev;
       if (field === "pergunta") {
@@ -48,6 +50,16 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
       } else {
         updated[currentPage - 1].alternativas[field] = e.target.value;
       }
+      return updated;
+    });
+  };
+
+  const handleSelectCorrectAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setQuestions((prev) => {
+      const updated = [...prev];
+      if (!updated[currentPage - 1]) return prev;
+      updated[currentPage - 1].resposta_correta = value;
       return updated;
     });
   };
@@ -88,7 +100,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
       <TextField
         fullWidth
         placeholder="Insira sua pergunta aqui"
-        value={localQuestions[currentPage - 1]?.pergunta || ""}
+        value={questions[currentPage - 1]?.pergunta || ""}
         onChange={(e) => handleChangeQuestion(e, "pergunta")}
         sx={{
           backgroundColor: "#e0e0e0",
@@ -111,7 +123,10 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
         correta ao lado
       </Typography>
 
-      <RadioGroup>
+      <RadioGroup
+        value={questions[currentPage - 1]?.resposta_correta || ""}
+        onChange={handleSelectCorrectAnswer}
+      >
         {["A", "B", "C", "D"].map((option) => (
           <Box
             key={option}
@@ -128,7 +143,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
             <TextField
               fullWidth
               placeholder={`Resposta ${option}`}
-              value={localQuestions[currentPage - 1]?.alternativas?.[option] || ""}
+              value={questions[currentPage - 1]?.alternativas?.[option] || ""}
               onChange={(e) => handleChangeQuestion(e, option as "A" | "B" | "C" | "D")}
               sx={{
                 backgroundColor: "#e0e0e0",
@@ -147,16 +162,17 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
           </Box>
         ))}
       </RadioGroup>
+
       <Typography
-        variant="subtitle1"
+        variant="subtitle2"
         sx={{
           fontFamily: "Nunito",
           fontWeight: "bold",
-          marginTop: "16px",
+          marginTop: "8px",
           color: "#213435",
         }}
       >
-        Resposta correta: {localQuestions[currentPage - 1]?.resposta_correta || ""}
+        Resposta sugerida pela IA: {questions[currentPage - 1]?.resposta_sugerida || ""}
       </Typography>
       <Box
         sx={{
