@@ -34,6 +34,7 @@ const ADMCriaCurso: React.FC = () => {
     numberOfLessons: "",
     courseDescription: "",
     courseCoverUrl: "",
+    classTranscription: "", // Novo campo para a transcrição da aula
   });
 
   const [lessons, setLessons] = useState<Lesson[]>([
@@ -99,12 +100,13 @@ const ADMCriaCurso: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Altera para usar a transcrição da aula para a geração das perguntas
   const generateAiQuestions = async () => {
     try {
       setError(null); // Clear previous errors
       setLoading(true); // Start loading animation
       const response = await generateQuiz({
-        transcricao: formData.courseDescription,
+        transcricao: formData.classTranscription,
         num_perguntas: numQuestions,
       });
       const perguntas = response.data.perguntas.slice(0, numQuestions).map((pergunta: any) => ({
@@ -229,6 +231,8 @@ const ADMCriaCurso: React.FC = () => {
             />
           </Box>
           <Box>
+          </Box>
+          <Box>
             <Typography
               sx={{
                 fontFamily: "Nunito",
@@ -238,22 +242,20 @@ const ADMCriaCurso: React.FC = () => {
                 marginBottom: "8px",
               }}
             >
-              Descrição do Curso:
+              Transcrição da Aula:
             </Typography>
             <TextField
               variant="outlined"
               fullWidth
               multiline
               rows={4}
-              name="courseDescription"
-              value={formData.courseDescription}
+              name="classTranscription"
+              value={formData.classTranscription}
               onChange={handleInputChange}
               sx={{
                 backgroundColor: "#fff",
                 borderRadius: "8px",
-                "& .MuiOutlinedInput-input": {
-                  color: "black",
-                },
+                "& .MuiOutlinedInput-input": { color: "black" },
               }}
             />
           </Box>
