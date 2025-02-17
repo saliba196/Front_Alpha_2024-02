@@ -11,7 +11,8 @@ interface Aula {
     id: number;
     title: string;
     description: string;
-    url: string;
+    video_url: string;
+    image_url: string;
 }
 
 interface CourseResponse {
@@ -54,3 +55,4 @@ export const fetchAulas = async (courseId: number): Promise<Aula[]> => {
         throw error;
     }
 };
+

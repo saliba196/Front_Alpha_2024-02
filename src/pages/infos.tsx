@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, IconButton, Avatar } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -7,6 +7,7 @@ import SideMenu from "../components/menu_lat";
 import { CardComponent } from "../components/card_video";
 import ArticleIcon from '@mui/icons-material/Article';
 import { useSearchParams, redirect } from "react-router-dom";
+import { fetchAulas } from "../api/courses";
 
 const containerStyle = {
   background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
@@ -20,6 +21,15 @@ const Infos: React.FC = () => {
   const pageId = searchParams.get("id") || "0";
   const pageTitle = searchParams.get("title") || "Agatha all along";
   const pageSubtitle = searchParams.get("subtitle") || "Aprenda tudo sobre a dieta das bruxas";
+
+  const [aulas, setAulas] = useState<any[]>([]);
+
+  useEffect(() => {
+    const courseId = Number(pageId);
+    fetchAulas(courseId)
+      .then(data => setAulas(data))
+      .catch(error => console.error("Erro ao buscar aulas:", error));
+  }, [pageId]);
 
   return (
     <Box sx={containerStyle}>
@@ -59,9 +69,7 @@ const Infos: React.FC = () => {
             <Typography variant="subtitle1" sx={{ my: 1 }}>
               {pageSubtitle}
             </Typography>
-            <Typography variant="body2" sx={{ my: 1 }}>
-              Curso ID: {pageId}
-            </Typography>
+
             <Button
               variant="contained"
               startIcon={<PlayArrowIcon />}
@@ -80,36 +88,13 @@ const Infos: React.FC = () => {
               Assistir
             </Typography>
             <Box display="flex" sx={{ flex: 1 }} flexDirection="column" gap={2}>
-              <CardComponent
-                title="Finanças para restaurante"
-                onButtonClick={() =>
-                  window.open(
-                    "https://www.youtube.com/watch?v=GQQsSFN6Mo0",
-                    "_blank"
-                  )
-                }
-                imageSrc={undefined} // Substitua por uma URL de imagem real
-              />
-              <CardComponent
-                title="Finanças para restaurante"
-                onButtonClick={() =>
-                  window.open(
-                    "https://www.youtube.com/watch?v=GQQsSFN6Mo0",
-                    "_blank"
-                  )
-                }
-                imageSrc={undefined} // Substitua por uma URL de imagem real
-              />
-              <CardComponent
-                title="Finanças para restaurante"
-                onButtonClick={() =>
-                  window.open(
-                    "https://www.youtube.com/watch?v=GQQsSFN6Mo0",
-                    "_blank"
-                  )
-                }
-                imageSrc={undefined} // Substitua por uma URL de imagem real
-              />
+              {aulas.map((aula) => (
+                <CardComponent
+                  title={aula.title}
+                  imageSrc={aula.image_url}
+                  linkTo={`/video?videoUrl=${encodeURIComponent(aula.video_url)}&videoTitle=${encodeURIComponent(aula.title)}&description=${encodeURIComponent(aula.description)}`}
+                />
+              ))}
             </Box>
           </Box>
 

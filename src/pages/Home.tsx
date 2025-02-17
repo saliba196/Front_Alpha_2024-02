@@ -132,9 +132,9 @@ const Home: React.FC = () => {
                 key={aula.id}
                 title={aula.title}
                 progress={30} // Placeholder progress value
-                imageSrc={aula.url}
+                imageSrc={aula.image_url}
                 linkTo={`/video?videoUrl=${encodeURIComponent(
-                  "https://youtube.com/embed/u6ijpqnDw1s"
+                  aula.video_url
                 )}&videoTitle=${encodeURIComponent(aula.title)}&description=${encodeURIComponent(
                   aula.description
                 )}`}
