@@ -1,27 +1,51 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
-import ADMMenu_lat from "../components/ADMMenuLateral"; // Menu lateral
+import ADMMenu_lat from "../components/ADMMenuLateral";
 import { CardComponent } from "../components/card_video"; // Card de vídeo simples
 import { CardVideoProgresso } from "../components/CardVideoProgresso"; // Card com progresso
 import { BannerInicial } from "../components/BannerInicial"; // Componente Banner Inicial
+import { checkUserLoggedIn, checkUserIsAdmin } from "../api/auth"; // Import checkUserLoggedIn and checkUserIsAdmin
 import { fetchCourses, fetchAulas } from "../api/courses"; // Import fetchCourses and fetchAulas
+import { link } from "fs";
 
 interface Course {
-  id: number;
-  name: string;
-  description: string;
+    id: number;
+    name: string;
+    description: string;
+    url: string;
 }
 
 interface Aula {
-  id: number;
-  title: string;
-  description: string;
-  url: string;
+    id: number;
+    title: string;
+    description: string;
+    url: string;
 }
 
 const HomeADM: React.FC = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [courses, setCourses] = useState<Course[]>([]);
   const [aulas, setAulas] = useState<Aula[]>([]);
+
+  useEffect(() => {
+    const verifyLogin = async () => {
+      const isLoggedIn = await checkUserLoggedIn();
+      if (!isLoggedIn) {
+        navigate("/"); // Redirect to login page if not logged in
+      } else {
+        const isAdmin = await checkUserIsAdmin();
+        if (isAdmin) {
+          navigate("/HomeADM"); // Redirect to admin home page if user is admin
+        } else {
+          setIsLoading(false); // Set loading to false if logged in and not admin
+        }
+      }
+    };
+
+    verifyLogin();
+  }, [navigate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +64,10 @@ const HomeADM: React.FC = () => {
 
     fetchData();
   }, []);
+
+  if (isLoading) {
+    return null; // Render nothing while checking login status
+  }
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", overflowX: "hidden" }}>
@@ -63,9 +91,23 @@ const HomeADM: React.FC = () => {
           <BannerInicial
             title={courses[0].name}
             subtitle={courses[0].description}
-            onAssistirClick={() => alert("Assistir")}
-            onSaibaMaisClick={() => alert("Saiba Mais")}
-            imageSrc="/path/to/banner-image.jpg" // Substituir pela imagem correta
+            onAssistirClick={() =>
+              navigate(
+                `/video?videoUrl=${encodeURIComponent(
+                  courses[0].url
+                )}&videoTitle=${encodeURIComponent(
+                  courses[0].name
+                )}&description=${encodeURIComponent(courses[0].description)}`
+              )
+            }
+            onSaibaMaisClick={() =>
+              navigate(
+                `/infos?id=${courses[0].id}&title=${encodeURIComponent(
+                  courses[0].name
+                )}&subtitle=${encodeURIComponent(courses[0].description)}`
+              )
+            }
+            imageSrc={courses[0].url} // Use a propriedade imageUrl
           />
         )}
 
@@ -89,8 +131,13 @@ const HomeADM: React.FC = () => {
               <CardVideoProgresso
                 key={aula.id}
                 title={aula.title}
-                progress={60} // Placeholder progress value
-                onButtonClick={() => alert("Continuando o vídeo...")}
+                progress={30} // Placeholder progress value
+                imageSrc={aula.image_url}
+                linkTo={`/video?videoUrl=${encodeURIComponent(
+                  aula.video_url
+                )}&videoTitle=${encodeURIComponent(aula.title)}&description=${encodeURIComponent(
+                  aula.description
+                )}`}
               />
             ))}
           </Box>
@@ -113,12 +160,15 @@ const HomeADM: React.FC = () => {
             }}
           >
             {courses.map((course) => (
-              <CardComponent
-                key={course.id}
-                title={course.name}
-                onButtonClick={() => alert("Iniciando vídeo...")}
-                imageSrc={undefined} // Substituir por uma URL de imagem real
-              />
+              <Box key={course.id} sx={{ cursor: "pointer" }}>
+                <CardComponent
+                  title={course.name}
+                  imageSrc={course.url}
+                  linkTo={`/infos?id=${course.id}&title=${encodeURIComponent(
+                    course.name
+                  )}&subtitle=${encodeURIComponent(course.description)}`}
+                />
+              </Box>
             ))}
           </Box>
         </Box>

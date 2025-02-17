@@ -6,7 +6,7 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import SideMenu from "../components/menu_lat";
 import { CardComponent } from "../components/card_video";
 import ArticleIcon from '@mui/icons-material/Article';
-import { useSearchParams, redirect } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { fetchAulas } from "../api/courses";
 
 const containerStyle = {
@@ -18,6 +18,7 @@ const containerStyle = {
 
 const Infos: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const pageId = searchParams.get("id") || "0";
   const pageTitle = searchParams.get("title") || "Agatha all along";
   const pageSubtitle = searchParams.get("subtitle") || "Aprenda tudo sobre a dieta das bruxas";
@@ -30,6 +31,14 @@ const Infos: React.FC = () => {
       .then(data => setAulas(data))
       .catch(error => console.error("Erro ao buscar aulas:", error));
   }, [pageId]);
+
+  const handleAssistirClick = () => {
+    if (aulas.length > 0) {
+      const firstAula = aulas[0];
+      const videoUrl = `/video?videoUrl=${encodeURIComponent(firstAula.video_url)}&videoTitle=${encodeURIComponent(firstAula.title)}&description=${encodeURIComponent(firstAula.description)}`;
+      navigate(videoUrl);
+    }
+  };
 
   return (
     <Box sx={containerStyle}>
@@ -74,6 +83,7 @@ const Infos: React.FC = () => {
               variant="contained"
               startIcon={<PlayArrowIcon />}
               sx={{ backgroundColor: "#4CAF50", color: "white" }}
+              onClick={handleAssistirClick}
             >
               Assistir
             </Button>
@@ -132,7 +142,7 @@ const Infos: React.FC = () => {
               <Box display="flex" alignItems="center" gap={2}>
                 <Avatar
                   alt="Professor"
-                  src="https://via.placeholder.com/100"
+                  src="luiza.png"
                   sx={{ width: 60, height: 60 }}
                 />
                 <Box>
@@ -149,7 +159,7 @@ const Infos: React.FC = () => {
                 <Button
                   variant="contained"
                   sx={{ backgroundColor: "#4CAF50", color: "white" }}
-                  onClick={() => redirect("/exercicios")}
+                  onClick={() => navigate("/exercicios")}
                   startIcon={<ArticleIcon />}
                 >
                   Exercícios

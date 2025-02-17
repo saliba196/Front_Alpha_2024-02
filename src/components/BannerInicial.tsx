@@ -101,13 +101,6 @@ export const BannerInicial: React.FC<BannerInicialProps> = ({
 
         <Box sx={{ display: "flex", gap: "16px", mt: "16px" }}>
           <StyledButton
-            bgcolor="#648A64"
-            onClick={onAssistirClick}
-            startIcon={<PlayArrowIcon />}
-          >
-            Assistir
-          </StyledButton>
-          <StyledButton
             bgcolor="#46685B"
             onClick={onSaibaMaisClick}
             startIcon={<InfoIcon />}
