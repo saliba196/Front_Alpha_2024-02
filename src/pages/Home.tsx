@@ -91,8 +91,8 @@ const Home: React.FC = () => {
             title={courses[0].name}
             subtitle={courses[0].description}
             onAssistirClick={() => alert("Assistir")}
-            onSaibaMaisClick={() => alert("Saiba Mais")}
-            imageSrc={courses[0].imageUrl} // Use a propriedade imageUrl
+            onSaibaMaisClick={() => navigate('/info')}
+            imageSrc={courses[0].url} // Use a propriedade imageUrl
           />
         )}
 
@@ -116,9 +116,9 @@ const Home: React.FC = () => {
               <CardVideoProgresso
                 key={aula.id}
                 title={aula.title}
-                progress={60} // Placeholder progress value
-                onButtonClick={() => alert("Continuando o vídeo...")}
-                imageSrc={aula.url} // Placeholder image source
+                progress={30} // Placeholder progress value
+                imageSrc={aula.url}
+                linkTo={`/video?videoUrl=${encodeURIComponent(aula.url)}&videoTitle=${encodeURIComponent(aula.title)}&description=${encodeURIComponent(aula.description)}`}
               />
             ))}
           </Box>

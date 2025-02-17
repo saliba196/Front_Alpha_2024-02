@@ -6,6 +6,7 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import SideMenu from "../components/menu_lat";
 import { CardComponent } from "../components/card_video";
 import ArticleIcon from '@mui/icons-material/Article';
+import { redirect } from "react-router-dom";
 
 const containerStyle = {
     background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
@@ -14,7 +15,7 @@ const containerStyle = {
     flex: 1
   };
 
-  export const Infos = () => {
+const Infos: React.FC  = () => {
     return (
       <Box sx={containerStyle}>
         {/* Menu Lateral */}
@@ -148,7 +149,7 @@ const containerStyle = {
           <Button
             variant="contained"
             sx={{ backgroundColor: "#4CAF50", color: "white" }}
-            onClick={() => window.open("https://google.com", "_blank")}
+            onClick={() => redirect('/exercicios')}
             startIcon={<ArticleIcon/>}
           >
             Exercícios
@@ -167,3 +168,5 @@ const containerStyle = {
       </Box>
     );
   };
+
+export default Infos;

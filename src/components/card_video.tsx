@@ -44,7 +44,7 @@ export const CardComponent: React.FC<CardComponentProps> = ({
         variant="square"
         sx={{
           width: "100%",
-          height: "100px",
+          height: "150px",
           backgroundColor: "#d3d3d3", // Cor de fundo do placeholder
           marginBottom: "12px",
           borderRadius: "4px",
@@ -56,7 +56,7 @@ export const CardComponent: React.FC<CardComponentProps> = ({
         sx={{
           fontFamily: "Nunito",
           fontSize: "16px",
-          fontWeight: 400,
+          fontWeight: 500,
           color: "white",
           textAlign: "center",
           marginBottom: "12px",
@@ -65,29 +65,7 @@ export const CardComponent: React.FC<CardComponentProps> = ({
         {title}
       </Typography>
 
-      {/* Botão com ícone e texto */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "8px",
-        }}
-      >
-        <StyledIconButton onClick={onButtonClick}>
-          <PlayArrowIcon sx={{ color: "white", fontSize: "18px" }} />
-        </StyledIconButton>
-        <Typography
-          sx={{
-            fontFamily: "Nunito",
-            fontSize: "16px",
-            fontWeight: 700,
-            color: "white",
-          }}
-        >
-          Assistir
-        </Typography>
-      </Box>
+      
     </Box>
   );
 };

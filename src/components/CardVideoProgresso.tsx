@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 interface CardVideoProgressoProps {
   title: string; // Título do vídeo
   progress: number; // Progresso do vídeo em porcentagem (0 a 100)
-  onButtonClick: () => void; // Função ao clicar no botão "Continuar"
+  onButtonClick?: () => void; // Função ao clicar no botão "Continuar"
   imageSrc?: string; // Fonte da imagem (opcional)
+  linkTo?: string; // URL dinâmica para navegação
 }
 
 const ProgressBar = styled(LinearProgress)`
@@ -26,9 +27,10 @@ export const CardVideoProgresso: React.FC<CardVideoProgressoProps> = ({
   progress,
   onButtonClick,
   imageSrc,
+  linkTo,
 }) => {
   return (
-    <Link to="/video" style={{ textDecoration: "none" }}>
+    <Link to={linkTo || "/video"} style={{ textDecoration: "none" }}>
       <Box
         sx={{
           width: 280,
