@@ -22,25 +22,26 @@ interface Pergunta {
 
 interface QuestionSectionProps {
   numQuestions: number;
-  questions?: Pergunta[];
+  questions: Pergunta[];
+  setQuestions: (questions: Pergunta[]) => void;
 }
 
 const QuestionSection: React.FC<QuestionSectionProps> = ({
   numQuestions,
-  questions = [],
+  questions,
+  setQuestions,
 }) => {
-  const [localQuestions, setLocalQuestions] = useState<Pergunta[]>(questions);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    setLocalQuestions(questions);
-  }, [questions]);
+    setQuestions(questions);
+  }, [questions, setQuestions]);
 
   const handleChangeQuestion = (
     e: React.ChangeEvent<HTMLInputElement>,
     field: "pergunta" | "A" | "B" | "C" | "D"
   ) => {
-    setLocalQuestions((prev) => {
+    setQuestions((prev) => {
       const updated = [...prev];
       if (!updated[currentPage - 1]) return prev;
       if (field === "pergunta") {
@@ -88,7 +89,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
       <TextField
         fullWidth
         placeholder="Insira sua pergunta aqui"
-        value={localQuestions[currentPage - 1]?.pergunta || ""}
+        value={questions[currentPage - 1]?.pergunta || ""}
         onChange={(e) => handleChangeQuestion(e, "pergunta")}
         sx={{
           backgroundColor: "#e0e0e0",
@@ -128,7 +129,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
             <TextField
               fullWidth
               placeholder={`Resposta ${option}`}
-              value={localQuestions[currentPage - 1]?.alternativas?.[option] || ""}
+              value={questions[currentPage - 1]?.alternativas?.[option] || ""}
               onChange={(e) => handleChangeQuestion(e, option as "A" | "B" | "C" | "D")}
               sx={{
                 backgroundColor: "#e0e0e0",
@@ -156,7 +157,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
           color: "#213435",
         }}
       >
-        Resposta correta: {localQuestions[currentPage - 1]?.resposta_correta || ""}
+        Resposta correta: {questions[currentPage - 1]?.resposta_correta || ""}
       </Typography>
       <Box
         sx={{

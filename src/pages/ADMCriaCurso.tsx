@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Stack, TextField, Button, Typography, CircularProgress } from "@mui/material";
 import ADMMenu_lat from "../components/ADMMenuLateral";
 import { TituloPagina } from "../components/TituloPagina";
@@ -15,15 +15,23 @@ interface Lesson {
   thumnail_url: string;
 }
 
+interface Pergunta {
+  pergunta: string;
+  alternativas: {
+    A: string;
+    B: string;
+    C: string;
+    D: string;
+  };
+  resposta_correta: string;
+}
+
 const ADMCriaCurso: React.FC = () => {
   const [numQuestions, setNumQuestions] = useState<number>(1);
   const [formData, setFormData] = useState({
     courseTitle: "",
     numberOfLessons: "",
     courseDescription: "",
-    instructorName: "",
-    instructorDescription: "",
-    selectedCategories: [] as string[],
   });
 
   const [lessons, setLessons] = useState<Lesson[]>([
@@ -35,9 +43,47 @@ const ADMCriaCurso: React.FC = () => {
     },
   ]);
 
-  const [aiQuestions, setAiQuestions] = useState([]);
+  const [aiQuestions, setAiQuestions] = useState<Pergunta[]>([
+    {
+      pergunta: "",
+      alternativas: {
+        A: "",
+        B: "",
+        C: "",
+        D: "",
+      },
+      resposta_correta: "",
+    },
+  ]);
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Ajusta o número de perguntas quando numQuestions é alterado
+    setAiQuestions((prev) => {
+      const updated = [...prev];
+      if (numQuestions > updated.length) {
+        // Adiciona perguntas vazias se numQuestions for maior que o tamanho atual
+        for (let i = updated.length; i < numQuestions; i++) {
+          updated.push({
+            pergunta: "",
+            alternativas: {
+              A: "",
+              B: "",
+              C: "",
+              D: "",
+            },
+            resposta_correta: "",
+          });
+        }
+      } else if (numQuestions < updated.length) {
+        // Remove perguntas extras se numQuestions for menor que o tamanho atual
+        updated.length = numQuestions;
+      }
+      return updated;
+    });
+  }, [numQuestions]);
 
   const handleNumQuestionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value, 10);
@@ -58,7 +104,6 @@ const ADMCriaCurso: React.FC = () => {
         num_perguntas: numQuestions,
       });
       const perguntas = response.data.perguntas.map((pergunta: any, index: number) => ({
-        id: index,
         pergunta: pergunta.pergunta,
         alternativas: pergunta.alternativas,
         resposta_correta: pergunta.resposta_correta,
@@ -197,6 +242,7 @@ const ADMCriaCurso: React.FC = () => {
         <QuestionSection
           numQuestions={aiQuestions.length > 0 ? aiQuestions.length : numQuestions}
           questions={aiQuestions}
+          setQuestions={setAiQuestions}
         />
 
         {/* Botão de Salvar */}
