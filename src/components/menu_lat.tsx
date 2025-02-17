@@ -68,7 +68,7 @@ export const SideMenu: React.FC = () => {
       {/* Foto do perfil com redirecionamento */}
       <Link to="/perfil" style={{ textDecoration: "none" }}>
         <ImageWithBadge
-          src=""
+          src="images/image.png"
           alt={userName}
           isExpanded={isExpanded}
         />

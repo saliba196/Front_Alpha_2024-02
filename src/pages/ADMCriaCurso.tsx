@@ -3,38 +3,50 @@ import { Box, Stack, TextField, Button, Typography, CircularProgress } from "@mu
 import ADMMenu_lat from "../components/ADMMenuLateral";
 import { TituloPagina } from "../components/TituloPagina";
 import QuestionSection from "../components/QuestionSection";
-import InfosDoCurso from "../components/InfosDoCurso.tsx";
+import InfosDoCurso from "../components/InfosDoCurso";
 import SecaoCriaAulas from "../components/SecaoCriaAulas";
 import { generateQuiz } from "../api/quizService";
+import { createCourse } from "../api/createCourse";
+
+interface Lesson {
+  title: string;
+  description: string;
+  youtubeLink: string;
+  thumnail_url: string;
+}
 
 const ADMCriaCurso: React.FC = () => {
   const [numQuestions, setNumQuestions] = useState<number>(1);
-  const [courseName, setCourseName] = useState("");
-  const [associatedCourse, setAssociatedCourse] = useState("");
-  const [classTranscription, setClassTranscription] = useState("");
-  interface Pergunta {
-    id: number;
-    pergunta: string;
-    alternativas: string[];
-    resposta_correta: string;
-  }
+  const [formData, setFormData] = useState({
+    courseTitle: "",
+    numberOfLessons: "",
+    courseDescription: "",
+    instructorName: "",
+    instructorDescription: "",
+    selectedCategories: [] as string[],
+  });
 
-  const [aiQuestions, setAiQuestions] = useState<Pergunta[]>([]);
+  const [lessons, setLessons] = useState<Lesson[]>([
+    {
+      title: "",
+      description: "",
+      youtubeLink: "",
+      thumnail_url: "",
+    },
+  ]);
+
+  const [aiQuestions, setAiQuestions] = useState([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleNumQuestionsChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleNumQuestionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value, 10);
     setNumQuestions(value > 0 ? value : 1); // Garante que seja >= 1
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "classTranscription") {
-      setClassTranscription(value);
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const generateAiQuestions = async () => {
@@ -42,10 +54,10 @@ const ADMCriaCurso: React.FC = () => {
       setError(null); // Clear previous errors
       setLoading(true); // Start loading animation
       const response = await generateQuiz({
-        transcricao: classTranscription,
+        transcricao: formData.courseDescription,
         num_perguntas: numQuestions,
       });
-      const perguntas: Pergunta[] = response.data.perguntas.map((pergunta: any, index: number) => ({
+      const perguntas = response.data.perguntas.map((pergunta: any, index: number) => ({
         id: index,
         pergunta: pergunta.pergunta,
         alternativas: pergunta.alternativas,
@@ -76,7 +88,7 @@ const ADMCriaCurso: React.FC = () => {
       >
         {/* Título da Página */}
         <TituloPagina titulo="Criação de Curso" backRoute="/AdminPanel" />
-        <InfosDoCurso />
+        <InfosDoCurso formData={formData} onFormDataChange={setFormData} />
         <Typography
           sx={{
             fontFamily: "Nunito",
@@ -88,7 +100,7 @@ const ADMCriaCurso: React.FC = () => {
         >
           Aulas do curso
         </Typography>
-        <SecaoCriaAulas />
+        <SecaoCriaAulas lessons={lessons} setLessons={setLessons} />
         <Typography
           sx={{
             fontFamily: "Nunito",
@@ -149,7 +161,7 @@ const ADMCriaCurso: React.FC = () => {
               multiline
               rows={4}
               name="classTranscription"
-              value={classTranscription}
+              value={formData.courseDescription}
               onChange={handleInputChange}
               sx={{
                 backgroundColor: "#fff",
@@ -192,7 +204,7 @@ const ADMCriaCurso: React.FC = () => {
           <Button
             variant="contained"
             color="success"
-            //onClick={() => console.log("Lessons Data:", lessons)}
+            onClick={() => console.log("Form Data:", formData, "Lessons:", lessons, "AI Questions:", aiQuestions)}
             sx={{
               padding: "10px 20px",
               borderRadius: "8px",

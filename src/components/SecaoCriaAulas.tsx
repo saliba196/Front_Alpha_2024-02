@@ -14,18 +14,17 @@ interface Lesson {
   title: string;
   description: string;
   youtubeLink: string;
+  thumnail_url: string;
 }
 
-const SecaoCriaAulas: React.FC = () => {
-  const [numberOfLessons, setNumberOfLessons] = useState<number>(1);
+interface SecaoCriaAulasProps {
+  lessons: Lesson[];
+  setLessons: (lessons: Lesson[]) => void;
+}
+
+const SecaoCriaAulas: React.FC<SecaoCriaAulasProps> = ({ lessons, setLessons }) => {
+  const [numberOfLessons, setNumberOfLessons] = useState<number>(lessons.length || 1);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [lessons, setLessons] = useState<Lesson[]>(
-    Array.from({ length: numberOfLessons }, () => ({
-      title: "",
-      description: "",
-      youtubeLink: "",
-    }))
-  );
 
   const handleLessonChange = (
     index: number,
@@ -51,6 +50,7 @@ const SecaoCriaAulas: React.FC = () => {
               title: "",
               description: "",
               youtubeLink: "",
+              thumnail_url: "",
             }
         )
       );
@@ -199,6 +199,33 @@ const SecaoCriaAulas: React.FC = () => {
                 handleLessonChange(
                   currentPage - 1,
                   "youtubeLink",
+                  e.target.value
+                )
+              }
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "8px",
+                "& .MuiOutlinedInput-input": {
+                  color: "black",
+                },
+              }}
+            />
+          </Box>
+
+          {/* Link da Thumbnail */}
+          <Box>
+            <Typography
+              sx={{ marginBottom: "8px", fontWeight: "bold", color: "#213435" }}
+            >
+              Link da Thumbnail:
+            </Typography>
+            <TextField
+              fullWidth
+              value={currentLesson.thumnail_url}
+              onChange={(e) =>
+                handleLessonChange(
+                  currentPage - 1,
+                  "thumnail_url",
                   e.target.value
                 )
               }

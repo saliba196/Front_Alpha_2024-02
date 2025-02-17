@@ -37,8 +37,8 @@ const VerVideo: React.FC = () => {
               component="iframe"
               src={videoUrl}
               title={videoTitle}
-              width="80%"
-              height="480px"
+              width="60%"
+              height="700px"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
