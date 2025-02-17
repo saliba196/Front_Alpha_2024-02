@@ -32,6 +32,7 @@ const ADMCriaCurso: React.FC = () => {
     courseTitle: "",
     numberOfLessons: "",
     courseDescription: "",
+    courseCoverUrl: "",
   });
 
   const [lessons, setLessons] = useState<Lesson[]>([
@@ -113,6 +114,41 @@ const ADMCriaCurso: React.FC = () => {
       setError(error.message);
     } finally {
       setLoading(false); // Stop loading animation
+    }
+  };
+
+  const handleSaveCourse = async () => {
+    try {
+      setLoading(true);
+      const courseData = {
+        titulo: formData.courseTitle,
+        numero_aulas: parseInt(formData.numberOfLessons, 10),
+        descricao_curso: formData.courseDescription,
+        imagem_curso: formData.courseCoverUrl,
+        aulas: lessons.map((lesson) => ({
+          titulo: lesson.title,
+          descricao: lesson.description,
+          video_url: lesson.youtubeLink,
+          transcrição: lesson.thumnail_url,
+        })),
+        questoes: aiQuestions.map((question) => ({
+          enunciado: question.pergunta,
+          alternativa_a: question.alternativas.A,
+          alternativa_b: question.alternativas.B,
+          alternativa_c: question.alternativas.C,
+          alternativa_d: question.alternativas.D,
+          alternativa_e: "a", // Supondo que não há alternativa E
+          resposta_correta: "A",
+        })),
+      };
+      console.log("Dados do curso:", courseData);
+      const response = await createCourse(courseData);
+      console.log("Curso criado com sucesso:", response);
+      // Adicione qualquer lógica adicional após a criação do curso, como redirecionamento ou exibição de mensagem de sucesso
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -250,7 +286,7 @@ const ADMCriaCurso: React.FC = () => {
           <Button
             variant="contained"
             color="success"
-            onClick={() => console.log("Form Data:", formData, "Lessons:", lessons, "AI Questions:", aiQuestions)}
+            onClick={handleSaveCourse}
             sx={{
               padding: "10px 20px",
               borderRadius: "8px",

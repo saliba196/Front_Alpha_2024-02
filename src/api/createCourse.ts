@@ -39,7 +39,7 @@ interface QuizResponse {
 // Função para enviar a requisição ao endpoint e tratar a resposta
 export const createCourse = async (data: QuizRequest): Promise<QuizResponse> => {
     try {
-        const response = await axiosInstance.post<QuizResponse>("/course/create", data);
+        const response = await axiosInstance.post<QuizResponse>("/criar_curso", data);
 
         if (response.data.response !== 200) {
             const responseCode = response.data.response;
