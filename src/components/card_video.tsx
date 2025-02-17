@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography, IconButton, Avatar } from "@mui/material";
 import { styled } from "@mui/system";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 interface CardComponentProps {
   title: string; // Título do card
@@ -25,6 +24,7 @@ export const CardComponent: React.FC<CardComponentProps> = ({
 }) => {
   return (
     <Box
+      onClick={onButtonClick} // nova propriedade para clique
       sx={{
         width: "100%",
         height: "210px",
@@ -35,9 +35,9 @@ export const CardComponent: React.FC<CardComponentProps> = ({
         alignItems: "center",
         padding: "8px",
         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        cursor: onButtonClick ? "pointer" : "default", // mostra cursor pointer se clicável
       }}
     >
-      {/* Placeholder da imagem */}
       <Avatar
         src={imageSrc}
         alt={title}

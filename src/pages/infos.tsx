@@ -6,7 +6,7 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import SideMenu from "../components/menu_lat";
 import { CardComponent } from "../components/card_video";
 import ArticleIcon from '@mui/icons-material/Article';
-import { redirect } from "react-router-dom";
+import { useParams, redirect } from "react-router-dom";
 
 const containerStyle = {
     background: "linear-gradient(to bottom right, #213435 30%, #46685B)",
@@ -15,7 +15,11 @@ const containerStyle = {
     flex: 1
   };
 
-const Infos: React.FC  = () => {
+const Infos: React.FC = () => {
+    const { title, subtitle } = useParams<{ title?: string; subtitle?: string }>();
+    const pageTitle = title || "Agatha all along";
+    const pageSubtitle = subtitle || "Aprenda tudo sobre a dieta das bruxas";
+    
     return (
       <Box sx={containerStyle}>
         {/* Menu Lateral */}
@@ -49,10 +53,10 @@ const Infos: React.FC  = () => {
                 LANÇAMENTO
               </Typography>
               <Typography variant="h3" fontWeight="bold">
-                Agatha all along
+                {pageTitle}
               </Typography>
               <Typography variant="subtitle1" sx={{ my: 1 }}>
-                Aprenda tudo sobre a dieta das bruxas
+                {pageSubtitle}
               </Typography>
               <Button
                 variant="contained"

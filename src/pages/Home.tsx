@@ -118,7 +118,7 @@ const Home: React.FC = () => {
                 title={aula.title}
                 progress={30} // Placeholder progress value
                 imageSrc={aula.url}
-                linkTo={`/video?videoUrl=${encodeURIComponent(aula.url)}&videoTitle=${encodeURIComponent(aula.title)}&description=${encodeURIComponent(aula.description)}`}
+                linkTo={`/video?videoUrl=${encodeURIComponent("https://youtube.com/embed/u6ijpqnDw1s")}&videoTitle=${encodeURIComponent(aula.title)}&description=${encodeURIComponent(aula.description)}`}
               />
             ))}
           </Box>
@@ -144,7 +144,11 @@ const Home: React.FC = () => {
               <CardComponent
                 key={course.id}
                 title={course.name}
-                onButtonClick={() => alert("Iniciando vídeo...")}
+                onButtonClick={() =>
+                  navigate(
+                    `/Infos?title=${encodeURIComponent(course.name)}&subtitle=${encodeURIComponent(course.description)}&image=${encodeURIComponent(course.url)}`
+                  )
+                }
                 imageSrc={course.url} 
               />
             ))}
