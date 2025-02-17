@@ -24,6 +24,7 @@ interface Pergunta {
     D: string;
   };
   resposta_correta: string;
+  resposta_sugerida: string; // Adicionando campo para resposta sugerida
 }
 
 const ADMCriaCurso: React.FC = () => {
@@ -54,6 +55,7 @@ const ADMCriaCurso: React.FC = () => {
         D: "",
       },
       resposta_correta: "",
+      resposta_sugerida: "", // Inicializando campo para resposta sugerida
     },
   ]);
 
@@ -76,6 +78,7 @@ const ADMCriaCurso: React.FC = () => {
               D: "",
             },
             resposta_correta: "",
+            resposta_sugerida: "", // Inicializando campo para resposta sugerida
           });
         }
       } else if (numQuestions < updated.length) {
@@ -108,6 +111,7 @@ const ADMCriaCurso: React.FC = () => {
         pergunta: pergunta.pergunta,
         alternativas: pergunta.alternativas,
         resposta_correta: pergunta.resposta_correta,
+        resposta_sugerida: pergunta.resposta_correta, // Armazenando a resposta sugerida pela IA
       }));
       setAiQuestions(perguntas);
     } catch (error: any) {

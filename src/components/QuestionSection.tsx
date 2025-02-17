@@ -18,6 +18,7 @@ interface Pergunta {
     D: string;
   };
   resposta_correta: string;
+  resposta_sugerida: string; // Adicionando campo para resposta sugerida
 }
 
 interface QuestionSectionProps {
@@ -49,6 +50,16 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
       } else {
         updated[currentPage - 1].alternativas[field] = e.target.value;
       }
+      return updated;
+    });
+  };
+
+  const handleSelectCorrectAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setQuestions((prev) => {
+      const updated = [...prev];
+      if (!updated[currentPage - 1]) return prev;
+      updated[currentPage - 1].resposta_correta = value;
       return updated;
     });
   };
@@ -112,7 +123,10 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
         correta ao lado
       </Typography>
 
-      <RadioGroup>
+      <RadioGroup
+        value={questions[currentPage - 1]?.resposta_correta || ""}
+        onChange={handleSelectCorrectAnswer}
+      >
         {["A", "B", "C", "D"].map((option) => (
           <Box
             key={option}
@@ -148,16 +162,17 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
           </Box>
         ))}
       </RadioGroup>
+
       <Typography
-        variant="subtitle1"
+        variant="subtitle2"
         sx={{
           fontFamily: "Nunito",
           fontWeight: "bold",
-          marginTop: "16px",
+          marginTop: "8px",
           color: "#213435",
         }}
       >
-        Resposta correta: {questions[currentPage - 1]?.resposta_correta || ""}
+        Resposta sugerida pela IA: {questions[currentPage - 1]?.resposta_sugerida || ""}
       </Typography>
       <Box
         sx={{
