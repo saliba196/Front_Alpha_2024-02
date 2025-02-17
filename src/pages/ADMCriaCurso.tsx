@@ -104,7 +104,7 @@ const ADMCriaCurso: React.FC = () => {
         transcricao: formData.courseDescription,
         num_perguntas: numQuestions,
       });
-      const perguntas = response.data.perguntas.map((pergunta: any, index: number) => ({
+      const perguntas = response.data.perguntas.slice(0, numQuestions).map((pergunta: any) => ({
         pergunta: pergunta.pergunta,
         alternativas: pergunta.alternativas,
         resposta_correta: pergunta.resposta_correta,
@@ -137,8 +137,8 @@ const ADMCriaCurso: React.FC = () => {
           alternativa_b: question.alternativas.B,
           alternativa_c: question.alternativas.C,
           alternativa_d: question.alternativas.D,
-          alternativa_e: "a", // Supondo que não há alternativa E
-          resposta_correta: "A",
+          alternativa_e: "", // Supondo que não há alternativa E
+          resposta_correta: question.resposta_correta,
         })),
       };
       console.log("Dados do curso:", courseData);
@@ -234,14 +234,14 @@ const ADMCriaCurso: React.FC = () => {
                 marginBottom: "8px",
               }}
             >
-              Transcrição da Aula:
+              Descrição do Curso:
             </Typography>
             <TextField
               variant="outlined"
               fullWidth
               multiline
               rows={4}
-              name="classTranscription"
+              name="courseDescription"
               value={formData.courseDescription}
               onChange={handleInputChange}
               sx={{
